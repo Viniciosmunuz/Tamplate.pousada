@@ -3969,8 +3969,8 @@
       }
 
       /* ---- Botao secundario ----
-         Contorno na cor da marca, para acoes que nao sao a reserva (rota,
-         transfer, pergunta). A reserva continua sendo o unico botao cheio. */
+         Contorno na cor da marca, para acoes que nao sao a reserva (como
+         perguntar no WhatsApp). A reserva continua sendo o unico botao cheio. */
       .btn-secundario {
         display: inline-flex;
         align-items: center;
@@ -4049,75 +4049,6 @@
       /* a carta da frente da galeria abre a foto em tela cheia */
       .pilha[data-pilha-lightbox] .pilha-item[data-pilha-estado="frente"] .pilha-carta {
         cursor: zoom-in;
-      }
-
-      /* ---- Como chegar ---- */
-      .chegar {
-        margin-top: 40px;
-      }
-
-      .chegar > h3 {
-        margin-bottom: 16px;
-        font-size: 1.35rem;
-        color: var(--color-heading);
-      }
-
-      .chegar-grade {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .chegar-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
-        padding: 20px;
-        background: var(--color-card);
-        border: 1px solid var(--color-border);
-        border-radius: var(--r-md);
-      }
-
-      .chegar-item svg {
-        width: 24px;
-        height: 24px;
-        flex-shrink: 0;
-        margin-top: 1px;
-        color: var(--color-orange-ink);
-      }
-
-      .chegar-item div {
-        min-width: 0;
-      }
-
-      .chegar-item strong {
-        display: block;
-        margin-bottom: 4px;
-        font-size: 1rem;
-        color: var(--color-heading);
-      }
-
-      .chegar-item p {
-        margin: 0;
-        font-size: 0.9rem;
-        line-height: 1.55;
-        color: var(--color-text-soft);
-      }
-
-      .chegar-acoes {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 18px;
-      }
-
-      @media (max-width: 900px) {
-        .chegar-grade {
-          grid-template-columns: minmax(0, 1fr);
-        }
       }
 
       /* ---- Duvidas frequentes ----
@@ -5124,48 +5055,6 @@
                   <span>Check-in a partir das <span data-pousada="horarios.checkin">14h</span>, check-out até as <span data-pousada="horarios.checkout">12h</span></span>
                 </li>
               </ul>
-            </div>
-          </div>
-
-          <!-- COMO CHEGAR: [MODELO] tres jeitos de chegar, com texto de
-               exemplo. Troque pelo trajeto real do cliente (distancia e tempo
-               da capital, linha de onibus, se tem transfer). Para tirar um
-               jeito, apague o <li>. A rota do Google Maps usa o mapa.busca do
-               js/config.js. -->
-          <div class="chegar">
-            <h3>Como chegar</h3>
-            <ul class="chegar-grade">
-              <li class="chegar-item">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.8 11.6 5.6 7.4A2 2 0 0 1 7.4 6.2h9.2a2 2 0 0 1 1.8 1.2l1.8 4.2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><rect x="3" y="11.4" width="18" height="5.6" rx="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M4.6 17v1.8M19.4 17v1.8M6.6 14.2h1.6M15.8 14.2h1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                <div>
-                  <strong>De carro</strong>
-                  <p>Da capital, são cerca de 2 horas pela rodovia principal, com placas até a pousada. Estacionamento gratuito.</p>
-                </div>
-              </li>
-              <li class="chegar-item">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="3.6" width="14" height="14.4" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M5 11.2h14M8 18v2.2M16 18v2.2M8.2 14.6h.6M15.2 14.6h.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                <div>
-                  <strong>De ônibus</strong>
-                  <p>Há linhas diárias saindo da rodoviária da capital. Avise pelo WhatsApp e buscamos você no terminal da cidade.</p>
-                </div>
-              </li>
-              <li class="chegar-item">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6.5" cy="17.5" r="2.2" stroke="currentColor" stroke-width="1.6"/><path d="M17.5 10.4s3-2.9 3-5.1a3 3 0 1 0-6 0c0 2.2 3 5.1 3 5.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.7 17.5h6.1a2.8 2.8 0 0 0 0-5.6H9.9a2.6 2.6 0 0 1 0-5.2h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                <div>
-                  <strong>Transfer</strong>
-                  <p>Organizamos o transfer do aeroporto ou do seu hotel na capital. Combine a data e o horário com a nossa equipe.</p>
-                </div>
-              </li>
-            </ul>
-            <div class="chegar-acoes">
-              <a class="btn-secundario" data-link="rota" href="https://www.google.com/maps/dir/?api=1&amp;destination=Amazonas%2C%20Brasil" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.5-5.4 6.5-10.1a6.5 6.5 0 1 0-13 0C5.5 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10.7" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
-                Traçar rota no Google Maps
-              </a>
-              <a class="btn-secundario" data-link="whatsapp" data-mensagem="Olá! Gostaria de combinar um transfer até a pousada." href="https://wa.me/5592999990000" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Z"/></svg>
-                Combinar transfer
-              </a>
             </div>
           </div>
         </div>

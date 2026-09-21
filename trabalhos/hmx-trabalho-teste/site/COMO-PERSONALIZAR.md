@@ -121,7 +121,7 @@ página:
 | Experiências e atrações | `destino` | as cartas (ver item 7) |
 | Chamada final | (sem id) | frase de convite |
 | Galeria | `galeria` | só as fotos e os nomes (`data-nome`) |
-| Localização | `localizacao` | título, frase e o bloco **Como chegar** `[MODELO]` (ver item 7b); mapa e endereço vêm do config |
+| Localização | `localizacao` | título e frase; mapa e endereço vêm do config |
 | Depoimentos | `avaliacoes` | os depoimentos (ver item 8) |
 | Dúvidas frequentes | `duvidas` | perguntas e respostas `[MODELO]` (ver item 8b) |
 | Reserva | `contato` | políticas; horários vêm do config |
@@ -165,16 +165,6 @@ de clique durante o arraste já estão no CSS e no JS.
 
 Tocar na foto da carta da frente abre em tela cheia, como na galeria, com o
 nome e a descrição da atração como legenda. Não precisa configurar nada.
-
----
-
-## 7b. Como chegar `[MODELO]`
-
-Dentro da seção Localização, três cartões (de carro, de ônibus, transfer)
-com texto de exemplo. Troque pelo trajeto real do cliente: distância e tempo
-da capital, linha de ônibus, se ele oferece transfer. Para tirar um jeito de
-chegar, apague o `<li>`. O botão "Traçar rota" usa o `mapa.busca` do
-`config.js`.
 
 ---
 

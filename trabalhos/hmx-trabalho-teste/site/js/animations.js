@@ -38,9 +38,6 @@ const LINKS_DA_POUSADA = {
   mapa: () => (buscaDoMapa()
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(buscaDoMapa())}`
     : null),
-  rota: () => (buscaDoMapa()
-    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(buscaDoMapa())}`
-    : null),
   instagram: () => dadoDaPousada('redes.instagram'),
   facebook: () => dadoDaPousada('redes.facebook'),
   avaliacoes: () => dadoDaPousada('avaliacoes.link'),
