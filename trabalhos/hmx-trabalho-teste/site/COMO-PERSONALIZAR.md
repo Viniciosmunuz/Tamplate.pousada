@@ -141,8 +141,10 @@ e o preço.
 - **Acrescentar ou tirar:** copie ou apague um `<article>` inteiro. O
   carrossel, as opções de quarto dos dois formulários e o botão "Reservar
   agora" de cada cartão se ajustam sozinhos.
-- **Preço:** vem como "Sob consulta". Para mostrar valor, troque por
-  `<span class="quarto-preco"><strong>R$ 000</strong> /noite</span>`.
+- **Preço `[MODELO]`:** os valores do template (R$ 250, R$ 350 e R$ 550 por
+  noite) são ilustrativos. Troque pelos do cliente dentro do `<strong>`. Se o
+  cliente não quiser mostrar valor, use
+  `<span class="quarto-preco"><strong>Sob consulta</strong></span>`.
 
 ---
 
