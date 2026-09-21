@@ -38,6 +38,9 @@ const LINKS_DA_POUSADA = {
   mapa: () => (buscaDoMapa()
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(buscaDoMapa())}`
     : null),
+  rota: () => (buscaDoMapa()
+    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(buscaDoMapa())}`
+    : null),
   instagram: () => dadoDaPousada('redes.instagram'),
   facebook: () => dadoDaPousada('redes.facebook'),
   avaliacoes: () => dadoDaPousada('avaliacoes.link'),
@@ -95,12 +98,20 @@ const aplicarDadosDaPousada = () => {
    saem as opcoes dos dois formularios e o quarto que cada "Reservar agora"
    de cartao escolhe: renomear, acrescentar ou tirar uma suite e mexer num
    lugar so. */
+/* Preco por noite de cada suite, lido do proprio cartao ("R$ 1.250" vira
+   1250). Suite "Sob consulta" fica fora, e o resumo mostra so as noites. */
+const PRECO_POR_QUARTO = new Map();
+
 const montarOpcoesDeQuarto = () => {
   const cartoes = Array.from(document.querySelectorAll('#quartos [data-carrossel-slide]'));
   const nomes = cartoes
     .map((cartao) => {
       const nome = (cartao.dataset.nome || cartao.querySelector('h3')?.textContent || '').trim();
       cartao.querySelectorAll('[data-ir-reserva]').forEach((botao) => { botao.dataset.quarto = nome; });
+      const preco = (cartao.querySelector('.quarto-preco strong')?.textContent || '')
+        .split(',')[0]
+        .replace(/\D/g, '');
+      if (nome && preco) PRECO_POR_QUARTO.set(nome, Number(preco));
       return nome;
     })
     .filter(Boolean);
@@ -135,23 +146,89 @@ const montarNumeros = () => {
   }
 };
 
-/* Os campos de data ja abrem com o dia em que a pessoa entrou no site,
-   como o de hospedes ja abre com "1 hospede": a barra nao aparece vazia e a
-   pessoa so ajusta. Data local do aparelho, nao UTC, senao a noite viraria
-   o dia seguinte. Campo que ja tem valor (o navegador restaurou, ou a
-   pessoa escolheu) nao e tocado. */
-const preencherDatasDeHoje = () => {
-  const agora = new Date();
-  const doisDigitos = (n) => String(n).padStart(2, '0');
-  const hoje = `${agora.getFullYear()}-${doisDigitos(agora.getMonth() + 1)}-${doisDigitos(agora.getDate())}`;
-  document.querySelectorAll('input[type="date"][name="checkin"], input[type="date"][name="checkout"]')
-    .forEach((campo) => { if (!campo.value) campo.value = hoje; });
+/* ---------- Datas da reserva ----------
+   Os campos ja abrem preenchidos, como o de hospedes ja abre com "1
+   hospede": check-in no dia em que a pessoa entrou no site e check-out no
+   dia seguinte (uma noite). Datas passadas ficam bloqueadas, e o check-out
+   nunca fica antes do check-in: se a pessoa empurra o check-in para depois
+   dele, o check-out anda junto.
+
+   Tudo em data local do aparelho, nao UTC, senao a noite viraria o dia
+   seguinte. Campo que ja tem valor valido nao e tocado. */
+const doisDigitos = (n) => String(n).padStart(2, '0');
+const dataISO = (d) => `${d.getFullYear()}-${doisDigitos(d.getMonth() + 1)}-${doisDigitos(d.getDate())}`;
+const somarDias = (iso, dias) => {
+  const [ano, mes, dia] = iso.split('-').map(Number);
+  return dataISO(new Date(ano, mes - 1, dia + dias));
+};
+const noitesEntre = (entrada, saida) => {
+  if (!entrada || !saida) return 0;
+  const [a1, m1, d1] = entrada.split('-').map(Number);
+  const [a2, m2, d2] = saida.split('-').map(Number);
+  return Math.round((Date.UTC(a2, m2 - 1, d2) - Date.UTC(a1, m1 - 1, d1)) / 86400000);
+};
+const formatarReais = (valor) =>
+  valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+/* noites e valor estimado do formulario completo, a partir das datas e do
+   preco da suite escolhida */
+const resumoDaReserva = () => {
+  const form = document.querySelector('#formReserva');
+  if (!form) return null;
+  const noites = noitesEntre(form.elements.checkin?.value, form.elements.checkout?.value);
+  const quarto = form.elements.quarto?.value || '';
+  const preco = PRECO_POR_QUARTO.get(quarto);
+  return { noites, quarto, total: preco && noites > 0 ? preco * noites : null };
+};
+
+const atualizarResumoDaReserva = () => {
+  const alvo = document.querySelector('[data-resumo-reserva]');
+  const resumo = resumoDaReserva();
+  if (!alvo || !resumo) return;
+  if (resumo.noites < 1) { alvo.hidden = true; return; }
+
+  const noites = `${resumo.noites} ${resumo.noites === 1 ? 'noite' : 'noites'}`;
+  const linha = document.createElement('strong');
+  linha.textContent = resumo.total ? `${noites} · a partir de ${formatarReais(resumo.total)}` : noites;
+  const partes = [linha];
+  if (resumo.total) {
+    const obs = document.createElement('small');
+    obs.textContent = `${resumo.quarto}. Valor estimado, confirmado pela pousada no WhatsApp.`;
+    partes.push(obs);
+  }
+  alvo.replaceChildren(...partes);
+  alvo.hidden = false;
+};
+
+const prepararDatas = () => {
+  const hoje = dataISO(new Date());
+  document.querySelectorAll('#formReservaRapida, #formReserva').forEach((form) => {
+    const entrada = form.elements.checkin;
+    const saida = form.elements.checkout;
+    if (!entrada || !saida) return;
+
+    entrada.min = hoje;
+    if (!entrada.value || entrada.value < hoje) entrada.value = hoje;
+
+    const ajustarSaida = () => {
+      const minimo = somarDias(entrada.value || hoje, 1);
+      saida.min = minimo;
+      if (!saida.value || saida.value < minimo) saida.value = minimo;
+    };
+    ajustarSaida();
+
+    entrada.addEventListener('change', () => { ajustarSaida(); atualizarResumoDaReserva(); });
+    saida.addEventListener('change', atualizarResumoDaReserva);
+  });
+
+  document.querySelector('#formReserva')?.elements.quarto?.addEventListener('change', atualizarResumoDaReserva);
+  atualizarResumoDaReserva();
 };
 
 aplicarDadosDaPousada();
 montarOpcoesDeQuarto();
 montarNumeros();
-preencherDatasDeHoje();
+prepararDatas();
 
 /* ---------- Header: transparente sobre o hero, sólido ao rolar ---------- */
 const siteHeader = document.querySelector('.site-header');
@@ -300,6 +377,91 @@ if ('IntersectionObserver' in window && !prefersReducedMotion.matches) {
   revealItems.forEach((item) => item.classList.add('is-visible'));
 }
 
+
+/* ---------- Fotos em tela cheia ----------
+   Um <dialog> so para a pagina inteira. Quem abre passa a lista de fotos
+   ({ src, alt }) e por qual comecar: a galeria passa as dez cartas, cada
+   suite passa as fotos do proprio <template data-fotos>.
+
+   <dialog> nativo porque ja resolve o que um modal precisa: prende o foco,
+   fecha no Esc e devolve o foco a quem abriu. Setas do teclado e arraste
+   para o lado trocam a foto; clique no fundo escuro fecha. */
+const lightbox = (() => {
+  const dialogo = document.querySelector('[data-lightbox]');
+  if (!dialogo || typeof dialogo.showModal !== 'function') return null;
+
+  const img = dialogo.querySelector('[data-lightbox-img]');
+  const legenda = dialogo.querySelector('[data-lightbox-legenda]');
+  const contador = dialogo.querySelector('[data-lightbox-contador]');
+  const palco = dialogo.querySelector('[data-lightbox-palco]');
+  const setas = dialogo.querySelectorAll('[data-lightbox-anterior], [data-lightbox-proxima]');
+  let fotos = [];
+  let atual = 0;
+
+  const mostrar = (i) => {
+    atual = ((i % fotos.length) + fotos.length) % fotos.length;
+    const foto = fotos[atual];
+    if (img.getAttribute('src') !== foto.src) {
+      img.classList.add('carregando');
+      img.src = foto.src;
+    }
+    img.alt = foto.alt || '';
+    legenda.textContent = foto.alt || '';
+    contador.textContent = fotos.length > 1 ? `${atual + 1} de ${fotos.length}` : '';
+    setas.forEach((seta) => { seta.hidden = fotos.length < 2; });
+  };
+
+  img.addEventListener('load', () => img.classList.remove('carregando'));
+  img.addEventListener('error', () => img.classList.remove('carregando'));
+
+  /* a pagina volta a rolar no mesmo instante em que a janela fecha. O
+     evento "close" do navegador chega depois, numa tarefa propria; ele
+     continua ouvido abaixo para o Esc, mas nao da para depender so dele. */
+  const liberarRolagem = () => document.documentElement.classList.remove('lightbox-aberto');
+  const fechar = () => { liberarRolagem(); dialogo.close(); };
+
+  dialogo.querySelector('[data-lightbox-fechar]')?.addEventListener('click', fechar);
+  dialogo.querySelector('[data-lightbox-anterior]')?.addEventListener('click', () => mostrar(atual - 1));
+  dialogo.querySelector('[data-lightbox-proxima]')?.addEventListener('click', () => mostrar(atual + 1));
+
+  dialogo.addEventListener('keydown', (e) => {
+    if (fotos.length < 2) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); mostrar(atual + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); mostrar(atual - 1); }
+  });
+
+  /* arraste horizontal troca a foto. O clique que o navegador dispara logo
+     depois do arraste e ignorado, senao soltar o dedo no fundo fecharia. */
+  let inicioX = null;
+  let arrastou = false;
+  palco?.addEventListener('pointerdown', (e) => { inicioX = e.clientX; arrastou = false; });
+  palco?.addEventListener('pointerup', (e) => {
+    if (inicioX === null) return;
+    const deslocado = e.clientX - inicioX;
+    inicioX = null;
+    arrastou = Math.abs(deslocado) > 10;
+    if (Math.abs(deslocado) > 50 && fotos.length > 1) mostrar(atual + (deslocado < 0 ? 1 : -1));
+  });
+
+  dialogo.addEventListener('click', (e) => {
+    if (arrastou) { arrastou = false; return; }
+    if (e.target === dialogo || e.target === palco) fechar();
+  });
+
+  /* Esc: o "cancel" chega na hora, o "close" logo depois */
+  dialogo.addEventListener('cancel', liberarRolagem);
+  dialogo.addEventListener('close', liberarRolagem);
+
+  return {
+    abrir(lista, inicio = 0) {
+      if (!lista.length) return;
+      fotos = lista;
+      mostrar(inicio);
+      document.documentElement.classList.add('lightbox-aberto');
+      dialogo.showModal();
+    },
+  };
+})();
 
 /* ---------- Pilha de cartas ----------
    Um baralho arrastavel, usado nas duas galerias do site. A carta da frente
@@ -491,7 +653,18 @@ function iniciarPilha(pilha) {
   pilha.addEventListener("pointerup", soltar);
   pilha.addEventListener("pointercancel", soltar);
 
-  /* clicar numa carta lateral traz ela para a frente; se o dedo andou, o
+  /* fotos da pilha para a tela cheia (so onde a pilha pede, com
+     data-pilha-lightbox): o src e a versao maior de cada carta */
+  const ampliavel = pilha.hasAttribute("data-pilha-lightbox") && lightbox;
+  const fotosDaPilha = ampliavel
+    ? itens.map((item) => {
+        const foto = item.querySelector("img");
+        return { src: foto?.getAttribute("src") || "", alt: foto?.getAttribute("alt") || "" };
+      })
+    : [];
+
+  /* clicar numa carta lateral traz ela para a frente; clicar na da frente
+     abre a foto em tela cheia, onde a pilha permitir. Se o dedo andou, o
      gesto foi arraste e nao clique */
   itens.forEach((item, i) => {
     const carta = item.querySelector("[data-pilha-carta]");
@@ -500,7 +673,13 @@ function iniciarPilha(pilha) {
       /* o clique chega logo depois do pointerup: se o dedo andou, o gesto
          foi arraste e nao clique */
       if (ultimoGesto > 6) { ultimoGesto = 0; e.preventDefault(); return; }
-      if (i !== frente) irPara(i);
+      if (i !== frente) {
+        irPara(i);
+      } else if (ampliavel) {
+        pausar();
+        lightbox.abrir(fotosDaPilha, i);
+        return;
+      }
       retomar();
     });
     carta.addEventListener("keydown", (e) => {
@@ -627,7 +806,7 @@ function iniciarCarrossel(carrossel) {
 
   carrossel.addEventListener('pointerdown', (e) => {
     if (e.button !== undefined && e.button !== 0) return;
-    if (e.target.closest('[data-carrossel-seta], [data-carrossel-pontos], a')) return;
+    if (e.target.closest('[data-carrossel-seta], [data-carrossel-pontos], a, button')) return;
     arrastando = true;
     inicioX = e.clientX;
     deslocado = 0;
@@ -694,6 +873,25 @@ function iniciarCarrossel(carrossel) {
 
 document.querySelectorAll('[data-carrossel]').forEach(iniciarCarrossel);
 
+/* ---------- "Ver fotos" das suites ----------
+   Cada cartao lista as proprias fotos num <template data-fotos> (nao
+   carrega nada ate abrir). O botao mostra quantas sao e abre a tela cheia.
+   Cartao sem fotos listadas fica sem o botao. */
+document.querySelectorAll('[data-quarto-fotos]').forEach((botao) => {
+  const modelo = botao.closest('[data-carrossel-slide]')?.querySelector('template[data-fotos]');
+  const fotos = modelo
+    ? Array.from(modelo.content.querySelectorAll('img')).map((foto) => ({
+        src: foto.getAttribute('src') || '',
+        alt: foto.getAttribute('alt') || '',
+      }))
+    : [];
+  if (!fotos.length || !lightbox) { botao.hidden = true; return; }
+
+  const rotulo = botao.querySelector('span');
+  if (rotulo) rotulo.textContent = fotos.length > 1 ? `Ver ${fotos.length} fotos` : 'Ver foto';
+  botao.addEventListener('click', () => lightbox.abrir(fotos, 0));
+});
+
 /* ---------- Barra de reserva do topo ----------
    Nao envia nada por conta propria: copia os quatro campos para o formulario
    da secao Contato e leva a pessoa para la, com o cursor no primeiro campo
@@ -714,7 +912,11 @@ if (formRapido && formCompleto) {
          completo, entao nao viaja. */
       if (campo === 'quarto' && origem.value === 'Todos') return;
       destino.value = origem.value;
+      /* o change avisa o formulario completo: o check-out acompanha o
+         check-in e o resumo de noites e valor se refaz */
+      destino.dispatchEvent(new Event('change'));
     });
+    atualizarResumoDaReserva();
 
     const alvo = document.querySelector('#contato');
     if (alvo) alvo.scrollIntoView({ behavior: prefersReducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
@@ -749,6 +951,7 @@ const irParaReserva = (quarto) => {
        nao pode deixar o campo com valor invisivel */
     if (campo && Array.from(campo.options).some((o) => o.value === quarto)) {
       campo.value = quarto;
+      atualizarResumoDaReserva();
     }
   }
 
@@ -806,6 +1009,9 @@ if (formReserva) {
       return `${dia}/${mes}/${ano}`;
     };
 
+    /* noites e valor estimado entram na mensagem: a pousada ja recebe o
+       pedido com a conta feita */
+    const resumo = resumoDaReserva();
     const linhas = [
       dadoDaPousada('whatsapp.mensagemFormulario')
         || dadoDaPousada('whatsapp.mensagem')
@@ -814,8 +1020,10 @@ if (formReserva) {
       `Nome: ${dados.get('nome') || ''}`,
       `Check-in: ${formatarData(dados.get('checkin'))}`,
       `Check-out: ${formatarData(dados.get('checkout'))}`,
+      ...(resumo && resumo.noites > 0 ? [`Noites: ${resumo.noites}`] : []),
       `Hóspedes: ${dados.get('hospedes') || ''}`,
       `Tipo de quarto: ${dados.get('quarto') || ''}`,
+      ...(resumo && resumo.total ? [`Valor estimado: ${formatarReais(resumo.total)} (a confirmar)`] : []),
       `WhatsApp: ${dados.get('whatsapp') || ''}`,
     ];
 

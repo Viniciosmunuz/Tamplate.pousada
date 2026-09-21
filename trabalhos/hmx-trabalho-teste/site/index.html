@@ -2110,7 +2110,9 @@
          regra o display das classes venceria o hidden do navegador. Link
          novo que dependa do config entra nesta lista. */
       .dep-fonte[hidden],
-      .footer-redes a[hidden] {
+      .footer-redes a[hidden],
+      .quarto-ver-fotos[hidden],
+      .lightbox-botao[hidden] {
         display: none;
       }
 
@@ -3965,6 +3967,402 @@
           transform: none;
         }
       }
+
+      /* ---- Botao secundario ----
+         Contorno na cor da marca, para acoes que nao sao a reserva (rota,
+         transfer, pergunta). A reserva continua sendo o unico botao cheio. */
+      .btn-secundario {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 20px;
+        border: 1px solid rgba(var(--rgb-marca), 0.45);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--marca-principal);
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: background-color 0.16s ease-out, border-color 0.16s ease-out;
+      }
+
+      .btn-secundario:hover,
+      .btn-secundario:focus-visible {
+        background: rgba(var(--rgb-marca), 0.08);
+        border-color: var(--marca-principal);
+      }
+
+      .btn-secundario:focus-visible {
+        outline: 2px solid var(--marca-principal);
+        outline-offset: 2px;
+      }
+
+      .btn-secundario svg {
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+      }
+
+      /* ---- Ver fotos da suite ----
+         Pilula no canto de cima da foto, fora da etiqueta, para nao disputar
+         com o preco e o botao de reserva. */
+      .quarto-ver-fotos {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 36px;
+        padding: 7px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        background: rgba(var(--rgb-escuro), 0.5);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.16s ease-out;
+      }
+
+      .quarto-ver-fotos:hover,
+      .quarto-ver-fotos:focus-visible {
+        background: rgba(var(--rgb-escuro), 0.72);
+      }
+
+      .quarto-ver-fotos:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+      }
+
+      .quarto-ver-fotos svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      /* a carta da frente da galeria abre a foto em tela cheia */
+      .pilha[data-pilha-lightbox] .pilha-item[data-pilha-estado="frente"] .pilha-carta {
+        cursor: zoom-in;
+      }
+
+      /* ---- Como chegar ---- */
+      .chegar {
+        margin-top: 40px;
+      }
+
+      .chegar > h3 {
+        margin-bottom: 16px;
+        font-size: 1.35rem;
+        color: var(--color-heading);
+      }
+
+      .chegar-grade {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .chegar-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 20px;
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--r-md);
+      }
+
+      .chegar-item svg {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: var(--color-orange-ink);
+      }
+
+      .chegar-item div {
+        min-width: 0;
+      }
+
+      .chegar-item strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1rem;
+        color: var(--color-heading);
+      }
+
+      .chegar-item p {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: var(--color-text-soft);
+      }
+
+      .chegar-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 900px) {
+        .chegar-grade {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      /* ---- Duvidas frequentes ----
+         details nativo: abre e fecha sem JS, funciona no teclado e no leitor
+         de tela. So o sinal de mais gira (transform); a altura nao anima. */
+      .faq-wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        column-gap: 56px;
+        row-gap: 32px;
+        align-items: start;
+      }
+
+      .faq-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .faq-copy > .eyebrow {
+        margin-bottom: 0;
+      }
+
+      .faq-copy p {
+        max-width: 42ch;
+        margin: 0;
+        color: var(--color-text-soft);
+      }
+
+      .faq-lista {
+        display: grid;
+        gap: 10px;
+      }
+
+      .faq-item {
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--r-md);
+      }
+
+      .faq-item summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 56px;
+        padding: 14px 20px;
+        list-style: none;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--color-heading);
+      }
+
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-item summary svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: var(--color-orange-ink);
+        transition: transform 0.2s ease-out;
+      }
+
+      .faq-item[open] summary svg {
+        transform: rotate(45deg);
+      }
+
+      .faq-item summary:focus-visible {
+        outline: 2px solid var(--marca-principal);
+        outline-offset: 2px;
+        border-radius: var(--r-md);
+      }
+
+      .faq-item p {
+        margin: 0;
+        padding: 0 20px 18px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--color-text-soft);
+      }
+
+      @media (max-width: 979px) {
+        .faq-wrap {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      /* ---- Resumo da reserva (noites e valor estimado) ---- */
+      .form-resumo {
+        margin: 16px 0 0;
+        padding: 12px 14px;
+        border-radius: var(--r-sm);
+        background: rgba(var(--rgb-marca), 0.08);
+        color: var(--color-heading);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      .form-resumo small {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.78rem;
+        color: var(--color-text-soft);
+      }
+
+      /* ---- Fotos em tela cheia ----
+         <dialog> nativo: prende o foco, fecha no Esc e devolve o foco a quem
+         abriu. So a opacidade da foto anima, quando ela troca. */
+      .lightbox {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        background: rgba(var(--rgb-escuro), 0.95);
+        color: #ffffff;
+      }
+
+      .lightbox[open] {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+      }
+
+      .lightbox::backdrop {
+        background: rgba(var(--rgb-escuro), 0.6);
+      }
+
+      .lightbox-topo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 8px;
+      }
+
+      .lightbox-contador {
+        margin: 0;
+        font-size: 0.88rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .lightbox-palco {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 0;
+        padding: 0 76px;
+        touch-action: pan-y;
+      }
+
+      .lightbox-img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: var(--r-sm);
+        transition: opacity 0.25s ease-out;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .lightbox-img.carregando {
+        opacity: 0;
+      }
+
+      .lightbox-legenda {
+        margin: 0;
+        padding: 12px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+        text-align: center;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .lightbox-botao {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        cursor: pointer;
+        transition: background-color 0.16s ease-out;
+      }
+
+      .lightbox-botao:hover,
+      .lightbox-botao:focus-visible {
+        background: rgba(255, 255, 255, 0.24);
+      }
+
+      .lightbox-botao:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+      }
+
+      .lightbox-botao svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .lightbox-seta {
+        position: absolute;
+        top: 50%;
+        margin-top: -22px;
+      }
+
+      .lightbox-seta--esq { left: 16px; }
+      .lightbox-seta--dir { right: 16px; }
+
+      /* no celular a foto ocupa a largura toda e as setas ficam por cima
+         dela, com fundo mais fechado para aparecer sobre foto clara */
+      @media (max-width: 640px) {
+        .lightbox-palco {
+          padding: 0 6px;
+        }
+
+        .lightbox-seta {
+          background: rgba(var(--rgb-escuro), 0.55);
+        }
+
+        .lightbox-seta--esq { left: 12px; }
+        .lightbox-seta--dir { right: 12px; }
+      }
+
+      html.lightbox-aberto {
+        overflow: hidden;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .faq-item summary svg,
+        .lightbox-img {
+          transition: none;
+        }
+      }
     </style>
     <script type="application/ld+json">
       {
@@ -4172,7 +4570,10 @@
           <!-- ============================================================
                SUITES: um <article class="quarto-slide"> por suite. Para
                trocar, edite data-nome, a foto, o <h3>, a descricao, a
-               capacidade e o preco. Para acrescentar uma suite, copie um
+               capacidade e o preco. O botao "Ver fotos" abre em tela cheia
+               as imagens listadas no <template data-fotos> do proprio
+               cartao: uma tag img por foto, quantas quiser (quarto, banheiro,
+               vista). Para acrescentar uma suite, copie um
                article inteiro; para tirar, apague um. As opcoes de quarto
                dos formularios e o botao "Reservar" acompanham sozinhos.
 
@@ -4189,6 +4590,16 @@
 
                 <article class="quarto-slide" data-carrossel-slide data-nome="Suíte Conforto">
                   <img src="./images/quarto-1.jpg" width="1200" height="900" alt="Suíte com paredes de madeira, cama de casal e porta de vidro para a varanda" loading="lazy" decoding="async" />
+                  <button class="quarto-ver-fotos" type="button" data-quarto-fotos>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6.5" width="18" height="13" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 6.5 10 4h4l1.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" stroke="currentColor" stroke-width="1.6"/></svg>
+                    <span>Ver fotos</span>
+                  </button>
+                  <!-- fotos desta suite em tela cheia (a primeira e a do cartao) -->
+                  <template data-fotos>
+                    <img src="./images/quarto-1.jpg" width="1200" height="900" alt="Suíte com paredes de madeira, cama de casal e porta de vidro para a varanda" loading="lazy" decoding="async" />
+                    <img src="./images/galeria-04-800.jpg" width="800" height="1200" alt="Cama de casal arrumada, com parede de madeira e luminárias de leitura" loading="lazy" decoding="async" />
+                    <img src="./images/galeria-10-800.jpg" width="800" height="1200" alt="Detalhe da cama: travesseiros brancos e manta listrada" loading="lazy" decoding="async" />
+                  </template>
                   <div class="quarto-etiqueta">
                     <h3>Suíte Conforto</h3>
                     <p class="quarto-desc">Aconchegante e prática, ideal para casais em uma pausa tranquila.</p>
@@ -4208,6 +4619,16 @@
 
                 <article class="quarto-slide" data-carrossel-slide data-nome="Suíte Natureza">
                   <img src="./images/quarto-2.jpg" width="1200" height="900" alt="Suíte com cama de casal e parede de vidro voltada para a mata" loading="lazy" decoding="async" />
+                  <button class="quarto-ver-fotos" type="button" data-quarto-fotos>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6.5" width="18" height="13" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 6.5 10 4h4l1.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" stroke="currentColor" stroke-width="1.6"/></svg>
+                    <span>Ver fotos</span>
+                  </button>
+                  <!-- fotos desta suite em tela cheia (a primeira e a do cartao) -->
+                  <template data-fotos>
+                    <img src="./images/quarto-2.jpg" width="1200" height="900" alt="Suíte com cama de casal e parede de vidro voltada para a mata" loading="lazy" decoding="async" />
+                    <img src="./images/galeria-06-800.jpg" width="800" height="1200" alt="Varanda com rede colorida, plantas e vista para a mata" loading="lazy" decoding="async" />
+                    <img src="./images/galeria-07-800.jpg" width="800" height="1200" alt="Caminho de madeira pelo jardim, a poucos passos da suíte" loading="lazy" decoding="async" />
+                  </template>
                   <div class="quarto-etiqueta">
                     <h3>Suíte Natureza</h3>
                     <p class="quarto-desc">Janelas amplas para a mata e muita luz natural ao acordar.</p>
@@ -4227,6 +4648,16 @@
 
                 <article class="quarto-slide" data-carrossel-slide data-nome="Suíte Premium">
                   <img src="./images/quarto-3.jpg" width="1200" height="900" alt="Suíte ampla com cantinho de estar, luminárias e portas para a varanda" loading="lazy" decoding="async" />
+                  <button class="quarto-ver-fotos" type="button" data-quarto-fotos>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6.5" width="18" height="13" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 6.5 10 4h4l1.5 2.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" stroke="currentColor" stroke-width="1.6"/></svg>
+                    <span>Ver fotos</span>
+                  </button>
+                  <!-- fotos desta suite em tela cheia (a primeira e a do cartao) -->
+                  <template data-fotos>
+                    <img src="./images/quarto-3.jpg" width="1200" height="900" alt="Suíte ampla com cantinho de estar, luminárias e portas para a varanda" loading="lazy" decoding="async" />
+                    <img src="./images/galeria-09-800.jpg" width="800" height="1200" alt="Sala de estar com sofá de couro, tapete e piso de madeira" loading="lazy" decoding="async" />
+                    <img src="./images/galeria-08-800.jpg" width="800" height="1200" alt="Banheiro com bancada de pedra, armário de madeira e espelho oval" loading="lazy" decoding="async" />
+                  </template>
                   <div class="quarto-etiqueta">
                     <h3>Suíte Premium</h3>
                     <p class="quarto-desc">Mais espaço, varanda privativa e um cantinho de estar para relaxar.</p>
@@ -4536,9 +4967,11 @@
           <!-- GALERIA: fotos em retrato 2:3, em dois tamanhos
                (galeria-NN-800.jpg e galeria-NN-480.jpg). Para trocar uma
                foto, substitua os dois arquivos mantendo o nome; para mudar a
-               quantidade, copie ou apague um bloco .pilha-item (minimo 3). -->
-          <div class="pilha" data-pilha role="group" aria-roledescription="pilha de cartas"
-               aria-label="Fotos da pousada: arraste para o lado ou clique numa carta">
+               quantidade, copie ou apague um bloco .pilha-item (minimo 3).
+               Clicar na carta da frente abre a foto em tela cheia
+               (data-pilha-lightbox); as outras vem para a frente. -->
+          <div class="pilha" data-pilha data-pilha-lightbox role="group" aria-roledescription="pilha de cartas"
+               aria-label="Fotos da pousada: arraste para o lado ou clique numa carta para ampliar">
             <div class="pilha-medida" aria-hidden="true"></div>
             <div class="pilha-lista">
               <div class="pilha-item" data-pilha-item data-nome="Área externa">
@@ -4689,6 +5122,48 @@
               </ul>
             </div>
           </div>
+
+          <!-- COMO CHEGAR: [MODELO] tres jeitos de chegar, com texto de
+               exemplo. Troque pelo trajeto real do cliente (distancia e tempo
+               da capital, linha de onibus, se tem transfer). Para tirar um
+               jeito, apague o <li>. A rota do Google Maps usa o mapa.busca do
+               js/config.js. -->
+          <div class="chegar">
+            <h3>Como chegar</h3>
+            <ul class="chegar-grade">
+              <li class="chegar-item">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.8 11.6 5.6 7.4A2 2 0 0 1 7.4 6.2h9.2a2 2 0 0 1 1.8 1.2l1.8 4.2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><rect x="3" y="11.4" width="18" height="5.6" rx="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M4.6 17v1.8M19.4 17v1.8M6.6 14.2h1.6M15.8 14.2h1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <div>
+                  <strong>De carro</strong>
+                  <p>Da capital, são cerca de 2 horas pela rodovia principal, com placas até a pousada. Estacionamento gratuito.</p>
+                </div>
+              </li>
+              <li class="chegar-item">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="3.6" width="14" height="14.4" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M5 11.2h14M8 18v2.2M16 18v2.2M8.2 14.6h.6M15.2 14.6h.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <div>
+                  <strong>De ônibus</strong>
+                  <p>Há linhas diárias saindo da rodoviária da capital. Avise pelo WhatsApp e buscamos você no terminal da cidade.</p>
+                </div>
+              </li>
+              <li class="chegar-item">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6.5" cy="17.5" r="2.2" stroke="currentColor" stroke-width="1.6"/><path d="M17.5 10.4s3-2.9 3-5.1a3 3 0 1 0-6 0c0 2.2 3 5.1 3 5.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.7 17.5h6.1a2.8 2.8 0 0 0 0-5.6H9.9a2.6 2.6 0 0 1 0-5.2h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <div>
+                  <strong>Transfer</strong>
+                  <p>Organizamos o transfer do aeroporto ou do seu hotel na capital. Combine a data e o horário com a nossa equipe.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="chegar-acoes">
+              <a class="btn-secundario" data-link="rota" href="https://www.google.com/maps/dir/?api=1&amp;destination=Amazonas%2C%20Brasil" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.5-5.4 6.5-10.1a6.5 6.5 0 1 0-13 0C5.5 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10.7" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
+                Traçar rota no Google Maps
+              </a>
+              <a class="btn-secundario" data-link="whatsapp" data-mensagem="Olá! Gostaria de combinar um transfer até a pousada." href="https://wa.me/5592999990000" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Z"/></svg>
+                Combinar transfer
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -4814,6 +5289,68 @@
         </div>
       </section>
 
+      <!-- ---- Duvidas frequentes ----
+           [MODELO] Perguntas e respostas de exemplo. Confira cada uma com o
+           cliente: pet, crianca, pagamento e day use mudam muito de uma
+           pousada para outra. Cada pergunta e um <details class="faq-item">
+           (abre e fecha sozinho, sem JS); para acrescentar, copie um bloco
+           inteiro, e para tirar, apague. Os horarios vem do js/config.js. -->
+      <section id="duvidas" data-section="duvidas" class="section-pad reveal">
+        <div class="container faq-wrap">
+          <div class="faq-copy">
+            <div class="eyebrow">Dúvidas frequentes</div>
+            <h2>O que você precisa saber antes de chegar.</h2>
+            <p>Reunimos as perguntas que mais recebemos. Se a sua não estiver aqui, a nossa equipe responde pelo WhatsApp.</p>
+            <a class="btn-secundario" data-link="whatsapp" data-mensagem="Olá! Tenho uma dúvida sobre a pousada." href="https://wa.me/5592999990000" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Z"/></svg>
+              Perguntar no WhatsApp
+            </a>
+          </div>
+
+          <div class="faq-lista">
+            <details class="faq-item" name="duvidas">
+              <summary>Quais são os horários de check-in e check-out?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>O check-in é a partir das <span data-pousada="horarios.checkin">14h</span> e o check-out até as <span data-pousada="horarios.checkout">12h</span>. Se precisar chegar mais cedo ou sair mais tarde, fale com a gente: verificamos a disponibilidade para o seu dia.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>O café da manhã está incluso?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Sim, em todas as suítes. É servido das <span data-pousada="horarios.cafe">7h às 10h</span>, com frutas, pães, bolos e quitutes da região.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>Posso levar meu pet?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Aceitamos pets de pequeno porte em suítes selecionadas, com aviso na hora da reserva. Pergunte as condições pelo WhatsApp.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>Crianças pagam hospedagem?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Crianças de até 5 anos não pagam quando ficam na cama dos pais. A partir de 6 anos é cobrada uma diária reduzida: consulte o valor.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>Tem estacionamento?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Sim, estacionamento gratuito dentro da pousada, exclusivo para hóspedes.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>Quais são as formas de pagamento?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Pix, cartão de crédito e cartão de débito. Para confirmar a reserva pedimos um sinal, e o restante é pago no check-in.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>Como funciona o cancelamento?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Cancelamentos feitos com aviso prévio não têm custo. Os prazos mudam conforme a data e a tarifa escolhida e são informados na confirmação da reserva.</p>
+            </details>
+
+            <details class="faq-item" name="duvidas">
+              <summary>Vocês fazem day use?<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+              <p>Sim, em datas selecionadas, com acesso à piscina, às áreas de descanso e ao almoço. As vagas são limitadas: consulte a disponibilidade pelo WhatsApp.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
       <section id="contato" data-section="contato" class="section-pad reveal">
         <div class="container contact-wrap">
           <div class="contact-details">
@@ -4873,6 +5410,8 @@
                   <input id="whatsapp" name="whatsapp" type="tel" placeholder="(99) 99999-9999" required />
                 </div>
               </div>
+              <!-- noites e valor estimado: o js calcula com as datas e o preco da suite -->
+              <p class="form-resumo" data-resumo-reserva aria-live="polite" hidden></p>
               <button class="btn-cta" type="submit"><svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g stroke-width="2" stroke-linecap="round" stroke="currentColor"><rect y="5" x="4" width="16" rx="2" height="16"></rect><path d="m8 3v4"></path><path d="m16 3v4"></path><path d="m4 11h16"></path></g></svg><span class="lable">Verificar disponibilidade</span></button>
               <p class="form-note">Ao enviar, abrimos o WhatsApp da pousada com os seus dados já preenchidos.</p>
             </form>
@@ -4951,6 +5490,7 @@
           <a href="#destino">Experiências</a>
           <a href="#galeria">Galeria</a>
           <a href="#localizacao">Localização</a>
+          <a href="#duvidas">Dúvidas</a>
         </nav>
 
       </div>
@@ -4983,6 +5523,27 @@
         </div>
       </div>
     </footer>
+
+    <!-- Fotos em tela cheia: abre pela galeria (carta da frente) e pelo
+         "Ver fotos" de cada suite. Um so para a pagina inteira. -->
+    <dialog class="lightbox" data-lightbox aria-label="Fotos em tela cheia">
+      <div class="lightbox-topo">
+        <p class="lightbox-contador" data-lightbox-contador aria-live="polite"></p>
+        <button class="lightbox-botao" type="button" data-lightbox-fechar aria-label="Fechar fotos">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="lightbox-palco" data-lightbox-palco>
+        <button class="lightbox-botao lightbox-seta lightbox-seta--esq" type="button" data-lightbox-anterior aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <img class="lightbox-img" data-lightbox-img src="./images/galeria-01-800.jpg" width="800" height="1200" alt="" loading="lazy" decoding="async" />
+        <button class="lightbox-botao lightbox-seta lightbox-seta--dir" type="button" data-lightbox-proxima aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <p class="lightbox-legenda" data-lightbox-legenda></p>
+    </dialog>
 
     <div class="floating-actions">
       <a class="fab-whatsapp" data-link="whatsapp" href="https://wa.me/5592999990000?text=Ol%C3%A1%21%20Gostaria%20de%20consultar%20disponibilidade%20para%20uma%20hospedagem." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">

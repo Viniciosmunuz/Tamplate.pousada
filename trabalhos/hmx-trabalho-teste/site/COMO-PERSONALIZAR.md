@@ -121,8 +121,9 @@ página:
 | Experiências e atrações | `destino` | as cartas (ver item 7) |
 | Chamada final | (sem id) | frase de convite |
 | Galeria | `galeria` | só as fotos e os nomes (`data-nome`) |
-| Localização | `localizacao` | título e frase; mapa e endereço vêm do config |
+| Localização | `localizacao` | título, frase e o bloco **Como chegar** `[MODELO]` (ver item 7b); mapa e endereço vêm do config |
 | Depoimentos | `avaliacoes` | os depoimentos (ver item 8) |
+| Dúvidas frequentes | `duvidas` | perguntas e respostas `[MODELO]` (ver item 8b) |
 | Reserva | `contato` | políticas; horários vêm do config |
 | Números | (sem id) | os quatro números (ver item 9) |
 
@@ -138,6 +139,10 @@ Na seção `quartos`, cada suíte é um `<article class="quarto-slide">`. Em cad
 uma, troque `data-nome`, a foto, o `<h3>`, a frase de descrição, a capacidade
 e o preço.
 
+- **Fotos da suíte:** o botão "Ver fotos" abre em tela cheia as imagens
+  listadas no `<template data-fotos>` do próprio cartão, uma `img` por foto
+  (quarto, banheiro, vista...). O botão mostra a quantidade sozinho. No
+  template elas reaproveitam fotos da galeria; troque pelas do cliente.
 - **Acrescentar ou tirar:** copie ou apague um `<article>` inteiro. O
   carrossel, as opções de quarto dos dois formulários e o botão "Reservar
   agora" de cada cartão se ajustam sozinhos.
@@ -160,6 +165,16 @@ de clique durante o arraste já estão no CSS e no JS.
 
 ---
 
+## 7b. Como chegar `[MODELO]`
+
+Dentro da seção Localização, três cartões (de carro, de ônibus, transfer)
+com texto de exemplo. Troque pelo trajeto real do cliente: distância e tempo
+da capital, linha de ônibus, se ele oferece transfer. Para tirar um jeito de
+chegar, apague o `<li>`. O botão "Traçar rota" usa o `mapa.busca` do
+`config.js`.
+
+---
+
 ## 8. Depoimentos `[MODELO]`
 
 **Os quatro depoimentos do template são fictícios.** Troque pelas avaliações
@@ -170,6 +185,26 @@ mostrar o link "Ver mais avaliações".
 O avatar ao lado do nome é a inicial num círculo colorido, como o Google
 mostra para quem não tem foto. Para usar a foto de perfil real do hóspede
 (só com autorização dele), o comentário da seção traz o `<img>` pronto.
+
+---
+
+## 8b. Dúvidas frequentes `[MODELO]`
+
+Cada pergunta é um `<details class="faq-item">`, que abre e fecha sem
+JavaScript. As respostas do template são exemplos: confira cada uma com o
+cliente, porque pet, criança, pagamento e day use mudam muito de uma pousada
+para outra. Para acrescentar, copie um bloco; para tirar, apague. Os horários
+vêm do `config.js`.
+
+---
+
+## 8c. Formulário de reserva
+
+Não precisa editar nada. Ele abre com check-in no dia de hoje e check-out no
+dia seguinte, não deixa escolher data passada nem check-out antes do
+check-in, e mostra as noites e o valor estimado (preço da suíte × noites). A
+mensagem do WhatsApp já chega com as noites e o valor. Suíte "Sob consulta"
+mostra só as noites.
 
 ---
 
