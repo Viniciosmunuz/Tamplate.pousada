@@ -2005,10 +2005,50 @@
         color: var(--color-text);
       }
 
+      /* Assinatura do depoimento no formato das avaliacoes do Google:
+         avatar redondo, nome em cima e o contexto embaixo. */
       .dep-slide figcaption {
-        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 16px;
         font-size: 0.8rem;
         color: var(--color-text-soft);
+      }
+
+      /* Inicial do nome num circulo, ou a foto do hospede (img com a mesma
+         classe). Branco sobre as quatro cores: 5,2:1 no pior caso. */
+      .dep-avatar {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: var(--marca-principal);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .dep-avatar--2 { background: var(--color-cta); }
+      .dep-avatar--3 { background: var(--color-orange-ink); }
+      .dep-avatar--4 { background: var(--marca-escura); }
+
+      .dep-autor {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+        line-height: 1.3;
+      }
+
+      .dep-autor strong {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--color-text);
       }
 
       .dep-seta {
@@ -4659,8 +4699,14 @@
            texto como o hospede escreveu e so o primeiro nome.
 
            Cada depoimento e um <figure class="dep-slide">: troque data-nome,
-           o texto do <blockquote> e a legenda. Para acrescentar, copie um
-           bloco inteiro. O link "Ver mais avaliacoes" so aparece quando
+           o texto do <blockquote>, o nome e o contexto da legenda. Para
+           acrescentar, copie um bloco inteiro.
+
+           Avatar: por padrao, a inicial do nome num circulo (como o Google
+           mostra para quem nao tem foto); dep-avatar--1 a --4 mudam a cor.
+           Com a foto de perfil real do hospede (so com autorizacao), troque
+           o <span class="dep-avatar"> por:
+           <img class="dep-avatar" src="./images/avaliacao-NOME.jpg" width="80" height="80" alt="" loading="lazy" decoding="async" /> O link "Ver mais avaliacoes" so aparece quando
            avaliacoes.link esta preenchido no js/config.js. -->
       <section id="avaliacoes" data-section="avaliacoes" class="faixa-depoimentos reveal">
         <div class="dep-foto" aria-hidden="true">
@@ -4698,7 +4744,10 @@
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
                     </div>
                     <blockquote>“Lugar lindo e muito tranquilo. O café da manhã é caprichado e a equipe faz a gente se sentir em casa.”</blockquote>
-                    <figcaption>Mariana · viagem em casal</figcaption>
+                    <figcaption>
+                      <span class="dep-avatar dep-avatar--1" aria-hidden="true">M</span>
+                      <span class="dep-autor"><strong>Mariana</strong><span>viagem em casal</span></span>
+                    </figcaption>
                   </figure>
 
                   <figure class="dep-slide" data-carrossel-slide data-nome="Carlos">
@@ -4710,7 +4759,10 @@
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
                     </div>
                     <blockquote>“Suíte limpa e confortável, com uma vista linda para a mata. As crianças adoraram a piscina e as trilhas.”</blockquote>
-                    <figcaption>Carlos · viagem em família</figcaption>
+                    <figcaption>
+                      <span class="dep-avatar dep-avatar--2" aria-hidden="true">C</span>
+                      <span class="dep-autor"><strong>Carlos</strong><span>viagem em família</span></span>
+                    </figcaption>
                   </figure>
 
                   <figure class="dep-slide" data-carrossel-slide data-nome="Juliana">
@@ -4722,7 +4774,10 @@
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
                     </div>
                     <blockquote>“Atendimento atencioso do começo ao fim. Recebemos ótimas dicas de passeios pela região.”</blockquote>
-                    <figcaption>Juliana · viagem com amigas</figcaption>
+                    <figcaption>
+                      <span class="dep-avatar dep-avatar--3" aria-hidden="true">J</span>
+                      <span class="dep-autor"><strong>Juliana</strong><span>viagem com amigas</span></span>
+                    </figcaption>
                   </figure>
 
                   <figure class="dep-slide" data-carrossel-slide data-nome="Rafael">
@@ -4734,7 +4789,10 @@
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
                     </div>
                     <blockquote>“Ótimo para descansar de verdade: silêncio, natureza e uma cama muito confortável. Quero voltar!”</blockquote>
-                    <figcaption>Rafael · viagem a dois</figcaption>
+                    <figcaption>
+                      <span class="dep-avatar dep-avatar--4" aria-hidden="true">R</span>
+                      <span class="dep-autor"><strong>Rafael</strong><span>viagem a dois</span></span>
+                    </figcaption>
                   </figure>
 
                 </div>
