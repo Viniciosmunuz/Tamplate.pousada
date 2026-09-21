@@ -406,7 +406,7 @@ const lightbox = (() => {
       img.src = foto.src;
     }
     img.alt = foto.alt || '';
-    legenda.textContent = foto.alt || '';
+    legenda.textContent = foto.legenda || foto.alt || '';
     contador.textContent = fotos.length > 1 ? `${atual + 1} de ${fotos.length}` : '';
     setas.forEach((seta) => { seta.hidden = fotos.length < 2; });
   };
@@ -654,12 +654,20 @@ function iniciarPilha(pilha) {
   pilha.addEventListener("pointercancel", soltar);
 
   /* fotos da pilha para a tela cheia (so onde a pilha pede, com
-     data-pilha-lightbox): o src e a versao maior de cada carta */
+     data-pilha-lightbox): o src e a versao maior de cada carta. Carta com
+     legenda propria (as atracoes) leva "nome: descricao" para baixo da
+     foto; carta sem legenda (a galeria) usa o alt da foto. */
   const ampliavel = pilha.hasAttribute("data-pilha-lightbox") && lightbox;
   const fotosDaPilha = ampliavel
     ? itens.map((item) => {
         const foto = item.querySelector("img");
-        return { src: foto?.getAttribute("src") || "", alt: foto?.getAttribute("alt") || "" };
+        const nome = (item.dataset.nome || "").trim();
+        const descricao = item.querySelector(".atracao-local")?.textContent.trim() || "";
+        return {
+          src: foto?.getAttribute("src") || "",
+          alt: foto?.getAttribute("alt") || "",
+          legenda: nome && descricao ? `${nome}: ${descricao}` : "",
+        };
       })
     : [];
 

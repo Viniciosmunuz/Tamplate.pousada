@@ -163,6 +163,9 @@ Para uma atração real do cliente com link para o Google Maps, o comentário em
 cima da seção traz o `<h3>` pronto para copiar. O estilo do link e o bloqueio
 de clique durante o arraste já estão no CSS e no JS.
 
+Tocar na foto da carta da frente abre em tela cheia, como na galeria, com o
+nome e a descrição da atração como legenda. Não precisa configurar nada.
+
 ---
 
 ## 7b. Como chegar `[MODELO]`

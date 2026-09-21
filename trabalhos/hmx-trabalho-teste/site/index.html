@@ -4813,10 +4813,14 @@
                <h3><a class="atracao-mapa" href="https://www.google.com/maps/search/?api=1&amp;query=NOME%2C%20CIDADE" target="_blank" rel="noopener noreferrer">NOME<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3>
                O estilo do link e o bloqueio de clique durante o arraste ja
                estao prontos no CSS e no js.
+
+               Clicar na foto da carta da frente abre em tela cheia
+               (data-pilha-lightbox), com o nome e a descricao da atracao
+               como legenda; as outras cartas vem para a frente.
                ============================================================ -->
           <div class="atracoes" id="atracoes">
-            <div class="pilha" data-pilha role="group" aria-roledescription="pilha de cartas"
-                 aria-label="Experiências e atrações da região: arraste para o lado ou clique numa carta">
+            <div class="pilha" data-pilha data-pilha-lightbox role="group" aria-roledescription="pilha de cartas"
+                 aria-label="Experiências e atrações da região: arraste para o lado ou clique numa carta para ampliar">
               <div class="pilha-medida" aria-hidden="true"></div>
               <div class="pilha-lista">
                 <figure class="pilha-item" data-pilha-item data-nome="Trilhas na mata">
