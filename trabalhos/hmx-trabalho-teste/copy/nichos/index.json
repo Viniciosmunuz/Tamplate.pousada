@@ -1,0 +1,11 @@
+{
+  "_comment": "Playbooks de copy por nicho. Um nicho é um arquivo <id>.md nesta pasta. Acrescentar um nicho = criar o arquivo e um id aqui — nenhum código muda, e o trabalho passa a levar o novo playbook junto. A IA que executa o trabalho escolhe qual aplicar lendo a copy do alvo/; a escolha é declarada em site/DECISOES.md. Espelha o padrão de vendor/targets/ e vendor/page-types/.",
+  "nichos": [
+    { "id": "advogado", "label": "Advocacia", "sinais": ["OAB", "processo", "jurídico", "advogado", "escritório", "cível", "trabalhista"], "regulado": "OAB — Provimento 205/2021" },
+    { "id": "medico", "label": "Medicina", "sinais": ["CRM", "consulta", "médico", "clínica", "exame", "diagnóstico", "tratamento"], "regulado": "CFM — Resolução 1.974/2011" },
+    { "id": "dentista", "label": "Odontologia", "sinais": ["CRO", "dentista", "odonto", "implante", "ortodontia", "sorriso"], "regulado": "CFO — Código de Ética Odontológica" },
+    { "id": "psicologo", "label": "Psicologia e terapia", "sinais": ["CRP", "psicólogo", "terapia", "sessão", "ansiedade", "psicoterapia"], "regulado": "CFP — Resolução 010/2005" },
+    { "id": "generico", "label": "Serviço ou produto sem regulação específica", "sinais": [], "regulado": "" }
+  ],
+  "default": "generico"
+}

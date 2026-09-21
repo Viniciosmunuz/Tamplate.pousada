@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+Thumbs.db
+trabalhos/*/fotos-reais/
+.claude/settings.local.json

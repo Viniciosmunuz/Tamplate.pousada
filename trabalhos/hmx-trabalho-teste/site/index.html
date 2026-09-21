@@ -1,0 +1,4939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ============================================================
+         SEO E COMPARTILHAMENTO: edite a mao ao montar cada cliente.
+         Estes dados ficam no HTML (e nao no js/config.js) porque o Google
+         e as previas do WhatsApp/Instagram leem a pagina sem rodar script.
+         Troque: nome, cidade, descricao e o dominio (canonical e og:image),
+         e tambem o bloco "application/ld+json" que fica logo depois do CSS.
+         ============================================================ -->
+    <title>Pousada Encanto da Floresta | Uma experiência especial em meio à natureza</title>
+    <meta
+      name="description"
+      content="Pousada Encanto da Floresta: suítes confortáveis, café da manhã caseiro e passeios pela natureza da região. Reserve direto pelo WhatsApp."
+    />
+    <link rel="canonical" href="https://viniciosmunuz.github.io/Tamplate.pousada/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://viniciosmunuz.github.io/Tamplate.pousada/" />
+    <meta property="og:title" content="Pousada Encanto da Floresta | Uma experiência especial em meio à natureza" />
+    <meta property="og:description" content="Suítes confortáveis, café da manhã caseiro e natureza por todos os lados. Reserve direto com a pousada." />
+    <meta property="og:image" content="https://viniciosmunuz.github.io/Tamplate.pousada/images/og-image.jpg" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#1f4d39" />
+    <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="./images/favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon-180.png" />
+    <style>
+      /* ---- Inter ----
+         Hospedada no proprio site, nao pelo Google Fonts: e uma requisicao a
+         menos para dominio de terceiros e nao depende de servico externo no ar.
+         Sao os dois arquivos variaveis do subset latin — conferido que nenhum
+         caractere da pagina cai fora dele, entao latin-ext (mais 177 KB) seria
+         peso morto.
+
+         Variavel: um arquivo cobre de 400 a 700, sem baixar um peso por vez.
+         O italico so e buscado se algum texto em italico renderizar. */
+      @font-face {
+        font-family: "Inter";
+        src: url("./fontes/inter.woff2") format("woff2");
+        font-weight: 400 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("./fontes/inter-italico.woff2") format("woff2");
+        font-weight: 400 700;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      /* ---- Caveat ----
+         So para a frase de vitrine da faixa de depoimentos. Uma unica frase
+         na pagina inteira a usa; o navegador so baixa os 75 KB quando chega
+         nela, porque nada acima aciona a familia. */
+      @font-face {
+        font-family: "Caveat";
+        src: url("./fontes/caveat.woff2") format("woff2");
+        font-weight: 400 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+
+      :root {
+        /* Quanto a barra de reserva sobe sobre a foto do hero. O hero ganha
+           exatamente esta altura a mais que a tela, entao o topo da barra cai
+           na dobra: foto inteira ao abrir, barra sobreposta ao rolar. Fica no
+           :root porque as duas secoes sao irmas — a variavel precisa de um
+           ancestral comum. */
+        --barra-sobre: 56px;
+
+        /* ============================================================
+           CORES DA MARCA: troque aqui para vestir o site de outro cliente.
+           O resto da pagina deriva destes valores. Os tres "--rgb-*" sao
+           as mesmas cores escritas como "R, G, B", porque entram em
+           rgba() para sombras, veus e bordas translucidas.
+           Confira o contraste depois de trocar: titulo sobre o fundo
+           precisa de 4,5:1 ou mais.
+           ============================================================ */
+        --marca-principal: #2e6a4f;      /* botoes secundarios, links, detalhes */
+        --marca-escura: #1f4d39;         /* titulos */
+        --marca-profunda: #163b2b;       /* hover da cor principal */
+        --marca-destaque: #d9a05b;       /* dourado: estrelas, sobrelinhas no escuro */
+        --rgb-marca: 46, 106, 79;        /* = --marca-principal */
+        --rgb-escuro: 6, 24, 17;         /* veus escuros sobre fotos */
+        --rgb-sombra: 14, 38, 28;        /* sombras e contornos */
+
+        /* Fundo: a pagina inteira e o verde palido. Nao ha mais secao clara
+           e secao de faixa — e um tom so, do topo ao rodape, com a variacao
+           do vidro por cima. Quem separa uma secao da outra passaram a ser as
+           faixas escuras e os cartoes brancos que flutuam sobre o verde. */
+        --color-bg: #eaf0ea;
+        /* Superficie de painel: o que flutua sobre o verde. Precisa de token
+           proprio desde que a pagina virou verde — antes "fundo da pagina" e
+           "fundo de cartao" eram a mesma coisa, e ao trocar um o outro foi
+           junto: a barra de reserva e o formulario ficaram da cor do papel e
+           perderam o efeito de painel apoiado. */
+        --color-card: #ffffff;
+        /* A faixa que separa uma secao da outra. Era um bege quente; virou
+           verde palido quando o fundo da pagina passou a ser vidro sobre
+           floresta — o bege puxava para o quente enquanto o resto da pagina
+           puxava para o verde, e os dois brigavam.
+
+           Medido sobre o fundo: texto secundario a 5,98:1, titulo a 8,56:1,
+           e a faixa continua se distinguindo do branco por 1,16 — a mesma
+           separacao que o bege dava (1,17). */
+        --color-surface: #eaf0ea;
+        --color-text: #2a3a32;
+        /* Tom solido para rotulos e legendas — nunca com opacidade, que
+           muda de contraste conforme o fundo atras. Medido: 6,3:1 sobre o
+           fundo e 4,8:1 no canto mais verde do vidro (#cad5cd). */
+        --color-text-soft: #4a5a52;
+        --color-heading: var(--marca-escura);
+        --color-muted: var(--marca-destaque);
+        --color-border: rgba(var(--rgb-marca), 0.14);
+        --color-accent: var(--marca-principal);
+        --color-primary: var(--marca-principal);
+        --color-primary-hover: var(--marca-profunda);
+        --color-amber: var(--marca-destaque);
+        /* Botao de reserva: terracota, branco por cima a 5,2:1 (hover 7,1:1) */
+        --color-cta: #a8561f;
+        --color-cta-hover: #8a4518;
+        --color-cta-ink: #ffffff;
+        /* Tom quente escurecido para texto pequeno sobre fundo claro:
+           5,9:1 no fundo, 4,5:1 no canto mais verde, 6,8:1 no branco. */
+        --color-orange-ink: #8a4a1a;
+        --color-icon-bg: #f4e6d4;
+        /* Faixas escuras, rodape e cartoes sobre foto */
+        --color-dark: #0f2a1f;
+        --color-whatsapp: #25d366;
+        --color-whatsapp-hover: #1da851;
+
+        /* Uma familia so para tudo. A pilha de reserva e a mesma nas duas,
+           para o texto nao saltar enquanto a fonte carrega. */
+        /* Uma familia so para tudo. A pilha de reserva e a mesma nas duas,
+           para o texto nao saltar enquanto a fonte carrega. */
+        --font-heading: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-manuscrita: "Caveat", "Segoe Script", cursive;
+        /* So o nome no logo. Serifa do proprio sistema: nenhum arquivo a mais. */
+        --font-logo: Georgia, "Times New Roman", serif;
+        --radius: 9999px;
+        --space-4: 4px;
+        --space-8: 8px;
+        --space-16: 16px;
+        --space-24: 24px;
+        --space-32: 32px;
+        --space-64: 64px;
+        --container: 1280px;
+
+        /* Escala de raio: tres degraus, em vez dos dez valores soltos de antes */
+        --r-sm: 10px;
+        --r-md: 12px;
+        --r-lg: 14px;
+
+        /* Sombras em camadas, todas na cor da marca — sombra cinza sobre
+           fundo creme suja; a mesma matiz do fundo mantem tudo coeso */
+        --sh-sm: 0 1px 2px rgba(var(--rgb-sombra), 0.05), 0 2px 6px rgba(var(--rgb-sombra), 0.04);
+        --sh-md: 0 1px 3px rgba(var(--rgb-sombra), 0.06), 0 8px 20px rgba(var(--rgb-sombra), 0.07);
+        --sh-lg: 0 2px 6px rgba(var(--rgb-sombra), 0.06), 0 16px 40px rgba(var(--rgb-sombra), 0.09);
+
+        /* Vidro da casa: um material so, usado na pilula do cabecalho e nos
+           cartoes de quarto. Escrito uma vez para os dois nao divergirem na
+           proxima mexida. */
+        --vidro: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.46) 0%,
+          rgba(214, 232, 220, 0.32) 100%
+        );
+        --vidro-desfoque: blur(30px) saturate(125%);
+        --vidro-sombra: 0 6px 26px rgba(var(--rgb-sombra), 0.08);
+
+        /* Grao de papel: ruido cinza gerado no proprio CSS, sem arquivo.
+           E o que tira a chapa do fundo sem recorrer a gradiente. */
+        --textura-grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+      }
+
+      * { box-sizing: border-box; }
+
+      /* Veu de grao sobre a pagina inteira, inclusive sobre as fotos e o
+         cabecalho de vidro. Fica por cima de tudo mas nao captura clique.
+         A 4% nao se enxerga como textura: se percebe como papel em vez de
+         tela chapada. */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        pointer-events: none;
+        background-image: var(--textura-grao);
+        opacity: 0.055;
+      }
+
+
+      /* ---- Pilha de cartas ----
+         Um baralho: a carta da frente no centro, as vizinhas abertas em leque
+         para os lados, inclinadas e menores. Arrastar para o lado troca a
+         carta da frente; clicar numa lateral traz ela para a frente.
+
+         A geometria do leque (deslocamento, giro e escala por posicao) esta em
+         `configuracao()` no animations.js, nao aqui: e a mesma tabela para as
+         duas pilhas do site.
+
+         Feito com transform e transition do CSS, sem biblioteca: o que anima
+         sao so transform e opacity, que o compositor resolve sozinho. */
+      /* Em tela estreita o leque passa da largura do container. O corte fica
+         na secao, nao no body: `clip` nao cria area rolavel e nao mexe no
+         eixo vertical, entao as cartas giradas continuam inteiras em cima e
+         embaixo — so o que escapa pelos lados some. */
+      #destino,
+      #galeria {
+        overflow-x: clip;
+      }
+
+      .pilha {
+        position: relative;
+        /* largura do leque mais folga para as setas; o resto da linha fica
+           vazio para a pilha continuar centrada na secao */
+        max-width: calc(var(--carta-altura) * 1.55);
+        margin: 0 auto;
+        /* altura da carta da frente; o resto do leque deriva dela */
+        --carta-altura: 580px;
+        touch-action: pan-y;
+      }
+
+      /* objeto invisivel que reserva a altura do palco */
+      .pilha-medida {
+        height: var(--carta-altura);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .pilha-lista {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pilha-item {
+        margin: 0;
+        position: absolute;
+        height: 100%;
+        will-change: transform, opacity;
+        /* mais longa e com saida mais macia: o leque assenta em vez de
+           travar no fim do percurso */
+        transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.55s ease-out;
+      }
+
+      /* enquanto o dedo esta na tela a carta acompanha sem atraso */
+      .pilha.arrastando .pilha-item {
+        transition: none;
+      }
+
+      .pilha-carta {
+        position: relative;
+        display: block;
+        height: 100%;
+        width: auto;
+        aspect-ratio: 2 / 3;
+        padding: 0;
+        border: none;
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        background: var(--color-dark);
+        /* o fio branco por dentro recorta a foto do fundo claro da pagina;
+           sem ele a borda da carta some no verde */
+        box-shadow: 0 10px 26px rgba(var(--rgb-escuro), 0.14),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        transition: box-shadow 0.32s ease-out;
+        cursor: grab;
+        -webkit-user-select: none;
+        user-select: none;
+        font-family: inherit;
+        text-align: left;
+      }
+
+      .pilha.arrastando .pilha-carta {
+        cursor: grabbing;
+      }
+
+      .pilha-carta img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        -webkit-user-drag: none;
+        user-select: none;
+      }
+
+      .pilha-carta:focus-visible {
+        outline: 3px solid var(--color-accent);
+        outline-offset: 4px;
+      }
+
+      /* legenda sobre a foto, so nas cartas que tem nome e endereco */
+      .pilha-legenda {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 68px 22px 20px;
+        color: #ffffff;
+        background: linear-gradient(180deg,
+                    rgba(var(--rgb-escuro), 0) 0%,
+                    rgba(var(--rgb-escuro), 0.08) 30%,
+                    rgba(var(--rgb-escuro), 0.46) 62%,
+                    rgba(var(--rgb-escuro), 0.88) 100%);
+        border-radius: 0 0 var(--r-lg) var(--r-lg);
+        pointer-events: none;
+      }
+
+      .pilha-legenda h3 {
+        color: #ffffff;
+        font-size: 1.35rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+        /* sobre uma parte clara da foto (agua, ceu) o nome perderia o
+           contorno sem esta sombra */
+        text-shadow: 0 1px 12px rgba(var(--rgb-escuro), 0.55);
+      }
+      /* ---- Nome da atracao: abre o mapa ----
+         A legenda inteira tem pointer-events:none para nao roubar o arraste
+         da pilha. So o link volta a aceitar toque. */
+      .pilha-legenda a {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 8px;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .pilha-legenda a svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        align-self: center;
+        opacity: 0.75;
+        transition: opacity 0.16s ease-out;
+      }
+
+      .pilha-legenda a:hover,
+      .pilha-legenda a:focus-visible {
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        text-decoration-thickness: 2px;
+      }
+
+      .pilha-legenda a:hover svg,
+      .pilha-legenda a:focus-visible svg {
+        opacity: 1;
+      }
+
+      .pilha-legenda a:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 4px;
+        border-radius: 3px;
+      }
+
+      /* nas cartas de tras a legenda esta invisivel — mas opacity 0 continua
+         recebendo toque. Sem isto daria para abrir o mapa de uma atracao
+         que nem esta a mostra. */
+      .pilha-item[data-pilha-estado="lado"] .pilha-legenda a {
+        pointer-events: none;
+      }
+
+
+      .pilha-legenda .atracao-local {
+        margin-top: 7px;
+        font-size: 0.78rem;
+        letter-spacing: 0.01em;
+        color: rgba(255, 255, 255, 0.86);
+        text-shadow: 0 1px 10px rgba(var(--rgb-escuro), 0.5);
+      }
+
+      /* fora da carta da frente a legenda some, para o leque nao virar texto */
+      .pilha-item[data-pilha-estado="lado"] .pilha-legenda {
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+      }
+
+      .pilha-item[data-pilha-estado="frente"] .pilha-legenda {
+        opacity: 1;
+        transition: opacity 0.45s ease-out 0.12s;
+      }
+
+      .pilha-item[data-pilha-estado="frente"] .pilha-carta {
+        box-shadow: 0 28px 60px -14px rgba(var(--rgb-escuro), 0.42),
+                    0 8px 20px rgba(var(--rgb-escuro), 0.12),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      }
+
+      .pilha-item[data-pilha-estado="lado"] .pilha-carta {
+        box-shadow: 0 12px 28px rgba(var(--rgb-escuro), 0.16),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+
+      /* ---- Setas da pilha ----
+         Mesmo vidro da barra de navegacao: o degrade, o desfoque e a sombra
+         vem dos mesmos tokens. Ficam fora do leque, nas pontas da pilha, e
+         nao tapam carta nenhuma. */
+      .pilha-seta {
+        position: absolute;
+        top: 50%;
+        z-index: 7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        margin-top: -23px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.94);
+        -webkit-backdrop-filter: var(--vidro-desfoque);
+        backdrop-filter: var(--vidro-desfoque);
+        box-shadow: 0 6px 18px rgba(var(--rgb-escuro), 0.18),
+                    0 1px 3px rgba(var(--rgb-escuro), 0.12);
+        color: var(--color-dark);
+        cursor: pointer;
+        transition: background-color 0.18s ease-out,
+                    box-shadow 0.18s ease-out,
+                    transform 0.18s ease-out;
+      }
+
+      .pilha-seta:hover,
+      .pilha-seta:focus-visible {
+        background-color: #ffffff;
+        box-shadow: 0 10px 24px rgba(var(--rgb-escuro), 0.22),
+                    0 2px 5px rgba(var(--rgb-escuro), 0.14);
+        transform: scale(1.07);
+      }
+
+      .pilha-seta:active {
+        transform: scale(0.97);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .pilha-seta,
+        .pilha-seta:hover,
+        .pilha-seta:focus-visible,
+        .pilha-seta:active {
+          transform: none;
+        }
+      }
+
+      .pilha-seta:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 3px;
+      }
+
+      .pilha-seta svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .pilha-seta--esq { left: 0; }
+      .pilha-seta--dir { right: 0; }
+
+      @media (max-width: 560px) {
+        .pilha-seta {
+          width: 40px;
+          height: 40px;
+          margin-top: -20px;
+        }
+
+        .pilha-seta svg {
+          width: 17px;
+          height: 17px;
+        }
+      }
+
+      /* ponto por carta, mesma linguagem dos pontos da galeria */
+      .pilha-pontos {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        margin-top: 22px;
+      }
+
+      .pilha-ponto {
+        box-sizing: content-box;
+        width: 8px;
+        height: 8px;
+        padding: 8px 6px;
+        border: none;
+        border-radius: 50%;
+        background-color: var(--color-border);
+        background-clip: content-box;
+        cursor: pointer;
+        transition: background-color 0.16s ease-out, width 0.24s ease-out;
+      }
+
+      /* A posicao atual e marcada pelo icone da marca, nao por um risco
+         colorido: e o mesmo simbolo da aba do navegador, entao a pessoa reconhece
+         sem precisar aprender nada. Quadrado, para o icone nao esticar.
+
+         Os 24px de alvo de toque continuam: o icone cresce para 16px e o
+         respiro encolhe na mesma medida, entao a caixa toda nao muda de
+         altura e os pontos nao pulam ao trocar de carta. */
+      .pilha-ponto[aria-selected="true"] {
+        width: 16px;
+        height: 16px;
+        padding: 4px 8px;
+        background-color: transparent;
+        background-image: url("./images/favicon-180.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 0;
+      }
+
+      .pilha-ponto:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 979px) {
+        .pilha {
+          --carta-altura: 480px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .pilha {
+          /* A carta passa a acompanhar a tela em vez de ficar em 400px fixos.
+             Num celular de 390px ela fica em 315px — cerca de um quinto menor
+             — e num 320px encolhe ate o piso de 280px. De 515px para cima a
+             conta ja devolve os 400px de antes, entao tablet e desktop nao
+             mudam. */
+          --carta-altura: clamp(280px, 8rem + 48vw, 400px);
+        }
+
+        .pilha-legenda {
+          padding: 16px 16px 14px;
+        }
+
+        .pilha-legenda h3 {
+          font-size: 1.1rem;
+        }
+
+        .pilha-legenda .atracao-local {
+          font-size: 0.74rem;
+        }
+      }
+
+      /* Sem movimento: o leque continua, a troca e seca. */
+      @media (prefers-reduced-motion: reduce) {
+        .pilha-item {
+          transition: none;
+        }
+      }
+
+      /* texto que so o leitor de tela recebe */
+      .visualmente-oculto {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      /* ---- Ambientacao do fundo ----
+         Terceira tentativa, e a que ficou. As duas anteriores erravam pelo
+         mesmo motivo: muita forma pequena. Catorze gradientes por lado viravam
+         mancha picada — ou some, ou aparece demais, nunca "profundidade".
+
+         Aqui sao duas luzes so, enormes e moles, ancoradas nos cantos que a
+         pagina nao usa: uma quente em cima a esquerda, uma verde embaixo a
+         direita. Cada uma e maior que a tela, entao nao tem borda visivel em
+         lugar nenhum — o que se ve e a variacao de tom, nao a forma. E o que
+         da a sensacao de vidro na frente de algo, sem desenhar nada.
+
+         Como nenhuma das duas tem contorno, a mascara horizontal deixou de
+         ser necessaria: elas ja nascem desbotando antes de chegar ao centro. */
+      .ambiente {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .ambiente-lado {
+        position: absolute;
+        /* quadrado, sem raio: quem faz o formato e o gradiente. Com
+           border-radius a borda do elemento cortava o gradiente antes dele
+           acabar de desbotar, e aparecia um arco duro atravessando a tela. */
+        width: 150vmax;
+        height: 150vmax;
+        will-change: transform;
+      }
+
+      /* verde claro, de folha nova, entrando pelo alto da esquerda */
+      .ambiente-lado--esq {
+        /* centro do elemento exatamente no canto da tela: so a parte externa
+           e macia do gradiente entra em cena */
+        top: -75vmax;
+        left: -75vmax;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(122, 152, 118, 0.48) 0%,
+          rgba(150, 174, 140, 0.3) 22%,
+          rgba(178, 196, 168, 0.12) 38%,
+          transparent 52%
+        );
+        transform: translate3d(0, calc(var(--amb, 0) * -60px), 0);
+      }
+
+      /* verde fechado, de mata densa, no canto de baixo a direita */
+      .ambiente-lado--dir {
+        bottom: -75vmax;
+        right: -75vmax;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(74, 106, 86, 0.52) 0%,
+          rgba(104, 136, 112, 0.32) 22%,
+          rgba(146, 170, 150, 0.12) 38%,
+          transparent 52%
+        );
+        transform: translate3d(0, calc(var(--amb, 0) * 52px), 0);
+      }
+
+      /* ---- A lamina de vidro fosco ----
+         Fica por cima das duas luzes e por baixo de todo o conteudo. E ela
+         que transforma "duas manchas verdes" em "vidro fosco na frente de
+         uma floresta": o verde continua la, mas chega lavado, como se
+         estivesse atras de um vidro jateado.
+
+         Global de proposito. As faixas claras e as escuras pintam por cima dela
+         e a escondem — entao, na pratica, o efeito so aparece justamente nas
+         secoes brancas, que sao as que nao tem faixa propria.
+
+         A lamina tem a cor do papel, nao branco: ela clareia as luzes ate o
+         verde palido da pagina, em vez de puxar tudo para o branco. E o que
+         mantem a pagina num tom so e ainda assim com variacao.
+
+         O 0,62 sai da conta de contraste, nao do olho. Com ele o canto mais
+         verde da tela para em #cad5cd, e ali o texto secundario da 4,68:1 —
+         acima do minimo de 4,5, com pouca folga. Baixar mais derruba a
+         leitura; se um dia a ideia for mais verde ainda, o caminho e
+         escurecer os tokens de texto primeiro, nunca a lamina sozinha. */
+      .ambiente-vidro {
+        position: absolute;
+        inset: 0;
+        background: rgba(234, 240, 234, 0.62);
+      }
+
+      /* O conteudo fica por cima da camada. O cabecalho e os botoes
+         flutuantes ja tem z-index proprio e maior. */
+      body > main,
+      body > .site-footer {
+        position: relative;
+        z-index: 1;
+      }
+
+
+
+      /* No celular as luzes recuam mais: a tela e estreita e o texto ocupa
+         quase toda a largura. */
+      @media (max-width: 979px) {
+        .ambiente {
+          opacity: 0.7;
+        }
+
+        .ambiente-lado--esq { top: -84vmax; left: -84vmax; }
+        .ambiente-lado--dir { bottom: -84vmax; right: -84vmax; }
+      }
+
+      /* Com movimento reduzido a camada continua, parada. */
+      @media (prefers-reduced-motion: reduce) {
+        .ambiente-lado {
+          transform: none !important;
+        }
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      section[id] {
+        scroll-margin-top: 96px;
+      }
+
+      body {
+        margin: 0;
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      .container {
+        width: min(var(--container), calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin: 0 0 12px;
+        color: var(--color-muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2.4px;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        color: var(--color-heading);
+        font-family: var(--font-heading);
+        /* o 700 padrao do navegador fica pesado na Inter; 600 e o peso de titulo */
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+      }
+
+      h1 {
+        /* A curva passa pelos mesmos 60px a 1440 e pelo mesmo teto de 72px
+           de antes; o que mudou foi o pe. Num celular de 390px o titulo
+           travava em 35px e quebrava em quatro linhas curtas — a 32px cabe
+           em tres, e a partir de 425px volta a duas. */
+        font-size: clamp(2rem, 1.34rem + 2.71vw, 4.5rem);
+        /* O tracking de titulo da Inter e -0.022em, a curva publicada pela
+           propria fundicao. */
+        letter-spacing: -0.022em;
+        font-weight: 600;
+      }
+
+      h2 {
+        font-size: clamp(1.75rem, 2.5vw, 2.75rem);
+        letter-spacing: -0.024em;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      /* ---- Botoes do hero ----
+         Pilula de contorno sobre a foto: sem preenchimento solido, sem icone,
+         so o traco e o texto. A seta saiu a pedido; sem ela o sublinhado que
+         so aparecia no hover deixava os dois com cara de texto comum, entao o
+         contorno passou a ser a forma do botao.
+         Os dois no mesmo peso: a hierarquia da reserva ja esta no botao
+         de reserva do cabecalho, que fica sempre a vista. */
+      .hero-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 11px 24px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        /* mesmo vidro da barra de navegacao: o degrade e o desfoque sao
+           os mesmos valores, para o hero e o cabecalho parecerem do mesmo
+           material em vez de dois efeitos parecidos */
+        background: linear-gradient(
+          180deg,
+          rgba(222, 238, 228, 0.14) 0%,
+          rgba(var(--rgb-sombra), 0.24) 100%
+        );
+        -webkit-backdrop-filter: blur(30px) saturate(140%);
+        backdrop-filter: blur(30px) saturate(140%);
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 0.92rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        line-height: 1;
+        cursor: pointer;
+        transition: background-color 0.16s ease-out;
+      }
+
+      /* uma mudanca so no hover: o veu branco engrossa */
+      .hero-btn:hover,
+      .hero-btn:focus-visible {
+        background: rgba(255, 255, 255, 0.26);
+      }
+
+      @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .hero-btn {
+          background: rgba(var(--rgb-escuro), 0.45);
+        }
+
+        .room-card {
+          background: #ffffff;
+        }
+      }
+
+      .hero-btn:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+      }
+
+      .btn-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 10px 20px;
+        border-radius: var(--r-sm);
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0;
+        gap: 8px;
+        transition: background-color 0.16s ease-out, color 0.16s ease-out, border-color 0.16s ease-out;
+      }
+
+      .btn-cta .svg-icon {
+        flex-shrink: 0;
+        transform-origin: 50% 65%;
+      }
+
+      .btn-cta .lable {
+        line-height: 1;
+      }
+
+      .btn-cta:hover .svg-icon,
+      .btn-cta:focus-visible .svg-icon {
+        animation: balanco 1s linear infinite;
+      }
+
+      @keyframes balanco {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(10deg); }
+      }
+
+      .btn-cta {
+        background: var(--color-cta);
+        color: var(--color-cta-ink);
+      }
+
+      .btn-cta:hover,
+      .btn-cta:focus-visible {
+        background: var(--color-cta-hover);
+      }
+
+      /* ---- Botão do cabeçalho ----
+         Papel diferente dos CTAs do corpo: fica sempre à vista, então não
+         precisa gritar. Menor, sem ícone, e contornado enquanto está sobre a
+         foto — só vira cor cheia depois que a página rola e ganha fundo. */
+      .header-cta {
+        min-height: 44px;
+        padding: 9px 20px;
+        font-size: 0.92rem;
+        white-space: nowrap;
+        border-radius: 999px;
+        border: none;
+        gap: 7px;
+      }
+
+      .header-cta::after {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border: solid currentColor;
+        border-width: 1.6px 1.6px 0 0;
+        transform: rotate(45deg);
+        margin-left: 1px;
+      }
+
+
+      /* ---- Cabeçalho ----
+         No topo é a barra comum: largura inteira, transparente sobre a foto.
+         Ao rolar, a linha interna vira uma pílula de vidro solta das bordas.
+         Quem muda é a .nav-row, não o <header>: transicionar fundo e raio de
+         um elemento é suave — transicionar largura e posição do cabeçalho
+         inteiro treme. */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        padding: 0;
+        transition: padding 0.3s ease-out;
+      }
+
+      /* O respiro de cima e o que decide a que altura a pilula flutua.
+         Estava em 14px e ela ficava baixa demais; 8px encosta mais no topo
+         sem colar. O dos lados continua igual. */
+      .site-header.is-scrolled {
+        padding: 8px 20px;
+      }
+
+      /* ---- Gaveta de menu ----
+         Fundo proprio: antes ela herdava o do cabecalho, que e transparente
+         sobre a foto do hero — o menu abria por cima da imagem, ilegivel.
+         E sai de display:none para opacity/visibility, que da transicao. */
+      .mobile-nav {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        display: grid;
+        gap: 2px;
+        padding: 12px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.88);
+        -webkit-backdrop-filter: blur(18px) saturate(115%);
+        backdrop-filter: blur(18px) saturate(115%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 10px 34px rgba(var(--rgb-sombra), 0.16);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.22s ease-out, transform 0.22s ease-out, visibility 0.22s;
+      }
+
+      .mobile-nav.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .mobile-nav a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 12px;
+        border-radius: var(--r-sm);
+        color: var(--color-heading);
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.16s ease-out;
+      }
+
+      .mobile-nav a:hover,
+      .mobile-nav a:focus-visible {
+        background: var(--color-surface);
+      }
+
+      .mobile-nav .btn-cta {
+        margin-top: 10px;
+        justify-content: center;
+        color: #ffffff;
+      }
+
+      .mobile-nav .btn-cta:hover {
+        background: var(--color-cta-hover);
+      }
+
+      /* sobre a foto do hero, texto claro */
+      .site-header:not(.is-scrolled) .main-nav {
+        color: #ffffff;
+      }
+
+      /* sobre a pílula de vidro, texto escuro com halo para firmar a leitura */
+      .is-scrolled .main-nav {
+        color: var(--color-dark);
+      }
+
+      .is-scrolled .main-nav a,
+      .is-scrolled .brand {
+        font-weight: 600;
+      }
+
+      @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .is-scrolled .nav-row,
+        .is-scrolled.esta-no-hero .nav-row {
+          background: rgba(255, 255, 255, 0.96);
+        }
+
+        .is-scrolled.esta-no-hero .main-nav {
+          color: var(--color-dark);
+        }
+      }
+
+      /* Os links saem da barra: navegação fica só na gaveta, em qualquer tela. */
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .main-nav a {
+        position: relative;
+      }
+
+      .main-nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 2px;
+        background: currentColor;
+        opacity: 0;
+        transform: scaleX(0.4);
+        transition: opacity 0.16s ease-out, transform 0.16s ease-out;
+      }
+
+      .main-nav a:hover::after,
+      .main-nav a:focus-visible::after {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+
+      .nav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 70px;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        border: 1px solid transparent;
+        transition: min-height 0.3s ease-out, padding 0.3s ease-out,
+          border-radius 0.3s ease-out, background 0.3s ease-out,
+          border-color 0.3s ease-out, box-shadow 0.3s ease-out;
+      }
+
+      /* a pílula de vidro é este estado */
+      .is-scrolled .nav-row {
+        min-height: 56px;
+        padding: 0 12px 0 22px;
+        border-radius: 999px;
+        /* Vidro quase invisivel: quem faz o efeito e o desfoque, nao a tinta.
+           So da para deixar a pelicula tao fina porque o texto muda de cor
+           conforme o que esta atras (ver .esta-no-hero abaixo) — com uma cor
+           fixa, ou a barra fica opaca ou o menu some. */
+        /* Degrade de cima para baixo, puxando de leve para a cor da marca.
+           A cor entra so na base, onde nao encosta no texto — e o que da a
+           sensacao de vidro grosso, com uma face mais clara que a outra. */
+        background: var(--vidro);
+        -webkit-backdrop-filter: var(--vidro-desfoque);
+        backdrop-filter: var(--vidro-desfoque);
+        border-color: transparent;
+        box-shadow: var(--vidro-sombra);
+      }
+
+      /* ---- Pilula sobre a foto do hero ----
+         Fundo escuro atras: o menu vira branco e a pelicula cai para 14%,
+         quase so o desfoque. Pior caso medido (menu sobre a parte mais clara
+         do ceu) da 4.6:1, dentro do minimo de leitura. */
+      .is-scrolled.esta-no-hero .nav-row {
+        background: linear-gradient(
+          180deg,
+          rgba(222, 238, 228, 0.14) 0%,
+          rgba(var(--rgb-sombra), 0.24) 100%
+        );
+        -webkit-backdrop-filter: blur(30px) saturate(140%);
+        backdrop-filter: blur(30px) saturate(140%);
+        border-color: transparent;
+        box-shadow: 0 6px 26px rgba(var(--rgb-escuro), 0.18);
+      }
+
+      .is-scrolled.esta-no-hero .main-nav {
+        color: #ffffff;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        /* mesma logica do menu: branco sobre a foto, escuro sobre o vidro */
+        color: #ffffff;
+        transition: color 0.2s ease-out;
+      }
+
+      .is-scrolled .brand {
+        color: var(--marca-escura);
+      }
+
+      .is-scrolled.esta-no-hero .brand {
+        color: #ffffff;
+      }
+
+      @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .is-scrolled.esta-no-hero .brand {
+          color: var(--marca-escura);
+        }
+      }
+
+      /* ---- Logo em texto ----
+         Simbolo em traco (herda a cor) + nome em serifa. Troca de cliente e
+         so texto no js/config.js; nada aqui precisa mudar. Se o cliente tiver
+         logo em imagem, o config troca este bloco pela imagem (.logo-imagem). */
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: inherit;
+        line-height: 1;
+      }
+
+      .logo-simbolo {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+      }
+
+      .logo-texto {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .logo-linha1 {
+        font-family: var(--font-body);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        opacity: 0.88;
+      }
+
+      .logo-linha2 {
+        font-family: var(--font-logo);
+        font-size: 1.14rem;
+        font-weight: 400;
+        letter-spacing: 0.005em;
+        white-space: nowrap;
+      }
+
+      .logo-imagem {
+        display: block;
+        height: 38px;
+        width: auto;
+      }
+
+      /* ---- Botao de menu ----
+         So os palitos, no tom de destaque: sem disco, sem contorno. O alvo de
+         toque continua com 44px, ele e que ficou invisivel, nao menor. */
+      .menu-toggle {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border: none;
+        background: transparent;
+        color: var(--color-cta);
+        cursor: pointer;
+        transition: color 0.16s ease-out;
+      }
+
+      .menu-toggle:hover,
+      .menu-toggle:focus-visible {
+        color: var(--color-cta-hover);
+      }
+
+      /* Sobre a foto do hero a cor sozinha nao se sustenta: contra o ceu
+         claro fica em 1,6:1 e o botao some — e no celular ele e a navegacao
+         inteira. A sombra contorna os palitos e devolve a leitura sem
+         desenhar disco nenhum. */
+      .esta-no-hero .menu-toggle .hamburger-svg {
+        filter: drop-shadow(0 1px 3px rgba(var(--rgb-escuro), 0.85));
+      }
+
+      .menu-toggle .hamburger-svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Hambúrguer que se dobra em X.
+         Usa [aria-expanded] em vez do truque de checkbox: o <button> continua
+         sendo anunciado como botão pelo leitor de tela, e a animação é a mesma. */
+      .menu-toggle .hamburger-svg {
+        width: 26px;
+        height: 26px;
+        transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .menu-toggle .line {
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 3;
+        transition:
+          stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+          stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .menu-toggle .line-top-bottom {
+        stroke-dasharray: 12 63;
+      }
+
+      .menu-toggle[aria-expanded="true"] .hamburger-svg {
+        transform: rotate(-45deg);
+      }
+
+      .menu-toggle[aria-expanded="true"] .line-top-bottom {
+        stroke-dasharray: 20 300;
+        stroke-dashoffset: -32.42;
+      }
+
+      /* ---- Altura do hero e a sobreposicao da barra ----
+         O truque que faz as duas coisas pedidas conviverem: a foto ocupa a
+         tela inteira ao abrir E a barra de reserva fica por cima da beirada
+         de baixo dela quando se rola.
+
+         Para isso o hero e mais alto que a tela exatamente na medida da
+         sobreposicao. A barra sobe essa mesma medida, entao o topo dela cai
+         precisamente na dobra: invisivel ao abrir, sobreposta ao rolar.
+
+         Os dois valores saem da mesma variavel de proposito — se um mudar
+         sem o outro, a ponta do cartao volta a aparecer. */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: var(--color-dark);
+        min-height: calc(100vh + var(--barra-sobre));
+        min-height: calc(100svh + var(--barra-sobre));
+        display: flex;
+        align-items: center;
+      }
+
+      /* o conteudo do hero ignora a sobra: senao o texto desceria junto e
+         ficaria descentrado na primeira tela */
+      .hero .hero-inner {
+        margin-bottom: var(--barra-sobre);
+      }
+
+      /* Duas camadas de movimento, separadas de proposito:
+         o contentor faz o parallax (JS escreve --parallax) e a imagem faz o
+         zoom lento. Se fossem o mesmo elemento, um transform sobrescreveria o outro. */
+      .hero-media {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        transform: translate3d(0, var(--parallax, 0px), 0);
+        will-change: transform;
+      }
+
+      .hero-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.74) saturate(1.02) contrast(1.04);
+        /* comeca ja com folga de escala: o deslocamento nunca revela borda */
+        transform: scale(1.06);
+        transform-origin: 58% 45%;
+        animation: hero-zoom 28s ease-in-out infinite alternate;
+        will-change: transform;
+      }
+
+      @keyframes hero-zoom {
+        from { transform: scale(1.06) translate3d(0, 0, 0); }
+        to   { transform: scale(1.15) translate3d(-1.4%, -1.2%, 0); }
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(var(--rgb-escuro), 0.84) 0%, rgba(var(--rgb-escuro), 0.52) 46%, rgba(var(--rgb-escuro), 0.12) 100%),
+          linear-gradient(180deg, rgba(var(--rgb-escuro), 0.45) 0%, rgba(var(--rgb-escuro), 0) 22%, rgba(var(--rgb-escuro), 0) 62%, rgba(var(--rgb-escuro), 0.5) 100%);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        align-items: center;
+        padding: 150px 0 130px;
+      }
+
+      .hero-content {
+        max-width: 760px;
+        color: #ffffff;
+      }
+
+      .hero-content .eyebrow,
+      .hero-content h1,
+      .hero-content p,
+      .hero-content .hero-meta,
+      .hero-content .hero-actions {
+        color: #ffffff;
+      }
+
+      .hero-content h1 {
+        color: #ffffff;
+        margin-bottom: 20px;
+        /* O navegador reparte as palavras entre as linhas em vez de encher
+           cada uma ate o limite e jogar o resto para baixo. E o que tira o
+           degrau da ultima linha. Onde nao houver suporte, a quebra volta a
+           ser a comum — nada quebra. */
+        text-wrap: balance;
+      }
+
+      .hero-content p {
+        max-width: 640px;
+        font-size: clamp(1rem, 0.94rem + 0.28vw, 1.125rem);
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 32px;
+      }
+
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 32px;
+        padding-top: 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        font-size: 0.95rem;
+      }
+
+      .hero-meta span:first-child {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      /* ---- Botao principal do hero ----
+         Os dois botoes do hero tem o mesmo tamanho e o mesmo raio; o que
+         muda e o peso. O primeiro e cor cheia, o segundo continua com
+         o vidro da barra. Assim ha uma acao obvia e uma alternativa, em vez
+         de dois botoes disputando. */
+      .hero-btn--principal {
+        background: var(--color-cta);
+        border-color: transparent;
+        color: #ffffff;
+        font-weight: 600;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+
+      .hero-btn--principal:hover,
+      .hero-btn--principal:focus-visible {
+        background: var(--color-cta-hover);
+      }
+
+      .hero-btn svg {
+        margin-right: 8px;
+        flex-shrink: 0;
+      }
+
+      /* ---- Barra de reserva ----
+         Sobe sobre a beirada de baixo da foto, na mesma medida que o hero
+         ganhou de altura (ver .hero). O topo dela cai exatamente na dobra,
+         entao ao abrir o site a primeira tela e so a fotografia.
+
+         z-index proprio porque o hero tem uma camada de sombreamento por
+         cima da foto; sem ele a barra passaria por baixo dela. */
+      .reserva-rapida {
+        position: relative;
+        z-index: 2;
+        margin-top: calc(var(--barra-sobre) * -1);
+        /* sem respiro proprio: a secao de baixo ja tem o dela, e os 14px que
+           havia aqui deixavam passar uma fatia do fundo da pagina entre duas
+           superficies brancas */
+        margin-bottom: 0;
+      }
+
+      .reserva-barra {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+        align-items: center;
+        gap: 4px;
+        padding: 10px;
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--r-md);
+        box-shadow: var(--sh-lg);
+      }
+
+      .rr-campo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        padding: 8px 14px;
+        border-radius: var(--r-sm);
+      }
+
+      /* filete entre os campos, no lugar de quatro caixas desenhadas: menos
+         tracos na tela e a barra continua lendo como uma peca so */
+      .rr-campo + .rr-campo {
+        box-shadow: inset 1px 0 0 var(--color-border);
+      }
+
+      .rr-campo > svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        color: var(--color-cta);
+      }
+
+      .rr-corpo {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        gap: 1px;
+      }
+
+      .rr-campo label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--color-heading);
+        line-height: 1.2;
+      }
+
+      /* O campo nao tem moldura propria: quem desenha a caixa e a barra. */
+      .rr-campo input,
+      .rr-campo select {
+        width: 100%;
+        min-width: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: var(--color-text-soft);
+        font-family: inherit;
+        /* 16px cravados: abaixo disso o Safari do iPhone da zoom na pagina
+           ao focar o campo, e a barra sai da tela. O rotulo acima continua
+           em 0,8rem — rotulo nao recebe foco, entao nao provoca zoom. */
+        font-size: 1rem;
+        line-height: 1.3;
+        cursor: pointer;
+      }
+
+      .rr-campo input:focus-visible,
+      .rr-campo select:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 4px;
+        border-radius: 3px;
+      }
+
+      /* O botao da barra usa outra cor, nao a do CTA: ela ja esta no hero logo
+         acima, e duas pecas da mesma cor coladas tiram o destaque um do outro. */
+      .rr-enviar {
+        background: var(--color-dark);
+        color: #ffffff;
+        padding: 14px 26px;
+        border-radius: var(--r-sm);
+        white-space: nowrap;
+        cursor: pointer;
+        border: none;
+      }
+
+      .rr-enviar:hover,
+      .rr-enviar:focus-visible {
+        background: var(--color-primary);
+      }
+
+      .rr-enviar svg {
+        transition: transform 0.18s ease-out;
+      }
+
+      .rr-enviar:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* Tablet: a barra vira duas linhas de dois campos e o botao ocupa a
+         largura toda. Nao encolhe os campos ate virarem ilegiveis. */
+      @media (max-width: 979px) {
+        .reserva-barra {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 2px;
+        }
+
+        .rr-campo + .rr-campo {
+          box-shadow: none;
+        }
+
+        .rr-campo {
+          background: var(--color-surface);
+        }
+
+        .rr-enviar {
+          grid-column: 1 / -1;
+          width: 100%;
+          margin-top: 6px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        /* no celular a barra empilha e fica alta: sobrepoe menos, senao come
+           metade da foto. O hero acompanha pela mesma variavel. */
+        :root {
+          --barra-sobre: 30px;
+        }
+
+        .reserva-barra {
+          grid-template-columns: minmax(0, 1fr);
+          padding: 8px;
+        }
+      }
+
+      section {
+        position: relative;
+      }
+
+      .stats {
+        /* sem fundo proprio: a cor era a mesma do corpo e so servia para
+           tapar a camada de ambientacao */
+        background: transparent;
+        padding: 56px 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 32px;
+      }
+
+      /* ---- Rodízio vertical dos números ----
+         Cada posição fica parada; o que sobe é a coluna dentro dela. A coluna
+         tem os quatro números mais uma repetição do primeiro: ao chegar no
+         quinto, o laço reinicia em cima de um quadro idêntico e não se vê corte.
+         Os quatro slots usam delay negativo (0, -3s, -6s, -9s), então cada um
+         mostra um número diferente ao mesmo tempo. */
+      .stat-slot {
+        height: 132px;
+        overflow: hidden;
+      }
+
+      .stat-reel {
+        display: flex;
+        flex-direction: column;
+        animation: stat-sobe 12s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      }
+
+      .stat-reel .stat-card {
+        flex: 0 0 132px;
+        height: 132px;
+      }
+
+      /* as outras tres colunas sao copias feitas pelo js; o atraso de cada
+         uma mora aqui, e nao em estilo inline no HTML */
+      .stat-slot:nth-child(2) .stat-reel { animation-delay: -3s; }
+      .stat-slot:nth-child(3) .stat-reel { animation-delay: -6s; }
+      .stat-slot:nth-child(4) .stat-reel { animation-delay: -9s; }
+
+      @keyframes stat-sobe {
+        /* os platôs são a pausa; a diferença entre eles é a subida */
+        0%,  20%  { transform: translateY(0); }
+        25%, 45%  { transform: translateY(-20%); }
+        50%, 70%  { transform: translateY(-40%); }
+        75%, 95%  { transform: translateY(-60%); }
+        100%      { transform: translateY(-80%); }
+      }
+
+      .stat-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        text-align: center;
+        padding: 8px 12px;
+      }
+
+      /* monocromático: tudo na cor da marca, variando só a intensidade */
+      .stat-icon {
+        color: rgba(var(--rgb-sombra), 0.42);
+        margin-bottom: 8px;
+      }
+
+      .stat-number {
+        font-family: var(--font-heading);
+        font-size: clamp(1.9rem, 2.4vw, 2.6rem);
+        line-height: 1;
+        color: var(--color-dark);
+      }
+
+      .stat-label {
+        font-size: 0.88rem;
+        color: var(--color-text-soft);
+      }
+
+      .section-pad {
+        padding: clamp(64px, 7.5vw, 104px) 0;
+      }
+
+      /* ---- Diferenciais da estadia ----
+         Sem caixa. A moldura branca com borda, raio e sombra em volta de cada
+         item era o que dava ar de painel de sistema — quatro widgets numa
+         linha. O que organiza a coluna agora e um filete em cima de cada
+         item, como numa tabela de caracteristicas, e o icone no tom de destaque.
+
+         Os icones tambem mudaram: os antigos eram formas abstratas, e as duas
+         primeiras eram praticamente iguais (duas cupulas arredondadas). Agora
+         cada um desenha o que diz — xicara, cama, folha e calendario. */
+      .beneficios {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 36px;
+      }
+
+      .beneficio {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding-top: 22px;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .beneficio-icone {
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+        color: var(--color-cta);
+      }
+
+      .beneficio h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+
+      .beneficio p {
+        font-size: 0.97rem;
+        color: var(--color-text);
+      }
+
+
+
+
+
+
+
+
+      .split {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        gap: 64px;
+      }
+      /* ---- Mosaico da seção "sobre" ----
+         Quatro fotos em duas colunas, com alturas diferentes para o conjunto
+         não virar uma grade rígida. Cantos discretos: o raio grande de antes
+         amolecia demais a foto. */
+      .about-mosaico {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      .about-mosaico .mos {
+        margin: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        background: var(--color-surface);
+      }
+
+      .about-mosaico .mos img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* alturas alternadas: a coluna da direita desce um degrau */
+      .mos-a { height: 230px; }
+      .mos-b { height: 190px; margin-top: 34px; }
+      .mos-c { height: 210px; }
+      .mos-d { height: 250px; margin-top: -34px; }
+
+      /* selo com o tempo de casa, na emenda das quatro fotos */
+      .about-selo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 118px;
+        height: 118px;
+        border-radius: 50%;
+        background: var(--color-cta);
+        color: #ffffff;
+        border: 5px solid var(--color-bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        text-align: center;
+        line-height: 1.1;
+      }
+
+      .about-selo strong {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .about-selo span {
+        /* 0.6rem davam 9.6px: pequeno demais para qualquer leitura */
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        max-width: 88px;
+      }
+
+      /* lista de diferenciais */
+      .about-lista {
+        list-style: none;
+        margin: 4px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .about-lista li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.97rem;
+        color: var(--color-text);
+      }
+
+      /* cada item tem o ícone do que ele diz: alfinete, pessoa, wi-fi, cama */
+      .about-lista li svg {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        margin-top: 1px;
+        color: var(--color-cta);
+      }
+
+
+      .story-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .story-copy .eyebrow {
+        margin-bottom: 0;
+      }
+
+      .story-copy h2 {
+        font-size: clamp(1.7rem, 2.4vw, 2.35rem);
+      }
+
+      .story-copy p {
+        font-size: 1.05rem;
+        color: var(--color-text);
+      }
+
+      .story-copy .btn-cta {
+        align-self: flex-start;
+        margin-top: 10px;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 40px;
+      }
+
+      .card-grid.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      /* quatro cartões só cabem lado a lado em tela larga; abaixo disso a
+         grade se reorganiza em vez de espremer */
+      .card-grid.quatro {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px;
+      }
+
+
+      /* ---- Cartao de quarto ----
+         Mesmo material da pilula do cabecalho: o vidro, o mesmo
+         desfoque, a mesma sombra. Nao e uma caixa branca com borda — e a
+         mesma peca de vidro que ja existe no topo da pagina, repetida aqui.
+
+         O canto: so o inferior direito arredondado. Arredondar os quatro
+         devolve a pastilha de painel; arredondar um vira gesto de desenho, e
+         repetido nos quatro quartos vira assinatura da secao. */
+      .room-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--vidro);
+        -webkit-backdrop-filter: var(--vidro-desfoque);
+        backdrop-filter: var(--vidro-desfoque);
+        border: none;
+        border-radius: 0 0 22px 0;
+        box-shadow: var(--vidro-sombra);
+        overflow: hidden;
+      }
+
+      .card-image {
+        position: relative;
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+        /* o cartão é flex em coluna: sem isto o flex encolhe a foto para
+           igualar as alturas, e a proporção declarada não vale nada */
+        flex-shrink: 0;
+      }
+
+      .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        height: 100%;
+        padding: 22px 24px 24px;
+      }
+
+      .card-body h3 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--color-heading);
+      }
+
+      /* ---- Cartões de acomodação ----
+         O preço sai do corpo e vai para cima da foto: é a informação que a
+         pessoa procura primeiro, e ali ela aparece antes de qualquer leitura. */
+      /* ---- Depoimentos ----
+         Faixa escura da marca com a foto de natureza entrando pela direita,
+         como no modelo. A foto nao e cortada por um retangulo: uma mascara
+         horizontal a dissolve na cor da faixa, senao a emenda viraria uma linha reta
+         no meio da faixa. */
+      .faixa-depoimentos {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: 64px 0;
+        background: linear-gradient(100deg, var(--color-dark) 0%, var(--marca-escura) 52%, var(--marca-principal) 100%);
+        color: #ffffff;
+      }
+
+      .dep-foto {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        width: 46%;
+      }
+
+      .dep-foto img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* dissolve para a esquerda: a foto some dentro da cor da faixa */
+        -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.45) 26%, #000 62%);
+        mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.45) 26%, #000 62%);
+      }
+
+      /* Veu escuro por cima da foto, para a frase manuscrita nao cair sobre
+         uma parte clara dela.
+
+         Comeca transparente na esquerda de proposito: o veu cobre so a caixa
+         da foto, entao um valor cheio na borda esquerda desenhava um degrau
+         vertical no meio da faixa — a emenda que a mascara da imagem
+         justamente evita. */
+      .dep-foto::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(var(--rgb-sombra), 0) 0%, rgba(var(--rgb-sombra), 0.5) 30%, rgba(var(--rgb-sombra), 0.62) 60%, rgba(var(--rgb-sombra), 0.5) 100%);
+      }
+
+      /* A frase de vitrine, na manuscrita. Decorativa: nao afirma nada que
+         precise de fonte, e o unico lugar do site onde a Caveat aparece. */
+      .dep-frase {
+        position: absolute;
+        left: 8%;
+        top: 50%;
+        z-index: 1;
+        transform: translateY(-50%) rotate(-4deg);
+        margin: 0;
+        font-family: var(--font-manuscrita);
+        font-size: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+        font-weight: 500;
+        line-height: 1.3;
+        color: #ffffff;
+        /* a sombra e o que garante a leitura no pior ponto da foto, onde a
+           agua e quase branca */
+        text-shadow: 0 2px 14px rgba(var(--rgb-escuro), 0.85), 0 1px 3px rgba(var(--rgb-escuro), 0.6);
+        text-align: center;
+        pointer-events: none;
+      }
+
+      .dep-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        max-width: min(var(--container), calc(100% - 32px));
+      }
+
+      .dep-copy h2 {
+        color: #ffffff;
+        margin-bottom: 6px;
+      }
+
+      .dep-copy p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .faixa-depoimentos .eyebrow {
+        color: var(--marca-destaque);
+      }
+
+      /* ---- O cartao e as setas ----
+         As setas ficam fora do cartao, uma de cada lado, como no modelo:
+         traco simples sobre o fundo escuro, sem disco. */
+      .dep-carrossel {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        max-width: 620px;
+      }
+
+      /* base 0, nao auto: com auto o item reivindica a largura do proprio
+         conteudo, e o conteudo aqui sao quatro slides lado a lado. O trilho
+         inteiro virava a largura pedida, nao cabia na linha ao lado das setas
+         e cada um quebrava para uma linha propria. */
+      .dep-palco {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      .dep-janela {
+        background: transparent;
+        box-shadow: none;
+        border-radius: var(--r-lg);
+      }
+
+      .dep-slide {
+        flex: 0 0 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 22px 24px;
+        background: var(--color-card);
+        border-radius: var(--r-lg);
+        box-shadow: var(--sh-lg);
+      }
+
+      .dep-estrelas {
+        display: flex;
+        gap: 3px;
+        margin-bottom: 12px;
+      }
+
+      .dep-estrelas svg {
+        width: 17px;
+        height: 17px;
+        fill: var(--marca-destaque);
+      }
+
+      .dep-slide blockquote {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.55;
+        color: var(--color-text);
+      }
+
+      .dep-slide figcaption {
+        margin-top: 14px;
+        font-size: 0.8rem;
+        color: var(--color-text-soft);
+      }
+
+      .dep-seta {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.82);
+        cursor: pointer;
+        transition: color 0.16s ease-out, background-color 0.16s ease-out;
+      }
+
+      .dep-seta:hover,
+      .dep-seta:focus-visible {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .dep-seta:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+      }
+
+      .dep-seta svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* quebra para a linha de baixo em vez de virar mais um item ao lado
+         das setas — sem isto os pontos ficam a direita do cartao */
+      .dep-pontos {
+        flex: 1 0 100%;
+        margin-top: 2px;
+      }
+
+      .dep-pontos .carrossel-ponto {
+        background-color: rgba(255, 255, 255, 0.34);
+      }
+
+      .dep-fonte {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.16s ease-out;
+      }
+
+      /* Links que dependem de um dado do config (avaliacoes, redes) nascem
+         com o atributo hidden e so aparecem quando o dado existe. Sem esta
+         regra o display das classes venceria o hidden do navegador. Link
+         novo que dependa do config entra nesta lista. */
+      .dep-fonte[hidden],
+      .footer-redes a[hidden] {
+        display: none;
+      }
+
+      .dep-fonte:hover,
+      .dep-fonte:focus-visible {
+        color: #ffffff;
+      }
+
+      .dep-fonte svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* Abaixo de 900px a foto nao cabe ao lado do cartao sem espremer os
+         dois: ela passa a cobrir a faixa inteira, por tras, e a frase sai —
+         sobre o cartao ela viraria ruido. */
+      @media (max-width: 900px) {
+        .faixa-depoimentos {
+          padding: 52px 0;
+        }
+
+        .dep-foto {
+          width: 100%;
+        }
+
+        .dep-foto img {
+          -webkit-mask-image: none;
+          mask-image: none;
+          opacity: 0.5;
+        }
+
+        .dep-foto::after {
+          background: linear-gradient(120deg, rgba(var(--rgb-sombra), 0.92) 0%, rgba(var(--rgb-sombra), 0.86) 100%);
+        }
+
+        .dep-frase {
+          display: none;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .dep-carrossel {
+          gap: 4px;
+        }
+
+        .dep-seta {
+          width: 38px;
+          height: 38px;
+        }
+
+        .dep-seta svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .dep-slide {
+          padding: 18px 18px;
+        }
+
+        .dep-slide blockquote {
+          font-size: 0.9rem;
+        }
+      }
+
+      /* ---- Chamada final ----
+         Mesma receita da faixa de experiencia: foto de textura, veu escuro
+         da marca e o conteudo por cima. Mais baixa, porque aqui so ha um
+         titulo, uma linha e dois botoes. */
+      .faixa-final {
+        position: relative;
+        isolation: isolate;
+        padding: 64px 0;
+        background: var(--color-dark);
+        color: #ffffff;
+      }
+
+      .final-fundo {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .final-fundo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.28;
+      }
+
+      .final-fundo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(var(--rgb-escuro), 0.92) 0%, rgba(var(--rgb-escuro), 0.84) 100%);
+      }
+
+      .final-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+      }
+
+      .final-copy h2 {
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+
+      .final-copy p {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.95rem;
+        max-width: 52ch;
+      }
+
+      .final-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      @media (max-width: 767px) {
+        .faixa-final {
+          padding: 48px 0;
+        }
+
+        .final-wrap {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .final-acoes {
+          width: 100%;
+        }
+
+        /* no celular o botao ocupa a linha inteira: alvo maior */
+        .final-acoes .hero-btn {
+          flex: 1 1 100%;
+          justify-content: center;
+        }
+      }
+
+      /* ---- Faixa de experiencia ----
+         Banda escura de ponta a ponta, do modelo: a foto da mata atras, o
+         cor da marca por cima e os itens em duas colunas. E a unica secao
+         escura no meio da pagina — serve de pausa entre os quartos e o
+         destino, e e o que quebra a sequencia de faixas claras. */
+      .faixa-experiencia {
+        position: relative;
+        isolation: isolate;
+        padding: 84px 0;
+        background: var(--color-dark);
+        color: #ffffff;
+      }
+
+      .exp-fundo {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .exp-fundo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* a foto entra so como textura: o que se le e o texto por cima */
+        opacity: 0.3;
+        filter: saturate(0.85);
+      }
+
+      /* Veu da cor da marca. Sem ele o branco cai para 3,1:1 sobre as partes
+         claras da agua; com ele o pior caso medido fica em 9,6:1. */
+      .exp-fundo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, rgba(var(--rgb-escuro), 0.93) 0%, rgba(var(--rgb-escuro), 0.82) 55%, rgba(var(--rgb-sombra), 0.88) 100%);
+      }
+
+      .exp-wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        column-gap: 64px;
+        row-gap: 36px;
+        align-items: center;
+      }
+
+      .exp-copy h2 {
+        color: #ffffff;
+        max-width: 18ch;
+      }
+
+      .faixa-experiencia .eyebrow {
+        color: var(--marca-destaque);
+      }
+
+      .exp-lista {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 36px;
+        row-gap: 26px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .exp-lista li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        min-width: 0;
+      }
+
+      /* Icone fino, sem disco nem cartao atras: e o que o briefing pedia —
+         icones discretos, texto curto, bastante espaco. */
+      .exp-lista svg {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .exp-lista div {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+
+      .exp-lista strong {
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.25;
+        color: #ffffff;
+      }
+
+      .exp-lista span {
+        font-size: 0.82rem;
+        line-height: 1.35;
+        /* 0,72 de branco sobre o veu da faixa da 6,9:1 */
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      @media (max-width: 979px) {
+        .faixa-experiencia {
+          padding: 64px 0;
+        }
+
+        .exp-wrap {
+          grid-template-columns: minmax(0, 1fr);
+          row-gap: 30px;
+        }
+
+        .exp-copy h2 {
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .faixa-experiencia {
+          padding: 52px 0;
+        }
+
+        .exp-lista {
+          grid-template-columns: minmax(0, 1fr);
+          row-gap: 20px;
+        }
+
+        .exp-lista svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+
+      /* ---- Vitrine dos quartos ----
+         Saiu a grade de quatro cartoes pequenos e entrou o formato do
+         modelo: coluna de texto a esquerda, uma foto grande a direita.
+         A foto passa de quarto em quarto; a lista logo abaixo repete os
+         quatro por extenso, com preco e link de reserva, para que nenhuma
+         informacao dependa de passar o carrossel. */
+      .quartos-wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        column-gap: 56px;
+        row-gap: 40px;
+        align-items: center;
+      }
+
+      .quartos-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .quartos-copy p {
+        color: var(--color-text-soft);
+        max-width: 42ch;
+      }
+
+      /* ---- Carrossel de foto unica ---- */
+      .quartos-vitrine {
+        position: relative;
+        min-width: 0;
+      }
+
+      /* Palco e janela sao dois elementos de proposito. A janela corta os
+         slides que aguardam a vez (overflow: hidden); o palco nao corta nada
+         e e contra ele que as setas se posicionam. Sem essa separacao as
+         setas ficariam presas dentro do recorte e nao teriam como descer
+         para fora da foto no celular. */
+      .carrossel-palco {
+        position: relative;
+      }
+
+      .carrossel-janela {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--r-lg);
+        background: var(--color-dark);
+        box-shadow: var(--sh-lg);
+        touch-action: pan-y;
+      }
+
+      .carrossel-trilho {
+        display: flex;
+        will-change: transform;
+        transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* enquanto o dedo esta na tela o trilho acompanha sem atraso */
+      .carrossel-janela.arrastando .carrossel-trilho,
+      .quartos-vitrine.arrastando .carrossel-trilho {
+        transition: none;
+      }
+
+      .quarto-slide {
+        position: relative;
+        flex: 0 0 100%;
+        min-width: 0;
+        margin: 0;
+      }
+
+      .quarto-slide img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        -webkit-user-drag: none;
+        user-select: none;
+      }
+
+      /* A etiqueta fica sobre a foto, como no modelo. O degrade abaixo dela
+         e o que garante a leitura: sobre uma foto clara o texto branco
+         sozinho nao se sustenta. */
+      /* A etiqueta carrega tudo do quarto: nome, capacidade, area,
+         ar-condicionado, preco e o botao de reserva. Nada fica dependendo de
+         uma lista fora da foto.
+
+         O degrade e o que sustenta a leitura. O ponto critico nao e a base
+         e sim o meio, onde fica o nome do quarto: com o meio em 0,55 o
+         branco dava 4,15:1 sobre a roupa de cama clara — passa como texto
+         grande, mas com pouca margem. Em 0,62 sobe para 4,7:1 e passa com
+         folga. Na altura dos dados e do preco o degrade ja esta em 0,88 e a
+         razao e de 13:1.
+
+         A caixa nao recebe ponteiro, senao engoliria o arraste do carrossel;
+         so o botao volta a receber. */
+      .quarto-etiqueta {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 52px 22px 18px;
+        color: #ffffff;
+        background: linear-gradient(180deg, rgba(var(--rgb-escuro), 0) 0%, rgba(var(--rgb-escuro), 0.62) 38%, rgba(var(--rgb-escuro), 0.9) 100%);
+        pointer-events: none;
+      }
+
+      .quarto-acao {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 12px;
+        padding-top: 11px;
+        border-top: 1px solid rgba(255, 255, 255, 0.28);
+      }
+
+      .quarto-preco {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 5px;
+        color: #ffffff;
+        font-size: 0.82rem;
+      }
+
+      .quarto-preco strong {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+
+      /* unico elemento da etiqueta que aceita toque */
+      .quarto-reservar {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 10px 20px;
+        border-radius: 999px;
+        background: var(--color-cta);
+        color: #ffffff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: background-color 0.16s ease-out;
+      }
+
+      .quarto-reservar:hover,
+      .quarto-reservar:focus-visible {
+        background: var(--color-cta-hover);
+      }
+
+      .quarto-reservar:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 3px;
+      }
+
+      .quarto-etiqueta h3 {
+        color: #ffffff;
+        font-size: 1.15rem;
+        margin-bottom: 6px;
+      }
+
+      /* uma frase so por suite: mais que isso cobre a foto no celular */
+      .quarto-desc {
+        max-width: 50ch;
+        margin: 0 0 10px;
+        font-size: 0.8rem;
+        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      /* A informacao encolheu para sobrar mais foto: o nome caiu de 1,4 para
+         1,15rem e os dados de 0,84 para 0,75rem. O preco nao mudou — e o que
+         a pessoa procura, e continua sendo o maior texto da etiqueta. */
+      .quarto-specs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .quarto-specs li {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .quarto-specs svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+
+      /* ---- O que vem em todos os quartos ----
+         Era uma frase solta embaixo da secao. Virou icone dentro do cartao:
+         cafe, televisao, wi-fi e ar-condicionado, sem legenda, porque a
+         legenda repetia em todos os quatro quartos e roubava foto.
+
+         Sem texto visivel, mas nao sem nome: cada um leva o rotulo em texto
+         oculto, que e o que o leitor de tela anuncia, e um title, que e a
+         dica ao passar o mouse. Icone mudo nao serve para ninguem. */
+      .so-icone {
+        opacity: 0.85;
+      }
+
+      /* filete separando os dados do quarto do que vem em todos eles */
+      .quarto-specs li:not(.so-icone) + .so-icone {
+        margin-left: 2px;
+        padding-left: 14px;
+        border-left: 1px solid rgba(255, 255, 255, 0.32);
+      }
+
+      /* Setas com o mesmo vidro da barra de navegacao e das galerias: um
+         material so no site inteiro. */
+      .carrossel-seta {
+        position: absolute;
+        top: 50%;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin-top: -22px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: var(--vidro);
+        -webkit-backdrop-filter: var(--vidro-desfoque);
+        backdrop-filter: var(--vidro-desfoque);
+        box-shadow: var(--vidro-sombra);
+        color: var(--color-dark);
+        cursor: pointer;
+        transition: background-color 0.18s ease-out;
+      }
+
+      .carrossel-seta:hover,
+      .carrossel-seta:focus-visible {
+        background-color: rgba(255, 255, 255, 0.72);
+      }
+
+      .carrossel-seta:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 3px;
+      }
+
+      .carrossel-seta svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .carrossel-seta--esq { left: 16px; }
+      .carrossel-seta--dir { right: 16px; }
+
+      .carrossel-pontos {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        margin-top: 18px;
+      }
+
+      .carrossel-ponto {
+        box-sizing: content-box;
+        width: 8px;
+        height: 8px;
+        padding: 8px 6px;
+        border: none;
+        border-radius: 50%;
+        background-color: var(--color-border);
+        background-clip: content-box;
+        cursor: pointer;
+        transition: background-color 0.16s ease-out, width 0.24s ease-out;
+      }
+
+      /* mesma marcacao das galerias: o icone da marca no lugar do ponto */
+      .carrossel-ponto[aria-selected="true"] {
+        width: 16px;
+        height: 16px;
+        padding: 4px 8px;
+        background-color: transparent;
+        background-image: url("./images/favicon-180.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 0;
+      }
+
+      .carrossel-ponto:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      /* ---- Os quatro quartos por extenso ----
+         Linhas, nao cartoes: quatro caixas com sombra ao lado de uma foto
+         grande virariam ruido. O filete separa e basta. */
+      .quartos-tabela {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 56px;
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .quartos-tabela li {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 22px 0;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .qt-nome {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px;
+      }
+
+      .qt-nome strong {
+        font-family: var(--font-heading);
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--color-heading);
+      }
+
+      .qt-nome span {
+        font-size: 0.82rem;
+        color: var(--color-text-soft);
+      }
+
+      .quartos-tabela p {
+        font-size: 0.9rem;
+        color: var(--color-text-soft);
+      }
+
+      .qt-fim {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 2px;
+      }
+
+      /* o preco saiu de cima da foto e virou texto na linha do quarto */
+      .quartos-tabela .room-preco {
+        position: static;
+        padding: 0;
+        background: none;
+        color: var(--color-heading);
+        text-shadow: none;
+        font-size: 0.82rem;
+      }
+
+      @media (max-width: 979px) {
+        .quartos-wrap {
+          grid-template-columns: minmax(0, 1fr);
+          row-gap: 30px;
+        }
+
+        .quartos-tabela {
+          column-gap: 32px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        /* Num celular a foto 4:3 fica com 269px de altura e a etiqueta,
+           mesmo enxuta, tomava 58% dela. Passando para quadrada a foto vai a
+           358px e a mesma etiqueta cai para 44%: sobra bem mais quarto para
+           ver. O corte e nas laterais, que e onde a foto de quarto tem menos
+           informacao. */
+        .quarto-slide img {
+          aspect-ratio: 1 / 1;
+        }
+
+        .quarto-etiqueta {
+          padding: 34px 16px 14px;
+        }
+
+        .quarto-etiqueta h3 {
+          font-size: 1.05rem;
+        }
+
+        .quarto-desc {
+          margin-bottom: 8px;
+          font-size: 0.74rem;
+        }
+
+        .quarto-specs {
+          gap: 10px;
+          font-size: 0.72rem;
+        }
+
+        .quarto-specs li:not(.so-icone) + .so-icone {
+          padding-left: 10px;
+        }
+
+        /* ---- As setas saem de cima da foto ----
+           No desktop elas ficam nas laterais da imagem e sobra foto de
+           sobra. Num celular a foto tem uns 358px: dois discos no meio dela
+           tapavam o quarto e, pior, comiam o comeco do arraste — o dedo
+           costuma partir justamente do meio da tela, que era onde elas
+           estavam, e o gesto nao pegava.
+
+           Descem para a linha dos pontos, uma em cada ponta: a foto inteira
+           volta a ser arrastavel e os dois botoes continuam la, maiores. */
+        .carrossel-pontos {
+          position: relative;
+          height: 42px;
+          align-items: center;
+          margin-top: 12px;
+        }
+
+        .carrossel-seta {
+          top: auto;
+          /* 12px de respiro + 42px da linha dos pontos: a seta encaixa
+             exatamente na altura dela */
+          bottom: -54px;
+          width: 42px;
+          height: 42px;
+          margin-top: 0;
+          /* fora da foto o vidro nao tem o que desfocar: vira disco solido
+             com um filete, que sobre o verde da mais contraste */
+          background: var(--color-card);
+          border: 1px solid var(--color-border);
+          -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+          box-shadow: var(--sh-sm);
+        }
+
+        .carrossel-seta:hover,
+        .carrossel-seta:focus-visible {
+          background-color: var(--color-surface);
+        }
+
+        .carrossel-seta--esq { left: 0; }
+        .carrossel-seta--dir { right: 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .carrossel-trilho {
+          transition: none;
+        }
+      }
+
+      .room-preco {
+        position: absolute;
+        left: 18px;
+        bottom: 14px;
+        z-index: 1;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
+        color: #ffffff;
+        font-size: 0.82rem;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+      }
+
+      .room-preco strong {
+        font-family: var(--font-heading);
+        font-size: 1.7rem;
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      /* véu na base da foto, para o preço branco ter contraste em qualquer
+         imagem — sem isso ele some em foto de parede clara */
+      .card-image::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 42%;
+        background: linear-gradient(180deg, transparent, rgba(var(--rgb-escuro), 0.62));
+        pointer-events: none;
+      }
+
+      .room-specs {
+        list-style: none;
+        margin: 0 0 4px;
+        padding: 0 0 12px;
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .room-specs li {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.84rem;
+        color: var(--color-text);
+      }
+
+      .room-specs svg {
+        width: 15px;
+        height: 15px;
+        color: rgba(var(--rgb-sombra), 0.45);
+      }
+
+      /* rodapé: o que o quarto tem, à esquerda; a ação, à direita */
+      .room-rodape {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: auto;
+        padding-top: 14px;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .room-amenidades {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 10px;
+      }
+
+      /* só o ícone aparece; o texto fica para o leitor de tela e para o
+         balão de dica do navegador */
+      .room-amenidades li {
+        display: inline-flex;
+        color: rgba(var(--rgb-sombra), 0.5);
+      }
+
+      .room-amenidades svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .room-amenidades span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      /* Botão minimalista: texto e uma linha que cresce no hover. Quatro
+         botões sólidos lado a lado brigariam entre si e com o cabeçalho. */
+      .room-cta {
+        flex-shrink: 0;
+        position: relative;
+        font-size: 0.88rem;
+        font-weight: 500;
+        /* tom quente de tinta, nao o do botao: sem a caixa branca do cartao este
+           texto passou a assentar no creme da secao, e ali o #c25400 cai para
+           4,01:1. O #b34700 da 4,80 no creme e 5,41 no claro. */
+        color: var(--color-orange-ink);
+      }
+
+      .room-cta::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.28s ease-out;
+      }
+
+      .room-cta:hover::after,
+      .room-cta:focus-visible::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      .card-body p {
+        color: var(--color-text);
+      }
+
+
+      /* ---- Galeria das atracoes ----
+         Uma foto grande em destaque e as outras em tiras embaixo. Clicar numa
+         tira promove ela ao destaque. E o formato de guia de viagem: a imagem
+         manda, o nome e o endereco ficam sobre ela, e o texto do cliente fica
+         logo abaixo.
+
+         Sem setas. O que diz que ha mais coisa ao lado e a espiada da proxima
+         tira na borda (a faixa e larga de proposito, para sempre sobrar um
+         pedaco), o esmaecido na borda direita e a linha de dica, que some
+         assim que a pessoa arrasta pela primeira vez. */
+      .atracoes {
+        margin-top: 32px;
+      }
+
+
+
+
+
+      /* troca suave entre uma atracao e outra */
+
+      }
+
+      .atracao-legenda {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 26px 28px 22px;
+        color: #ffffff;
+        background: linear-gradient(180deg, rgba(var(--rgb-escuro), 0), rgba(var(--rgb-escuro), 0.82));
+      }
+
+      .atracao-legenda h3 {
+        color: #ffffff;
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+      }
+
+      .atracao-local {
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+        margin-top: 8px;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.94);
+      }
+
+      .atracao-local svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        opacity: 0.85;
+      }
+
+      .atracao-desc {
+        margin-top: 18px;
+        max-width: 680px;
+        color: var(--color-text);
+      }
+
+
+
+
+      /* esmaecido na borda direita enquanto houver mais tira para o lado */
+
+
+
+      /* uma mudanca so: a foto acende */
+
+
+
+
+
+
+
+      @media (max-width: 860px) {
+        .atracao-legenda {
+          padding: 20px 20px 18px;
+        }
+
+      }
+
+
+
+      .head-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 48px;
+      }
+
+      /* dentro de um flex com gap a margem do eyebrow soma e vira espaco duplo */
+      .head-block > .eyebrow,
+      .story-copy > .eyebrow,
+      .contact-details > .eyebrow {
+        margin-bottom: 0;
+      }
+
+      .head-block p {
+        max-width: 700px;
+        color: var(--color-text);
+      }
+
+
+
+
+
+
+      /* ---- Carrossel da galeria ----
+         scroll-snap nativo: arrastar com o dedo funciona de graca no celular,
+         e o desktop mostra tres fotos por vez em vez de uma. */
+
+      /* mesmo recurso da galeria das atracoes: a faixa esmaece na borda
+         enquanto sobrar foto para o lado, e a dica some no primeiro arrasto */
+
+
+
+
+
+
+
+
+
+
+
+
+      /* ---- Localizacao ----
+         O mapa deixa de ser meia coluna e passa a ser o corpo da secao: ocupa
+         a largura inteira e o texto vira um cartao apoiado sobre ele, no canto
+         esquerdo. No lugar do nome escrito entra a propria logo.
+
+         O cartao fica centrado na vertical e nao desce ate o pe do mapa: a
+         assinatura do Google e os creditos de dados ficam no rodape do
+         iframe, e o uso do mapa incorporado exige que continuem a vista. */
+      .location-box {
+        position: relative;
+        margin-top: 24px;
+      }
+
+      .location-map {
+        width: 100%;
+        min-height: 420px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        background: linear-gradient(135deg, rgba(var(--rgb-marca), 0.08), rgba(var(--rgb-marca), 0.02));
+      }
+
+      .location-map iframe {
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        border: 0;
+        display: block;
+      }
+
+      /* Formato de painel, como a barra de reserva do topo: cantos
+         arredondados nos quatro lados e sombra. O fundo e exatamente o da
+         faixa "Pronto para viver essa experiencia" — mesma foto, mesmo
+         degrade da cor da marca — para as duas pecas escuras da pagina
+         serem do mesmo material, e nao dois escuros parecidos.
+
+         O veu daqui e mais fechado que o da faixa (0,96 contra 0,88) porque
+         la a foto ja entra com opacidade 0,28 no proprio img, e aqui ela e
+         imagem de fundo, que nao aceita opacidade separada. Com 0,88 a foto
+         aparecia tres vezes mais e o cartao ficava lavado; a 0,96 a
+         contribuicao dela cai para perto de 4%, que e a da faixa. Mesmo
+         escuro, mesma foto quase imperceptivel atras.
+
+         Largura menor que a original: sem o botao sobrou so a logo e uma
+         frase, entao a caixa aperta em vez de guardar vazio. */
+      .location-card {
+        position: absolute;
+        top: 50%;
+        left: 26px;
+        transform: translateY(-50%);
+        width: min(340px, 38%);
+        padding: 24px;
+        background-color: var(--color-dark);
+        background-image:
+          linear-gradient(90deg, rgba(var(--rgb-escuro), 0.97) 0%, rgba(var(--rgb-escuro), 0.94) 100%),
+          url("./images/chamada-fundo.jpg");
+        background-size: cover;
+        background-position: center;
+        border: none;
+        border-radius: var(--r-md);
+        color: #ffffff;
+        box-shadow: var(--sh-lg);
+      }
+
+      /* O titulo do cartao e o logo. O h3 continua no sumario da pagina e o
+         nome continua a ser lido: e texto dentro do logo (ou o alt, quando o
+         logo e imagem). */
+      .location-card h3 {
+        margin-bottom: 14px;
+      }
+
+      .location-card .logo {
+        color: #ffffff;
+      }
+
+      .location-card .logo-imagem {
+        height: auto;
+        width: 126px;
+      }
+
+      /* endereco e horarios: so no desktop, como o cartao inteiro. No
+         celular o endereco completo esta no rodape. */
+      .location-info {
+        display: grid;
+        gap: 8px;
+        margin: 16px 0 0;
+        padding: 14px 0 0;
+        list-style: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+        font-size: 0.84rem;
+        line-height: 1.4;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .location-info li {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+      }
+
+      .location-info svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: var(--marca-destaque);
+      }
+
+      /* branco a 0,9 sobre o veu: 13:1, a mesma razao do texto da faixa */
+      .location-card p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.92rem;
+        margin-bottom: 0;
+      }
+
+      /* Abaixo de 768px nao ha largura para o cartao flutuar sem tapar o
+         mapa: ele desce para baixo, inteiro. Nao sobrepoe nem um pouco de
+         proposito — os creditos do Google ficam colados no rodape do mapa e
+         qualquer sobreposicao os cobriria. */
+      @media (max-width: 768px) {
+        .location-map,
+        .location-map iframe {
+          min-height: 300px;
+        }
+
+        /* ---- No celular o cartao sai ----
+           Flutuando sobre o mapa ele e um painel. Empilhado numa tela
+           estreita ele virava um bloco escuro entre o mapa e a secao
+           seguinte, repetindo a logo que ja esta na barra de navegacao e no
+           rodape. A pedido, some.
+
+           display: none tira da tela e tambem da leitura por voz, que e o
+           certo aqui: um cartao invisivel que so o leitor de tela anuncia
+           seria pior que nao ter. A frase dele so aparece no desktop — e a
+           unica informacao da pagina que muda conforme a tela. */
+        .location-card {
+          display: none;
+        }
+      }
+
+      /* Areas nomeadas em vez de ordem do HTML: no desktop o formulario
+         ocupa a coluna da direita inteira, como antes. No celular a ordem
+         vira texto -> formulario -> WhatsApp, que e a que o cliente pediu:
+         quem quer reservar ve o formulario antes da alternativa. */
+      .contact-wrap {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        grid-template-areas: "detalhes formulario";
+        column-gap: 64px;
+        row-gap: 0;
+        align-items: center;
+      }
+
+      .contact-details {
+        grid-area: detalhes;
+      }
+
+      .booking-form {
+        grid-area: formulario;
+      }
+
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .contact-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 8px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: var(--color-text);
+      }
+
+      .contact-item .dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 8px;
+        border-radius: 999px;
+        background: var(--color-muted);
+        flex-shrink: 0;
+      }
+
+      .booking-form {
+        background: var(--color-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--r-lg);
+        padding: 30px 28px;
+        /* sombra em duas camadas: a rasa desenha o contato com a pagina, a
+           funda da a altura. Uma sombra so faz o cartao flutuar sem apoio. */
+        box-shadow: 0 1px 2px rgba(var(--rgb-escuro), 0.06),
+                    0 18px 44px -12px rgba(var(--rgb-escuro), 0.18);
+        /* o botao daqui leva ao check-in: esta folga e o que impede a
+           navbar de cobrir o topo do cartao na chegada */
+        scroll-margin-top: 92px;
+      }
+
+      .booking-form h3 {
+        margin-bottom: 20px;
+        font-size: 1.6rem;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        /* ---- o conserto do vazamento no celular ----
+           Item de grid nasce com min-width:auto, ou seja, nao encolhe abaixo
+           da largura minima do conteudo. O controle nativo de data do iOS
+           tem largura propria e maior que a coluna, entao o campo empurrava
+           a borda do cartao para fora. So aparece em iPhone de verdade: no
+           emulador o controle de data e o do Chrome, que encolhe. */
+        min-width: 0;
+      }
+
+      .field label {
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        color: var(--color-text);
+      }
+
+      .field input,
+      .field select {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        min-height: 48px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--r-sm);
+        padding: 11px 14px;
+        background: #f6f8fa;
+        color: var(--color-text);
+        /* sem isto o campo usa a fonte do navegador, que tem 13px. Abaixo de
+           16px o Safari do iPhone da zoom na pagina ao focar o campo — e a
+           pagina ampliada e a outra metade do "fica pra fora". */
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.3;
+        transition: border-color 0.16s ease-out, box-shadow 0.16s ease-out,
+                    background-color 0.16s ease-out;
+      }
+
+      /* #647386 sobre o #f6f8fa do campo da 4,55:1 — o texto de exemplo
+         tem que ser legivel, so mais leve que o que a pessoa digita */
+      .field input::placeholder {
+        color: #647386;
+        opacity: 1;
+      }
+
+      /* O controle de data do iOS ignora width:100%: tem largura intrinseca
+         propria. Tirar a aparencia nativa devolve a caixa ao CSS. O picker
+         continua abrindo no toque. */
+      .field input[type="date"],
+      .rr-campo input[type="date"] {
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .field input[type="date"]::-webkit-date-and-time-value,
+      .rr-campo input[type="date"]::-webkit-date-and-time-value {
+        text-align: left;
+        min-width: 0;
+      }
+
+      .field input:hover,
+      .field select:hover {
+        /* o mesmo tom da borda, so mais firme. Era --color-muted, que e o
+           tom de destaque: passar o dedo acendia o campo de tom quente e
+           disputava com o botao, que e a unica coisa em tom quente no cartao. */
+        border-color: rgba(var(--rgb-marca), 0.3);
+      }
+
+      .field input:focus,
+      .field select:focus {
+        outline: none;
+        background: var(--color-card);
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(var(--rgb-sombra), 0.14);
+      }
+
+      /* teclado: o anel do foco visivel continua sendo o contorno do
+         sistema, mais grosso, para quem navega por Tab */
+      .field input:focus-visible,
+      .field select:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 1px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .booking-form .btn-cta {
+        width: 100%;
+        margin-top: 18px;
+      }
+
+      /* ---- Rodape ----
+         Faixa fina: aqui nao ha nada para ler com calma, so o nome, o lugar
+         e os atalhos. O botao de reservar saiu — era o quinto "Reservar
+         agora" da pagina, e o ultimo lugar onde alguem procuraria um. */
+      .site-footer {
+        padding: 12px 0 0;
+        background: var(--color-dark);
+        border-top: none;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* ---- Rodape ----
+         Uma linha so: marca a esquerda, secoes no meio, chamada a direita.
+         Antes eram tres colunas com titulo cada ("Links Rapidos", "Contato")
+         e a mesma frase do hero repetida embaixo do nome — num celular isso
+         virava uma tela inteira de rodape. Os titulos sairam porque com os
+         links em linha nao ha o que rotular, e a frase saiu por ser copia
+         literal do paragrafo do hero, na mesma pagina. */
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px 22px;
+        padding-bottom: 6px;
+      }
+
+      .footer-marca {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .footer-marca h3 {
+        color: var(--color-amber);
+        /* dourado da marca sobre o verde escuro do rodape: 6,7:1, acima dos
+           4,5:1 exigidos. Da para encolher sem perder a leitura. */
+        font-size: 0.86rem;
+      }
+
+      /* telefone, WhatsApp e e-mail numa linha so, que quebra no celular */
+      .footer-contatos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1px 14px;
+      }
+
+      .footer-local {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.62);
+        transition: color 0.16s ease-out;
+      }
+
+      .footer-local svg {
+        flex-shrink: 0;
+      }
+
+      /* 0,72rem sao 11,5px — o piso que eu aceito aqui. O branco a 0,62
+         sobre o fundo escuro da 6,76:1, bem acima dos 4,5:1, e e isso que segura a
+         leitura nesse tamanho; encolher mais so com a cor mais clara. */
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px 15px;
+        font-size: 0.72rem;
+      }
+
+      .footer-links a,
+      .footer-local:hover,
+      .footer-local:focus-visible {
+        color: rgba(255, 255, 255, 0.62);
+        transition: color 0.16s ease-out;
+      }
+
+      .footer-local:hover,
+      .footer-local:focus-visible,
+      .footer-links a:hover,
+      .footer-links a:focus-visible {
+        color: var(--color-amber);
+      }
+
+      .footer-row {
+        display: flex;
+        align-items: center;
+        /* a esquerda, nao nas duas pontas: no canto direito mora o botao
+           flutuante do WhatsApp, e ali o icone das redes ficava por baixo
+           dele num celular. */
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        /* era 13px: os alvos das redes tem 36px de altura e ja dao corpo a
+           faixa. Mantido o respiro, a linha passaria de 44px para 62px. */
+        padding: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      /* ---- Credito das fotos ----
+         Linha discreta no rodape para credito de imagem, quando a licenca
+         pedir. Com as fotos do proprio cliente, pode sair. */
+      .footer-creditos {
+        max-width: 62ch;
+        margin: 0;
+        font-size: 0.68rem;
+        line-height: 1.45;
+      }
+
+      .footer-creditos a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      .footer-creditos a:hover,
+      .footer-creditos a:focus-visible {
+        color: var(--color-amber);
+      }
+
+      /* ---- Redes no rodape ----
+         So o simbolo, sem rotulo: o desenho ja diz o nome da rede, e o texto
+         ao lado dobraria a altura da faixa.
+
+         O alvo tem 36px ainda que o desenho tenha 18 — os 24px minimos de
+         area de toque sao do WCAG 2.2, e dois icones colados num celular sao
+         justamente o caso em que isso erra.
+
+         Branco a 0,62 sobre o escuro do rodape da 6,8:1; o minimo para simbolo e
+         3:1. */
+      .footer-redes {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+
+      .footer-redes a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        color: rgba(255, 255, 255, 0.62);
+        transition: color 0.16s ease-out, background-color 0.16s ease-out;
+      }
+
+      .footer-redes a:hover,
+      .footer-redes a:focus-visible {
+        color: var(--color-amber);
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .footer-redes a:focus-visible {
+        outline: 2px solid var(--color-amber);
+        outline-offset: 2px;
+      }
+
+      .footer-redes svg {
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+      }
+
+      /* ---- Eyebrow: tom quente escurecido sobre fundo claro (contraste AA) ---- */
+      .eyebrow {
+        color: var(--color-orange-ink);
+      }
+
+      .hero-content .eyebrow,
+      .stats .eyebrow {
+        color: var(--marca-destaque);
+      }
+
+
+
+
+
+
+
+
+
+
+      .form-note {
+        margin: 12px 0 0;
+        font-size: 0.82rem;
+        color: var(--color-text);
+      }
+
+      /* ---- Botões flutuantes (WhatsApp e telefone) ---- */
+      .floating-actions {
+        position: fixed;
+        right: 20px;
+        /* respeita a barra de gestos do celular, senao o botao encosta nela */
+        bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* o botao e fixo: sem esta folga ele fica por cima do ultimo conteudo
+         da pagina quando a pessoa chega ao fim */
+      /* o respiro de baixo nao e estetico: e o que impede o botao flutuante
+         do WhatsApp de cobrir a linha do copyright */
+      .site-footer {
+        padding-bottom: 56px;
+      }
+
+      @media (max-width: 560px) {
+        .floating-actions {
+          right: 14px;
+          bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        }
+
+        .floating-actions a {
+          width: 48px;
+          height: 48px;
+        }
+
+        .floating-actions svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+
+      .floating-actions a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        color: #ffffff;
+        box-shadow: 0 6px 18px -6px rgba(var(--rgb-sombra), 0.45);
+        transition: background-color 0.16s ease-out;
+      }
+
+      /* ---- Botao flutuante ----
+         Mesmo vidro da barra de navegacao. Com uma diferenca necessaria: a
+         barra so aparece sobre fundo claro ou sobre a foto do hero, mas este
+         botao passa por cima de tudo, inclusive do rodape escuro. So com
+         o degrade do vidro, o fundo atras mandaria na cor final e o icone
+         ficaria ilegivel metade do tempo — medido: verde da marca sobre o
+         rodape da 2.4:1, abaixo do minimo de 3:1 para simbolo.
+
+         Por isso ha um veu branco fixo por baixo do degrade: o vidro continua
+         translucido e desfocado, mas a cor final varia pouco, e o icone em
+         verde escuro fecha em 4.3:1 no pior caso. */
+      /* `.floating-actions a` tem especificidade maior que `.fab-whatsapp`
+         (uma classe mais um tipo contra uma classe so), entao o branco de la
+         vencia e o icone sumia no vidro claro. Por isso esta regra desce um
+         nivel junto: agora e classe + classe. */
+      .floating-actions .fab-whatsapp {
+        background-color: rgba(255, 255, 255, 0.7);
+        background-image: var(--vidro);
+        -webkit-backdrop-filter: var(--vidro-desfoque);
+        backdrop-filter: var(--vidro-desfoque);
+        box-shadow: var(--vidro-sombra);
+        color: #0b6b5f;
+        transition: background-color 0.18s ease-out;
+      }
+
+      .floating-actions .fab-whatsapp:hover,
+      .floating-actions .fab-whatsapp:focus-visible {
+        background-color: rgba(255, 255, 255, 0.88);
+      }
+
+      @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .floating-actions .fab-whatsapp {
+          background-color: rgba(255, 255, 255, 0.94);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---- Cartoes de quarto no celular ----
+         Dois por linha: assim se ve mais de um quarto sem rolar, que e como
+         se compara preco.
+
+         A primeira versao empilhava seis faixas em 165px — foto, nome, specs,
+         divisor, texto, divisor, icones, botao — e o cartao virava uma pilha
+         de fatias com a foto reduzida a uma tira de 122px. Aqui a foto manda:
+         sobe para 4:5 e ocupa metade do cartao, os dois divisores viram um so,
+         e o wi-fi some das specs porque ja esta nos icones logo abaixo. */
+      @media (max-width: 560px) {
+        .card-grid.quatro {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
+        }
+
+        .card-image {
+          aspect-ratio: 4 / 5;
+        }
+
+        /* veu menor: a foto e alta agora, nao precisa de tanto escurecimento */
+        .card-image::after {
+          height: 34%;
+        }
+
+        .card-body {
+          gap: 8px;
+          padding: 14px 13px 15px;
+        }
+
+        .card-body h3 {
+          font-size: 1.18rem;
+          line-height: 1.2;
+        }
+
+        .card-body p {
+          font-size: 0.82rem;
+          line-height: 1.45;
+        }
+
+        .room-preco {
+          left: 11px;
+          bottom: 9px;
+          font-size: 0.74rem;
+        }
+
+        .room-preco strong {
+          font-size: 1.2rem;
+        }
+
+        /* sem borda: o cartao ja tem um divisor, no rodape. Dois em 165px
+           picam o cartao em fatias. */
+        .room-specs {
+          gap: 5px 10px;
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+
+        /* o wi-fi esta repetido: aqui e no icone do rodape. Em 165px a
+           repeticao joga as specs para duas linhas, com "Wi-fi" sozinho
+           na segunda — parece defeito. Fica so o do rodape. */
+        .room-specs li:nth-child(3) {
+          display: none;
+        }
+
+        .room-specs li {
+          font-size: 0.75rem;
+          gap: 4px;
+        }
+
+        .room-specs svg {
+          width: 13px;
+          height: 13px;
+        }
+
+        .room-rodape {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          padding-top: 11px;
+        }
+
+        .room-amenidades {
+          gap: 12px;
+        }
+
+        .room-cta {
+          font-size: 0.82rem;
+        }
+      }
+
+      @media (max-width: 449px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 20px 12px;
+        }
+
+        .stats {
+          padding: 40px 0;
+        }
+
+
+
+        .beneficios {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 22px 18px;
+        }
+
+        .beneficio {
+          gap: 10px;
+          padding-top: 16px;
+        }
+
+        .beneficio-icone {
+          width: 26px;
+          height: 26px;
+        }
+
+        .beneficio h3 {
+          font-size: 1.05rem;
+        }
+
+        .beneficio p {
+          font-size: 0.84rem;
+          line-height: 1.45;
+        }
+
+
+
+        /* ---- Barra mais fina no celular ----
+           No desktop a barra tem espaco para respirar; num celular a mesma
+           altura come um oitavo da tela antes de o conteudo comecar. Os tres
+           valores descem juntos — a barra, a pilula de vidro e a logo — senao
+           a logo encosta nas bordas. O alvo de toque do menu continua com
+           44px: quem encolheu foi o respiro em volta, nao o botao. */
+        .nav-row {
+          min-height: 58px;
+        }
+
+        .is-scrolled .nav-row {
+          min-height: 50px;
+          padding: 0 10px 0 16px;
+        }
+
+        .logo-simbolo {
+          width: 32px;
+          height: 32px;
+        }
+
+        .logo-linha2 {
+          font-size: 1.02rem;
+        }
+
+        .logo-imagem {
+          height: 34px;
+        }
+
+        .header-cta {
+          display: none;
+        }
+
+        .hero-inner {
+          padding: 110px 0 96px;
+        }
+
+        /* .gallery-grid saiu daqui quando a galeria virou pilha; .split,
+           .contact-wrap e .field-grid foram levados junto por engano numa
+           limpeza de CSS morto, e sem eles a secao "essencia" ficava em
+           duas colunas de 69px num celular. */
+        .card-grid,
+        .split,
+        .contact-wrap,
+        .field-grid,
+        .footer-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      @media (min-width: 450px) and (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+
+
+
+
+        .beneficios {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .header-cta {
+          display: none;
+        }
+
+        .hero-inner {
+          padding: 130px 0 110px;
+        }
+
+        .card-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+
+        .split,
+        .contact-wrap {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* ---- Contato em uma coluna ----
+         Redeclarar a area e obrigatorio — so trocar as colunas para 1fr
+         deixaria a area pedindo duas, e o navegador inventaria uma coluna
+         implicita. */
+      @media (max-width: 768px) {
+        .contact-wrap {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-areas: "detalhes" "formulario";
+          row-gap: 28px;
+        }
+      }
+
+      /* Até 979px a navegação é o botão de menu mais a gaveta; acima disso são
+         os links na barra, e nem o botão nem a gaveta existem. O corte subiu de
+         768 para 980: com o menu maior os seis links deixaram de caber na
+         barra em tela de tablet — a logo era cortada e o botão quebrava. */
+      @media (max-width: 979px) {
+        .main-nav {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: inline-flex;
+        }
+      }
+
+      @media (min-width: 980px) {
+        .mobile-nav {
+          display: none !important;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LodgingBusiness",
+        "name": "Pousada Encanto da Floresta",
+        "description": "Pousada com suítes confortáveis, café da manhã caseiro e passeios pela natureza da região.",
+        "url": "https://viniciosmunuz.github.io/Tamplate.pousada/",
+        "image": "https://viniciosmunuz.github.io/Tamplate.pousada/images/og-image.jpg",
+        "telephone": "+55-92-3000-0000",
+        "email": "reservas@encantodafloresta.com",
+        "priceRange": "$$",
+        "checkinTime": "14:00",
+        "checkoutTime": "12:00",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Centro",
+          "addressLocality": "Cidade turística",
+          "addressRegion": "AM",
+          "addressCountry": "BR"
+        },
+        "amenityFeature": [
+          { "@type": "LocationFeatureSpecification", "name": "Café da manhã incluso", "value": true },
+          { "@type": "LocationFeatureSpecification", "name": "Wi-Fi", "value": true },
+          { "@type": "LocationFeatureSpecification", "name": "Estacionamento", "value": true }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Camada de ambientacao: tres manchas organicas desfocadas, fixas na
+         tela e atras de todo o conteudo. Nao e decoracao por secao — e uma
+         so camada que acompanha a pagina inteira, deslocando devagar
+         conforme a rolagem. aria-hidden porque nao carrega informacao. -->
+    <!-- Camada de ambientacao: folhagem fora de foco nas duas bordas, feita
+         de gradientes radiais empilhados. Fica fixa e atras de todo o
+         conteudo, deslocando devagar conforme a rolagem. Uma mascara
+         horizontal apaga a camada no meio da pagina, onde fica o texto. -->
+    <div class="ambiente" id="ambiente" aria-hidden="true">
+      <div class="ambiente-lado ambiente-lado--esq"></div>
+      <div class="ambiente-lado ambiente-lado--dir"></div>
+      <div class="ambiente-vidro"></div>
+    </div>
+    <header class="site-header">
+      <div class="container nav-row">
+        <!-- LOGO: o texto vem do js/config.js (logo.linha1 e logo.linha2).
+             Para usar o logo em imagem do cliente, preencha logo.imagem no
+             config: o simbolo e o texto dao lugar a imagem sozinhos. -->
+        <a class="brand" href="#hero" data-pousada-aria="{nome}: ir para o início da página" aria-label="Pousada Encanto da Floresta: ir para o início da página">
+          <span class="logo" data-logo>
+            <svg class="logo-simbolo" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.25" stroke="currentColor" stroke-width="1.5"/><path d="M20 31.5V17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 24c-5.6 0-9.2-3.6-9.2-8.8 5.6 0 9.2 3.6 9.2 8.8Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M20 19.6c0-5.6 3.6-9.4 9.2-9.4 0 5.6-3.6 9.4-9.2 9.4Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <span class="logo-texto">
+              <span class="logo-linha1" data-pousada="logo.linha1">Pousada</span>
+              <span class="logo-linha2" data-pousada="logo.linha2">Encanto da Floresta</span>
+            </span>
+          </span>
+        </a>
+        <nav class="main-nav" aria-label="Navegação principal">
+          <a href="#sobre">Sobre</a>
+          <a href="#quartos">Acomodações</a>
+          <a href="#experiencia">Comodidades</a>
+          <a href="#destino">Experiências</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#localizacao">Localização</a>
+        </nav>
+        <a class="btn-cta header-cta" href="#contato" data-ir-reserva>Reservar Agora</a>
+        <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuMobile">
+          <svg class="hamburger-svg" viewBox="0 0 32 32" aria-hidden="true">
+            <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+            <path class="line" d="M7 16 27 16"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-nav" id="menuMobile" aria-label="Menu mobile">
+        <a href="#sobre">Sobre</a>
+        <a href="#quartos">Acomodações</a>
+        <a href="#experiencia">Comodidades</a>
+        <a href="#destino">Experiências</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#localizacao">Localização</a>
+        <a class="btn-cta" href="#contato" data-ir-reserva><svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g stroke-width="2" stroke-linecap="round" stroke="currentColor"><rect y="5" x="4" width="16" rx="2" height="16"></rect><path d="m8 3v4"></path><path d="m16 3v4"></path><path d="m4 11h16"></path></g></svg><span class="lable">Reservar Agora</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" data-section="hero" class="hero">
+        <div class="hero-media">
+          <picture>
+            <!-- FOTO DO HERO: a mesma foto em dois recortes. Paisagem no
+                 desktop (hero-desk-*.jpg, 16:9) e retrato no celular
+                 (hero-mob-*.jpg, cerca de 3:4). Para trocar, substitua os
+                 cinco arquivos mantendo os nomes e as proporcoes. -->
+            <source
+              media="(max-width: 768px)"
+              srcset="./images/hero-mob-520.jpg 520w, ./images/hero-mob-740.jpg 740w"
+              sizes="100vw"
+              width="740"
+              height="1014"
+            />
+            <img
+              src="./images/hero-desk-1200.jpg"
+              srcset="./images/hero-desk-800.jpg 800w, ./images/hero-desk-1200.jpg 1200w, ./images/hero-desk-1549.jpg 1549w"
+              sizes="100vw"
+              width="1549"
+              height="871"
+              alt="Varanda da pousada com rede, flores tropicais e vista para as montanhas verdes"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </div>
+        <div class="container hero-inner">
+          <div class="hero-content">
+            <div class="eyebrow" data-pousada="cidadeUf">Cidade turística · AM</div>
+            <h1 data-pousada="slogan">Uma experiência especial em meio à natureza.</h1>
+            <p>
+              Suítes aconchegantes, café da manhã caseiro e uma equipe que recebe
+              como em casa, pertinho das trilhas e dos rios da região.
+            </p>
+            <div class="hero-actions">
+              <a class="hero-btn hero-btn--principal" href="#contato" data-ir-reserva>Reservar agora</a>
+              <a class="hero-btn" data-link="whatsapp" href="https://wa.me/5592999990000?text=Ol%C3%A1%21%20Gostaria%20de%20consultar%20disponibilidade%20para%20uma%20hospedagem." target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="17" height="17"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.19-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+                Fale conosco no WhatsApp
+              </a>
+            </div>
+            <!-- [MODELO] nota media: troque pela nota real do cliente (ou apague o bloco) -->
+            <div class="hero-meta">
+              <span>4.9/5</span>
+              <span>Avaliação média dos hóspedes</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---- Barra de reserva ----
+           Apoiada na borda de baixo do hero, como no modelo. Nao e um segundo
+           sistema de reserva: os quatro campos sao os mesmos do formulario da
+           secao Contato e o botao leva para la ja preenchido. Um caminho so,
+           o do WhatsApp, que e o canal de reserva da pousada. -->
+      <section class="reserva-rapida" data-section="reserva" aria-labelledby="titulo-reserva-rapida">
+        <div class="container">
+          <h2 id="titulo-reserva-rapida" class="visualmente-oculto">Consultar disponibilidade</h2>
+          <form class="reserva-barra" id="formReservaRapida">
+            <div class="rr-campo">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="15" rx="2.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 3.5v4M16 3.5v4M3.5 10.5h17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span class="rr-corpo">
+                <label for="rr-checkin">Check-in</label>
+                <input id="rr-checkin" name="checkin" type="date" />
+              </span>
+            </div>
+
+            <div class="rr-campo">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="15" rx="2.2" stroke="currentColor" stroke-width="1.5"/><path d="M8 3.5v4M16 3.5v4M3.5 10.5h17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m9.8 15.4 1.8 1.8 3.2-3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="rr-corpo">
+                <label for="rr-checkout">Check-out</label>
+                <input id="rr-checkout" name="checkout" type="date" />
+              </span>
+            </div>
+
+            <div class="rr-campo">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Z" stroke="currentColor" stroke-width="1.5"/><path d="M5.2 19.2c0-3.1 3-5.4 6.8-5.4s6.8 2.3 6.8 5.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span class="rr-corpo">
+                <label for="rr-hospedes">Hóspedes</label>
+                <select id="rr-hospedes" name="hospedes">
+                  <option>1 hóspede</option>
+                  <option>2 hóspedes</option>
+                  <option>3 hóspedes</option>
+                  <option>4 hóspedes</option>
+                </select>
+              </span>
+            </div>
+
+            <div class="rr-campo">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18v-7.5A1.5 1.5 0 0 1 4.5 9h15a1.5 1.5 0 0 1 1.5 1.5V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 15h18M6 9V6.6A1.6 1.6 0 0 1 7.6 5h8.8A1.6 1.6 0 0 1 18 6.6V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 18v1.6M19.5 18v1.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span class="rr-corpo">
+                <label for="rr-quarto">Quarto</label>
+                <!-- as opcoes sao refeitas pelo js a partir dos cartoes da
+                     secao Acomodacoes: renomeou um quarto la, muda aqui -->
+                <select id="rr-quarto" name="quarto" data-quartos-select="todos">
+                  <option>Todos</option>
+                  <option>Suíte Conforto</option>
+                  <option>Suíte Natureza</option>
+                  <option>Suíte Premium</option>
+                </select>
+              </span>
+            </div>
+
+            <button class="btn-cta rr-enviar" type="submit">
+              Reservar agora
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="16" height="16"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section id="quartos" data-section="quartos" class="section-pad reveal">
+        <div class="container quartos-wrap">
+          <div class="quartos-copy">
+            <div class="eyebrow">Acomodações</div>
+            <h2>Conforto e descanso em cada detalhe.</h2>
+            <p>Suítes com ar-condicionado, enxoval macio e café da manhã incluso, pensadas para quem quer descansar de verdade.</p>
+          </div>
+
+          <!-- ============================================================
+               SUITES: um <article class="quarto-slide"> por suite. Para
+               trocar, edite data-nome, a foto, o <h3>, a descricao, a
+               capacidade e o preco. Para acrescentar uma suite, copie um
+               article inteiro; para tirar, apague um. As opcoes de quarto
+               dos formularios e o botao "Reservar" acompanham sozinhos.
+
+               Preco: "Sob consulta" por padrao. Para mostrar valor, troque
+               o <span class="quarto-preco"> por:
+               <span class="quarto-preco"><strong>R$ 000</strong> /noite</span>
+               ============================================================ -->
+          <div class="quartos-vitrine" data-carrossel role="group"
+               aria-roledescription="carrossel"
+               aria-label="Suítes da pousada: arraste para o lado ou use as setas">
+            <div class="carrossel-palco">
+              <div class="carrossel-janela">
+                <div class="carrossel-trilho" data-carrossel-trilho>
+
+                <article class="quarto-slide" data-carrossel-slide data-nome="Suíte Conforto">
+                  <img src="./images/quarto-1.jpg" width="1200" height="900" alt="Suíte com paredes de madeira, cama de casal e porta de vidro para a varanda" loading="lazy" decoding="async" />
+                  <div class="quarto-etiqueta">
+                    <h3>Suíte Conforto</h3>
+                    <p class="quarto-desc">Aconchegante e prática, ideal para casais em uma pausa tranquila.</p>
+                    <ul class="quarto-specs">
+                      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Z" stroke="currentColor" stroke-width="1.6"/><path d="M5.2 19.2c0-3.1 3-5.4 6.8-5.4s6.8 2.3 6.8 5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Até 2 pessoas</li>
+                      <li class="so-icone" title="Café da manhã"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h12v5.5A4.5 4.5 0 0 1 11.5 18h-3A4.5 4.5 0 0 1 4 13.5V8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.4h1.8a2.3 2.3 0 0 1 0 4.6H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 3.2v2M11 3.2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 21h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="visualmente-oculto">Café da manhã</span></li>
+                      <li class="so-icone" title="Televisão"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.8" y="7" width="18.4" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m8.5 3.6 3.5 3.4 3.5-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visualmente-oculto">Televisão</span></li>
+                      <li class="so-icone" title="Wi-fi"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.4 9.2a13 13 0 0 1 17.2 0M6.4 12.6a8.6 8.6 0 0 1 11.2 0M9.4 16a4.2 4.2 0 0 1 5.2 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="19" r="1.1" fill="currentColor"/></svg><span class="visualmente-oculto">Wi-fi</span></li>
+                      <li class="so-icone" title="Ar-condicionado"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="6.4" width="18.8" height="7.4" rx="1.8" stroke="currentColor" stroke-width="1.6"/><path d="M6 17.2h3M15 17.2h3M6 10.1h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="visualmente-oculto">Ar-condicionado</span></li>
+                    </ul>
+                    <div class="quarto-acao">
+                      <span class="quarto-preco"><strong>Sob consulta</strong></span>
+                      <a class="quarto-reservar" href="#contato" data-ir-reserva>Reservar agora</a>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="quarto-slide" data-carrossel-slide data-nome="Suíte Natureza">
+                  <img src="./images/quarto-2.jpg" width="1200" height="900" alt="Suíte com cama de casal e parede de vidro voltada para a mata" loading="lazy" decoding="async" />
+                  <div class="quarto-etiqueta">
+                    <h3>Suíte Natureza</h3>
+                    <p class="quarto-desc">Janelas amplas para a mata e muita luz natural ao acordar.</p>
+                    <ul class="quarto-specs">
+                      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Z" stroke="currentColor" stroke-width="1.6"/><path d="M5.2 19.2c0-3.1 3-5.4 6.8-5.4s6.8 2.3 6.8 5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Até 3 pessoas</li>
+                      <li class="so-icone" title="Café da manhã"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h12v5.5A4.5 4.5 0 0 1 11.5 18h-3A4.5 4.5 0 0 1 4 13.5V8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.4h1.8a2.3 2.3 0 0 1 0 4.6H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 3.2v2M11 3.2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 21h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="visualmente-oculto">Café da manhã</span></li>
+                      <li class="so-icone" title="Televisão"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.8" y="7" width="18.4" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m8.5 3.6 3.5 3.4 3.5-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visualmente-oculto">Televisão</span></li>
+                      <li class="so-icone" title="Wi-fi"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.4 9.2a13 13 0 0 1 17.2 0M6.4 12.6a8.6 8.6 0 0 1 11.2 0M9.4 16a4.2 4.2 0 0 1 5.2 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="19" r="1.1" fill="currentColor"/></svg><span class="visualmente-oculto">Wi-fi</span></li>
+                      <li class="so-icone" title="Ar-condicionado"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="6.4" width="18.8" height="7.4" rx="1.8" stroke="currentColor" stroke-width="1.6"/><path d="M6 17.2h3M15 17.2h3M6 10.1h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="visualmente-oculto">Ar-condicionado</span></li>
+                    </ul>
+                    <div class="quarto-acao">
+                      <span class="quarto-preco"><strong>Sob consulta</strong></span>
+                      <a class="quarto-reservar" href="#contato" data-ir-reserva>Reservar agora</a>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="quarto-slide" data-carrossel-slide data-nome="Suíte Premium">
+                  <img src="./images/quarto-3.jpg" width="1200" height="900" alt="Suíte ampla com cantinho de estar, luminárias e portas para a varanda" loading="lazy" decoding="async" />
+                  <div class="quarto-etiqueta">
+                    <h3>Suíte Premium</h3>
+                    <p class="quarto-desc">Mais espaço, varanda privativa e um cantinho de estar para relaxar.</p>
+                    <ul class="quarto-specs">
+                      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 11.4a3.3 3.3 0 1 0 0-6.6 3.3 3.3 0 0 0 0 6.6Z" stroke="currentColor" stroke-width="1.6"/><path d="M5.2 19.2c0-3.1 3-5.4 6.8-5.4s6.8 2.3 6.8 5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Até 4 pessoas</li>
+                      <li class="so-icone" title="Café da manhã"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h12v5.5A4.5 4.5 0 0 1 11.5 18h-3A4.5 4.5 0 0 1 4 13.5V8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.4h1.8a2.3 2.3 0 0 1 0 4.6H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7.5 3.2v2M11 3.2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 21h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="visualmente-oculto">Café da manhã</span></li>
+                      <li class="so-icone" title="Televisão"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.8" y="7" width="18.4" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m8.5 3.6 3.5 3.4 3.5-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visualmente-oculto">Televisão</span></li>
+                      <li class="so-icone" title="Wi-fi"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.4 9.2a13 13 0 0 1 17.2 0M6.4 12.6a8.6 8.6 0 0 1 11.2 0M9.4 16a4.2 4.2 0 0 1 5.2 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="19" r="1.1" fill="currentColor"/></svg><span class="visualmente-oculto">Wi-fi</span></li>
+                      <li class="so-icone" title="Ar-condicionado"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="6.4" width="18.8" height="7.4" rx="1.8" stroke="currentColor" stroke-width="1.6"/><path d="M6 17.2h3M15 17.2h3M6 10.1h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="visualmente-oculto">Ar-condicionado</span></li>
+                    </ul>
+                    <div class="quarto-acao">
+                      <span class="quarto-preco"><strong>Sob consulta</strong></span>
+                      <a class="quarto-reservar" href="#contato" data-ir-reserva>Reservar agora</a>
+                    </div>
+                  </div>
+                </article>
+
+                </div>
+              </div>
+
+              <button class="carrossel-seta carrossel-seta--esq" type="button" data-carrossel-seta="anterior" aria-label="Quarto anterior">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="carrossel-seta carrossel-seta--dir" type="button" data-carrossel-seta="proximo" aria-label="Próximo quarto">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+
+            <div class="carrossel-pontos" data-carrossel-pontos role="tablist" aria-label="Escolher o quarto"></div>
+            <p class="visualmente-oculto" data-carrossel-anuncio aria-live="polite"></p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ---- Comodidades ----
+           Faixa escura de ponta a ponta, com a foto da mata atras
+           (images/experiencia-fundo.jpg) e a cor da marca por cima.
+           Seis itens fecham as duas colunas em tres linhas certas: se mudar
+           a quantidade, prefira numero par. Cada item e um <li> com icone,
+           titulo (<strong>) e detalhe (<span>). -->
+      <section id="experiencia" data-section="experiencia" class="faixa-experiencia reveal">
+        <div class="exp-fundo" aria-hidden="true">
+          <img src="./images/experiencia-fundo.jpg" width="1600" height="1067" alt="" loading="lazy" decoding="async" />
+        </div>
+
+        <div class="container exp-wrap">
+          <div class="exp-copy">
+            <div class="eyebrow">Comodidades</div>
+            <h2>Uma estadia pensada para descansar, explorar e voltar renovado.</h2>
+          </div>
+
+          <ul class="exp-lista">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.8 9.2h12.4v5.1a5.1 5.1 0 0 1-5.1 5.1H8.9a5.1 5.1 0 0 1-5.1-5.1V9.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M16.2 10.6h1.5a2.5 2.5 0 0 1 0 5h-1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2.4 21.6h15.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 2.6c-.9 1 -.9 2 0 3M12 2.2c-.9 1 -.9 2 0 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <div><strong>Café da manhã incluso</strong><span>Caseiro, com frutas e quitutes da região</span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.4 9.2a13 13 0 0 1 17.2 0M6.4 12.6a8.6 8.6 0 0 1 11.2 0M9.4 16a4.2 4.2 0 0 1 5.2 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="19" r="1.1" fill="currentColor"/></svg>
+              <div><strong>Wi-fi gratuito</strong><span>Nas suítes e nas áreas comuns</span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.6" y="6.4" width="18.8" height="7.4" rx="1.8" stroke="currentColor" stroke-width="1.5"/><path d="M6 17.2h3M15 17.2h3M6 10.1h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <div><strong>Ar-condicionado nas suítes</strong><span>Silencioso, com enxoval cuidado</span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 11.6a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Z" stroke="currentColor" stroke-width="1.5"/><path d="M5 19.4c0-3.2 3.1-5.6 7-5.6s7 2.4 7 5.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <div><strong>Atendimento acolhedor</strong><span>Equipe da casa, sempre por perto</span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.6-5.5 6.6-10.3a6.6 6.6 0 1 0-13.2 0C5.4 15.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10.6" r="2.4" stroke="currentColor" stroke-width="1.4"/></svg>
+              <div><strong>Natureza ao redor</strong><span>Jardins, trilhas e rios por perto</span></div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.2" y="4.8" width="17.6" height="16.4" rx="2.4" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.6v4.4M16 2.6v4.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3.2 10.2h17.6" stroke="currentColor" stroke-width="1.5"/><path d="m8.8 15.4 2.3 2.3 4.1-4.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div><strong>Reserva simples</strong><span>Direto com a pousada pelo WhatsApp</span></div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="sobre" data-section="sobre" class="section-pad reveal">
+        <div class="container split">
+          <div class="about-mosaico">
+            <!-- quatro fotos de proporcoes diferentes: sobre-cafe (620x700),
+                 sobre-fachada (620x560), sobre-quarto (620x620) e
+                 sobre-salao (620x760). Troque mantendo nome e proporcao. -->
+            <figure class="mos mos-a">
+              <img src="./images/sobre-cafe.jpg" width="620" height="700" alt="Café da manhã servido na mesa, com frutas, pães e suco" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="mos mos-b">
+              <img src="./images/sobre-fachada.jpg" width="620" height="560" alt="Chalé da pousada com varanda, cercado por árvores e plantas" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="mos mos-c">
+              <img src="./images/sobre-quarto.jpg" width="620" height="620" alt="Cama com mosquiteiro em varanda de madeira com vista para as montanhas" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="mos mos-d">
+              <img src="./images/sobre-salao.jpg" width="620" height="760" alt="Salão de refeições com mesas de madeira, luminárias e uma árvore ao centro" loading="lazy" decoding="async" />
+            </figure>
+            <!-- [MODELO] tempo de casa: troque pelo do cliente -->
+            <div class="about-selo">
+              <strong>10+</strong>
+              <span>Anos recebendo hóspedes</span>
+            </div>
+          </div>
+
+          <div class="story-copy">
+            <div class="eyebrow">A nossa essência</div>
+            <h2>Um refúgio <em>acolhedor</em> em meio à natureza.</h2>
+            <p>
+              A <span data-pousada="nome">Pousada Encanto da Floresta</span> nasceu do desejo de receber bem quem
+              busca descanso longe da correria. Unimos o conforto de suítes bem cuidadas ao ritmo tranquilo da
+              natureza, com café da manhã caseiro, jardins amplos e uma equipe sempre por perto para indicar os
+              melhores passeios da região.
+            </p>
+            <ul class="about-lista">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.6-5.5 6.6-10.3a6.6 6.6 0 1 0-13.2 0C5.4 15.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10.6" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                Localização tranquila, perto das principais atrações
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 11.6a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Z" stroke="currentColor" stroke-width="1.6"/><path d="M5 19.4c0-3.2 3.1-5.6 7-5.6s7 2.4 7 5.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                Atendimento próximo e personalizado
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.6 8.9a14 14 0 0 1 18.8 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5.9 12.6a9.2 9.2 0 0 1 12.2 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.2 16.2a4.4 4.4 0 0 1 5.6 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="19.4" r="1.2" fill="currentColor"/></svg>
+                Wi-fi gratuito nas suítes e nas áreas comuns
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18v-7.5A1.5 1.5 0 0 1 4.5 9h15a1.5 1.5 0 0 1 1.5 1.5V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 15h18M6 9V6.6A1.6 1.6 0 0 1 7.6 5h8.8A1.6 1.6 0 0 1 18 6.6V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4.5 18v1.6M19.5 18v1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                Suítes confortáveis, com enxoval cuidado
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="destino" data-section="destino" class="section-pad reveal">
+        <div class="container">
+          <div class="head-block">
+            <div class="eyebrow">Experiências e atrações</div>
+            <h2>Muito para viver ao redor da pousada.</h2>
+            <p>Trilhas, rios, sabores locais e noites ao ar livre: a região guarda passeios para todos os ritmos, e a nossa equipe ajuda você a montar o roteiro.</p>
+          </div>
+
+          <!-- ============================================================
+               ATRACOES: uma carta (<figure class="pilha-item">) por
+               experiencia. A pilha funciona com 3 cartas ou mais; com 5 o
+               leque fica completo. Fotos em retrato 2:3
+               (atracao-N-800.jpg e atracao-N-480.jpg).
+
+               Atracao real do cliente, com mapa: troque o <h3> por
+               <h3><a class="atracao-mapa" href="https://www.google.com/maps/search/?api=1&amp;query=NOME%2C%20CIDADE" target="_blank" rel="noopener noreferrer">NOME<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3>
+               O estilo do link e o bloqueio de clique durante o arraste ja
+               estao prontos no CSS e no js.
+               ============================================================ -->
+          <div class="atracoes" id="atracoes">
+            <div class="pilha" data-pilha role="group" aria-roledescription="pilha de cartas"
+                 aria-label="Experiências e atrações da região: arraste para o lado ou clique numa carta">
+              <div class="pilha-medida" aria-hidden="true"></div>
+              <div class="pilha-lista">
+                <figure class="pilha-item" data-pilha-item data-nome="Trilhas na mata">
+                  <button class="pilha-carta" type="button" data-pilha-carta aria-label="Ver Trilhas na mata">
+                    <img
+                      src="./images/atracao-1-800.jpg"
+                      srcset="./images/atracao-1-480.jpg 480w, ./images/atracao-1-800.jpg 800w"
+                      sizes="(max-width: 560px) 62vw, 390px"
+                      width="800" height="1200"
+                      alt="Trilha de terra entre árvores altas e samambaias, com luz filtrada pela copa"
+                      decoding="async"
+                    />
+                  </button>
+                  <figcaption class="pilha-legenda">
+                    <h3>Trilhas na mata</h3>
+                    <p class="atracao-local">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.5V11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 15c-3.9 0-6.4-2.5-6.4-6.1 3.9 0 6.4 2.5 6.4 6.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12c0-3.9 2.5-6.5 6.4-6.5 0 3.9-2.5 6.5-6.4 6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                      Caminhadas guiadas, para todos os níveis
+                    </p>
+                  </figcaption>
+                </figure>
+
+                <figure class="pilha-item" data-pilha-item data-nome="Rios e banhos naturais">
+                  <button class="pilha-carta" type="button" data-pilha-carta aria-label="Ver Rios e banhos naturais">
+                    <img
+                      src="./images/atracao-2-800.jpg"
+                      srcset="./images/atracao-2-480.jpg 480w, ./images/atracao-2-800.jpg 800w"
+                      sizes="(max-width: 560px) 62vw, 390px"
+                      width="800" height="1200"
+                      alt="Riacho de águas claras correndo entre pedras e troncos na floresta"
+                      loading="lazy" decoding="async"
+                    />
+                  </button>
+                  <figcaption class="pilha-legenda">
+                    <h3>Rios e banhos naturais</h3>
+                    <p class="atracao-local">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.5V11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 15c-3.9 0-6.4-2.5-6.4-6.1 3.9 0 6.4 2.5 6.4 6.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12c0-3.9 2.5-6.5 6.4-6.5 0 3.9-2.5 6.5-6.4 6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                      Águas frescas para um mergulho sem pressa
+                    </p>
+                  </figcaption>
+                </figure>
+
+                <figure class="pilha-item" data-pilha-item data-nome="Passeios de barco">
+                  <button class="pilha-carta" type="button" data-pilha-carta aria-label="Ver Passeios de barco">
+                    <img
+                      src="./images/atracao-3-800.jpg"
+                      srcset="./images/atracao-3-480.jpg 480w, ./images/atracao-3-800.jpg 800w"
+                      sizes="(max-width: 560px) 62vw, 390px"
+                      width="800" height="1200"
+                      alt="Proa de uma canoa azul deslizando por um rio calmo entre as árvores"
+                      loading="lazy" decoding="async"
+                    />
+                  </button>
+                  <figcaption class="pilha-legenda">
+                    <h3>Passeios de barco</h3>
+                    <p class="atracao-local">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.5V11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 15c-3.9 0-6.4-2.5-6.4-6.1 3.9 0 6.4 2.5 6.4 6.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12c0-3.9 2.5-6.5 6.4-6.5 0 3.9-2.5 6.5-6.4 6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                      Canoa e caiaque pelos rios da região
+                    </p>
+                  </figcaption>
+                </figure>
+
+                <figure class="pilha-item" data-pilha-item data-nome="Gastronomia local">
+                  <button class="pilha-carta" type="button" data-pilha-carta aria-label="Ver Gastronomia local">
+                    <img
+                      src="./images/atracao-4-800.jpg"
+                      srcset="./images/atracao-4-480.jpg 480w, ./images/atracao-4-800.jpg 800w"
+                      sizes="(max-width: 560px) 62vw, 390px"
+                      width="800" height="1200"
+                      alt="Pratos regionais servidos à mesa: carne seca, cuscuz e mandioca cozida"
+                      loading="lazy" decoding="async"
+                    />
+                  </button>
+                  <figcaption class="pilha-legenda">
+                    <h3>Gastronomia local</h3>
+                    <p class="atracao-local">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.5V11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 15c-3.9 0-6.4-2.5-6.4-6.1 3.9 0 6.4 2.5 6.4 6.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12c0-3.9 2.5-6.5 6.4-6.5 0 3.9-2.5 6.5-6.4 6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                      Sabores da terra, feitos com ingredientes da região
+                    </p>
+                  </figcaption>
+                </figure>
+
+                <figure class="pilha-item" data-pilha-item data-nome="Noites ao ar livre">
+                  <button class="pilha-carta" type="button" data-pilha-carta aria-label="Ver Noites ao ar livre">
+                    <img
+                      src="./images/atracao-5-800.jpg"
+                      srcset="./images/atracao-5-480.jpg 480w, ./images/atracao-5-800.jpg 800w"
+                      sizes="(max-width: 560px) 62vw, 390px"
+                      width="800" height="1200"
+                      alt="Fogueira acesa sobre pedras, com as árvores da mata ao fundo no fim da tarde"
+                      loading="lazy" decoding="async"
+                    />
+                  </button>
+                  <figcaption class="pilha-legenda">
+                    <h3>Noites ao ar livre</h3>
+                    <p class="atracao-local">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.5V11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 15c-3.9 0-6.4-2.5-6.4-6.1 3.9 0 6.4 2.5 6.4 6.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12c0-3.9 2.5-6.5 6.4-6.5 0 3.9-2.5 6.5-6.4 6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                      Fogueira, céu estrelado e boa conversa
+                    </p>
+                  </figcaption>
+                </figure>
+              </div>
+              <button class="pilha-seta pilha-seta--esq" type="button" data-pilha-anterior aria-label="Carta anterior">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="pilha-seta pilha-seta--dir" type="button" data-pilha-proxima aria-label="Próxima carta">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+
+            <div class="pilha-pontos" data-pilha-pontos role="tablist" aria-label="Escolher a atração em destaque"></div>
+
+            <p class="visualmente-oculto" data-pilha-anuncio aria-live="polite"></p>
+          </div>
+
+
+        </div>
+      </section>
+
+      <!-- ---- Chamada final ----
+           Entra logo depois das experiencias: e o ponto em que a pessoa
+           acabou de ver o que ha para fazer na regiao, e o convite chega
+           junto com a vontade. Um botao so, que leva ao formulario; o
+           WhatsApp ja esta no hero e no botao flutuante. Fundo:
+           images/chamada-fundo.jpg. -->
+      <section class="faixa-final reveal" data-section="chamada" aria-labelledby="titulo-chamada">
+        <div class="final-fundo" aria-hidden="true">
+          <img src="./images/chamada-fundo.jpg" width="1600" height="1067" alt="" loading="lazy" decoding="async" />
+        </div>
+        <div class="container final-wrap">
+          <div class="final-copy">
+            <h2 id="titulo-chamada">Pronto para viver essa experiência?</h2>
+            <p>Faça sua reserva e venha viver dias leves em meio à natureza.</p>
+          </div>
+          <div class="final-acoes">
+            <a class="hero-btn hero-btn--principal" href="#contato" data-ir-reserva>Reservar agora</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="galeria" data-section="galeria" class="section-pad reveal">
+        <div class="container">
+          <div class="head-block">
+            <div class="eyebrow">Galeria</div>
+            <h2>Cada detalhe importa</h2>
+          </div>
+
+          <!-- GALERIA: fotos em retrato 2:3, em dois tamanhos
+               (galeria-NN-800.jpg e galeria-NN-480.jpg). Para trocar uma
+               foto, substitua os dois arquivos mantendo o nome; para mudar a
+               quantidade, copie ou apague um bloco .pilha-item (minimo 3). -->
+          <div class="pilha" data-pilha role="group" aria-roledescription="pilha de cartas"
+               aria-label="Fotos da pousada: arraste para o lado ou clique numa carta">
+            <div class="pilha-medida" aria-hidden="true"></div>
+            <div class="pilha-lista">
+              <div class="pilha-item" data-pilha-item data-nome="Área externa">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-01-800.jpg"
+                       srcset="./images/galeria-01-480.jpg 480w, ./images/galeria-01-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Passarela de madeira entre as árvores levando a um quiosque de sapê" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Piscina">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-02-800.jpg"
+                       srcset="./images/galeria-02-480.jpg 480w, ./images/galeria-02-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Piscina cercada por árvores, pedras e plantas" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Café da manhã">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-03-800.jpg"
+                       srcset="./images/galeria-03-480.jpg 480w, ./images/galeria-03-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Mesa de café da manhã com frutas, pães, ovos, suco e café" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Suíte">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-04-800.jpg"
+                       srcset="./images/galeria-04-480.jpg 480w, ./images/galeria-04-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Cama de casal arrumada em suíte com parede de madeira" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Restaurante">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-05-800.jpg"
+                       srcset="./images/galeria-05-480.jpg 480w, ./images/galeria-05-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Restaurante ao ar livre sob pergolado coberto de plantas" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Varanda">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-06-800.jpg"
+                       srcset="./images/galeria-06-480.jpg 480w, ./images/galeria-06-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Rede colorida na varanda, com plantas e vista para a mata" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Jardim">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-07-800.jpg"
+                       srcset="./images/galeria-07-480.jpg 480w, ./images/galeria-07-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Caminho de madeira pelo jardim tropical com a luz do sol entre as folhas" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Banheiro">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-08-800.jpg"
+                       srcset="./images/galeria-08-480.jpg 480w, ./images/galeria-08-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Banheiro com bancada de pedra, armário de madeira e espelho oval" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Sala de estar">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-09-800.jpg"
+                       srcset="./images/galeria-09-480.jpg 480w, ./images/galeria-09-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Sala de estar com sofá de couro, tapete e piso de madeira" loading="lazy" decoding="async" />
+                </button>
+              </div>
+
+              <div class="pilha-item" data-pilha-item data-nome="Detalhes da suíte">
+                <button class="pilha-carta" type="button" data-pilha-carta>
+                  <img src="./images/galeria-10-800.jpg"
+                       srcset="./images/galeria-10-480.jpg 480w, ./images/galeria-10-800.jpg 800w"
+                       sizes="(max-width: 560px) 62vw, 390px"
+                       width="800" height="1200" alt="Travesseiros brancos e manta listrada diante de uma cabeceira de madeira" loading="lazy" decoding="async" />
+                </button>
+              </div>
+              </div>
+              <button class="pilha-seta pilha-seta--esq" type="button" data-pilha-anterior aria-label="Carta anterior">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="pilha-seta pilha-seta--dir" type="button" data-pilha-proxima aria-label="Próxima carta">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+          </div>
+
+          <div class="pilha-pontos" data-pilha-pontos role="tablist" aria-label="Escolher a foto"></div>
+          <p class="visualmente-oculto" data-pilha-anuncio aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="localizacao" data-section="localizacao" class="section-pad reveal">
+        <div class="container">
+          <div class="head-block">
+            <div class="eyebrow">Localização</div>
+            <h2>Fácil de chegar, bom de ficar.</h2>
+            <p>Uma base tranquila para explorar a região, com as trilhas, os rios e o comércio local a poucos minutos da pousada.</p>
+          </div>
+
+          <!-- MAPA: o endereco pesquisado vem do js/config.js (mapa.busca e
+               mapa.zoom). O src abaixo e so a reserva para quando o script
+               nao roda. -->
+          <div class="location-box">
+            <div class="location-map">
+              <iframe
+                title="Mapa com a localização da pousada"
+                data-mapa
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Amazonas%2C%20Brasil&amp;z=6&amp;output=embed">
+              </iframe>
+            </div>
+
+            <div class="location-card">
+              <h3>
+                <span class="logo" data-logo>
+                  <svg class="logo-simbolo" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18.25" stroke="currentColor" stroke-width="1.5"/><path d="M20 31.5V17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 24c-5.6 0-9.2-3.6-9.2-8.8 5.6 0 9.2 3.6 9.2 8.8Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M20 19.6c0-5.6 3.6-9.4 9.2-9.4 0 5.6-3.6 9.4-9.2 9.4Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                  <span class="logo-texto">
+                    <span class="logo-linha1" data-pousada="logo.linha1">Pousada</span>
+                    <span class="logo-linha2" data-pousada="logo.linha2">Encanto da Floresta</span>
+                  </span>
+                </span>
+              </h3>
+              <p>Em uma área tranquila, com a natureza por perto e tudo o que você precisa a poucos minutos.</p>
+              <ul class="location-info">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.5-5.4 6.5-10.1a6.5 6.5 0 1 0-13 0C5.5 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10.7" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
+                  <span data-pousada="endereco">Centro · Cidade turística, Amazonas</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.6V12l3 1.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Check-in a partir das <span data-pousada="horarios.checkin">14h</span>, check-out até as <span data-pousada="horarios.checkout">12h</span></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---- Depoimentos ----
+           [MODELO] Os quatro depoimentos abaixo sao ficticios, escritos so
+           para o template. Antes de publicar para um cliente, troque pelas
+           avaliacoes reais dele (Google, Booking, TripAdvisor...), com o
+           texto como o hospede escreveu e so o primeiro nome.
+
+           Cada depoimento e um <figure class="dep-slide">: troque data-nome,
+           o texto do <blockquote> e a legenda. Para acrescentar, copie um
+           bloco inteiro. O link "Ver mais avaliacoes" so aparece quando
+           avaliacoes.link esta preenchido no js/config.js. -->
+      <section id="avaliacoes" data-section="avaliacoes" class="faixa-depoimentos reveal">
+        <div class="dep-foto" aria-hidden="true">
+          <img src="./images/depoimentos-1600.jpg"
+               srcset="./images/depoimentos-900.jpg 900w, ./images/depoimentos-1600.jpg 1600w"
+               sizes="(max-width: 900px) 100vw, 46vw"
+               width="1600" height="1067" alt="" loading="lazy" decoding="async" />
+          <p class="dep-frase">Viva dias leves<br />em meio à natureza</p>
+        </div>
+
+        <div class="container dep-wrap">
+          <div class="dep-copy">
+            <div class="eyebrow">Depoimentos</div>
+            <h2>O que nossos hóspedes dizem</h2>
+            <p>Relatos de quem já passou alguns dias com a gente.</p>
+          </div>
+
+          <div class="dep-carrossel" data-carrossel role="group"
+               aria-roledescription="carrossel"
+               aria-label="Depoimentos de hóspedes: arraste para o lado ou use as setas">
+            <button class="dep-seta dep-seta--esq" type="button" data-carrossel-seta="anterior" aria-label="Depoimento anterior">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="carrossel-palco dep-palco">
+              <div class="carrossel-janela dep-janela">
+                <div class="carrossel-trilho" data-carrossel-trilho>
+
+                  <figure class="dep-slide" data-carrossel-slide data-nome="Mariana">
+                    <div class="dep-estrelas" role="img" aria-label="Nota 5 de 5">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                    </div>
+                    <blockquote>“Lugar lindo e muito tranquilo. O café da manhã é caprichado e a equipe faz a gente se sentir em casa.”</blockquote>
+                    <figcaption>Mariana · viagem em casal</figcaption>
+                  </figure>
+
+                  <figure class="dep-slide" data-carrossel-slide data-nome="Carlos">
+                    <div class="dep-estrelas" role="img" aria-label="Nota 5 de 5">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                    </div>
+                    <blockquote>“Suíte limpa e confortável, com uma vista linda para a mata. As crianças adoraram a piscina e as trilhas.”</blockquote>
+                    <figcaption>Carlos · viagem em família</figcaption>
+                  </figure>
+
+                  <figure class="dep-slide" data-carrossel-slide data-nome="Juliana">
+                    <div class="dep-estrelas" role="img" aria-label="Nota 5 de 5">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                    </div>
+                    <blockquote>“Atendimento atencioso do começo ao fim. Recebemos ótimas dicas de passeios pela região.”</blockquote>
+                    <figcaption>Juliana · viagem com amigas</figcaption>
+                  </figure>
+
+                  <figure class="dep-slide" data-carrossel-slide data-nome="Rafael">
+                    <div class="dep-estrelas" role="img" aria-label="Nota 5 de 5">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.3 2.6 5.5 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.6l5.9-.8L12 3.3Z"/></svg>
+                    </div>
+                    <blockquote>“Ótimo para descansar de verdade: silêncio, natureza e uma cama muito confortável. Quero voltar!”</blockquote>
+                    <figcaption>Rafael · viagem a dois</figcaption>
+                  </figure>
+
+                </div>
+              </div>
+            </div>
+
+            <button class="dep-seta dep-seta--dir" type="button" data-carrossel-seta="proximo" aria-label="Próximo depoimento">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="carrossel-pontos dep-pontos" data-carrossel-pontos role="tablist" aria-label="Escolher o depoimento"></div>
+            <p class="visualmente-oculto" data-carrossel-anuncio aria-live="polite"></p>
+          </div>
+
+          <a class="dep-fonte" data-link="avaliacoes" href="#avaliacoes" target="_blank" rel="noopener noreferrer" hidden>
+            <span data-pousada="avaliacoes.texto">Ver mais avaliações</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <section id="contato" data-section="contato" class="section-pad reveal">
+        <div class="container contact-wrap">
+          <div class="contact-details">
+            <div class="eyebrow">Reserve sua estadia</div>
+            <h2>Garanta seus dias de descanso.</h2>
+            <p>Preencha os dados e a nossa equipe responde pelo WhatsApp com a disponibilidade e os valores para as suas datas.</p>
+            <!-- POLITICAS E HORARIOS: os horarios vem do js/config.js;
+                 o texto das politicas e editado aqui mesmo. -->
+            <div class="contact-list">
+              <div class="contact-item"><span class="dot"></span><div>Check-in a partir das <span data-pousada="horarios.checkin">14h</span> e check-out até as <span data-pousada="horarios.checkout">12h</span></div></div>
+              <div class="contact-item"><span class="dot"></span><div>Café da manhã incluso, servido das <span data-pousada="horarios.cafe">7h às 10h</span></div></div>
+              <div class="contact-item"><span class="dot"></span><div>Atendimento humano, direto com a pousada</div></div>
+              <div class="contact-item"><span class="dot"></span><div>Cancelamento sem custo com aviso prévio (consulte as condições)</div></div>
+            </div>
+
+          </div>
+
+          <div class="booking-form" aria-label="Formulário de reserva">
+            <h3>Consultar disponibilidade</h3>
+            <form id="formReserva">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="checkin">Check-in</label>
+                  <input id="checkin" name="checkin" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="checkout">Check-out</label>
+                  <input id="checkout" name="checkout" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="hospedes">Hóspedes</label>
+                  <select id="hospedes" name="hospedes">
+                    <option>1 hóspede</option>
+                    <option>2 hóspedes</option>
+                    <option>3 hóspedes</option>
+                    <option>4 hóspedes</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="quarto">Tipo de quarto</label>
+                  <select id="quarto" name="quarto" data-quartos-select>
+                    <option>Suíte Conforto</option>
+                    <option>Suíte Natureza</option>
+                    <option>Suíte Premium</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="nome">Nome Completo</label>
+                  <input id="nome" name="nome" type="text" placeholder="Seu nome" required />
+                </div>
+                <div class="field full">
+                  <label for="email">E-mail</label>
+                  <input id="email" name="email" type="email" placeholder="seu@email.com" />
+                </div>
+                <div class="field full">
+                  <label for="whatsapp">WhatsApp para Contato</label>
+                  <input id="whatsapp" name="whatsapp" type="tel" placeholder="(99) 99999-9999" required />
+                </div>
+              </div>
+              <button class="btn-cta" type="submit"><svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><g stroke-width="2" stroke-linecap="round" stroke="currentColor"><rect y="5" x="4" width="16" rx="2" height="16"></rect><path d="m8 3v4"></path><path d="m16 3v4"></path><path d="m4 11h16"></path></g></svg><span class="lable">Verificar disponibilidade</span></button>
+              <p class="form-note">Ao enviar, abrimos o WhatsApp da pousada com os seus dados já preenchidos.</p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---- Numeros da casa ----
+           Quatro numeros, escritos uma vez so, aqui embaixo. O js monta o
+           resto: fecha o laco da animacao e repete a coluna nos quatro
+           espacos da grade, cada um defasado, para que cada espaco mostre
+           um numero diferente ao mesmo tempo. Mantenha exatamente quatro
+           <article class="stat-card">.
+           [MODELO] Os numeros sao ilustrativos: troque pelos do cliente. -->
+      <section class="stats reveal" data-section="estatisticas">
+        <div class="container stats-grid" data-stats>
+          <div class="stat-slot">
+            <div class="stat-reel">
+              <article class="stat-card">
+                <svg class="stat-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 11.2a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2Z" stroke="currentColor" stroke-width="1.6"/><path d="M16.8 11.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8Z" stroke="currentColor" stroke-width="1.5"/><path d="M3.2 19.5c0-2.9 2.8-5.1 6.3-5.1s6.3 2.2 6.3 5.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M17.4 14.5c2.2.5 3.7 2.1 3.7 4.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <div class="stat-number">2.500+</div>
+                <div class="stat-label">Hóspedes recebidos</div>
+              </article>
+              <article class="stat-card">
+                <svg class="stat-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 15.4c-4.2 0-6.9-2.7-6.9-6.6 4.2 0 6.9 2.7 6.9 6.6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12.1c0-4.2 2.7-7 6.9-7 0 4.2-2.7 7-6.9 7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Passeios na região</div>
+              </article>
+              <article class="stat-card">
+                <svg class="stat-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 10.4 12 3.6l8.5 6.8V19a1.6 1.6 0 0 1-1.6 1.6H5.1A1.6 1.6 0 0 1 3.5 19v-8.6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 17.4c1.9-1.4 2.9-2.6 2.9-3.9a1.8 1.8 0 0 0-3-1.3 1.8 1.8 0 0 0-2.9 1.3c0 1.3 1 2.5 2.9 3.9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Atendimento acolhedor</div>
+              </article>
+              <article class="stat-card">
+                <svg class="stat-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2 19.2 6.2v5.4c0 4.2-3 7.8-7.2 8.8-4.2-1-7.2-4.6-7.2-8.8V6.2L12 3.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.8 11.9 2.3 2.3 4.1-4.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="stat-number">Premium</div>
+                <div class="stat-label">Conforto e segurança</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- RODAPE: nome, endereco, telefone, WhatsApp, e-mail e redes vem do
+         js/config.js. O que esta escrito aqui e so a reserva. -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-marca">
+          <h3 data-pousada="nome">Pousada Encanto da Floresta</h3>
+          <a class="footer-local" data-link="mapa" href="https://www.google.com/maps/search/?api=1&amp;query=Amazonas%2C%20Brasil" target="_blank" rel="noopener noreferrer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.5-5.4 6.5-10.1a6.5 6.5 0 1 0-13 0C5.5 15.6 12 21 12 21Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10.7" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span data-pousada="endereco">Centro · Cidade turística, Amazonas</span>
+          </a>
+          <div class="footer-contatos">
+            <a class="footer-local" data-link="telefone" href="tel:+559230000000">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.6 3.8h3l1.6 4-2.1 1.3a11 11 0 0 0 4.9 4.9l1.3-2.1 4 1.6v3a1.8 1.8 0 0 1-1.9 1.8A15.6 15.6 0 0 1 3.8 5.7a1.8 1.8 0 0 1 1.8-1.9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span data-pousada="telefone.exibicao">(92) 3000-0000</span>
+            </a>
+            <a class="footer-local" data-link="whatsapp" href="https://wa.me/5592999990000?text=Ol%C3%A1%21%20Gostaria%20de%20consultar%20disponibilidade%20para%20uma%20hospedagem." target="_blank" rel="noopener">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Z"/></svg>
+              <span data-pousada="whatsapp.exibicao">(92) 99999-0000</span>
+            </a>
+            <a class="footer-local" data-link="email" href="mailto:reservas@encantodafloresta.com">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m3.8 7 8.2 6 8.2-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-pousada="email">reservas@encantodafloresta.com</span>
+            </a>
+          </div>
+        </div>
+
+        <nav class="footer-links" aria-label="Seções do site">
+          <a href="#sobre">Sobre</a>
+          <a href="#quartos">Acomodações</a>
+          <a href="#experiencia">Comodidades</a>
+          <a href="#destino">Experiências</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#localizacao">Localização</a>
+        </nav>
+
+      </div>
+
+      <div class="container footer-row">
+        <p><span data-pousada="nome">Pousada Encanto da Floresta</span> © <span data-pousada="ano">2026</span></p>
+
+        <!-- [MODELO] credito das fotos de exemplo (Unsplash, uso livre).
+             Apague este paragrafo quando entrarem as fotos do cliente. -->
+        <p class="footer-creditos">
+          Fotos ilustrativas: <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash</a>.
+        </p>
+
+        <!-- ---- Redes ----
+             Os enderecos vem de redes.instagram e redes.facebook no
+             js/config.js. Rede com endereco vazio some sozinha. -->
+        <div class="footer-redes">
+          <a data-link="instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" data-pousada-aria="Instagram da {nome} (abre em nova aba)" aria-label="Instagram da Pousada Encanto da Floresta (abre em nova aba)">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.1" y="3.1" width="17.8" height="17.8" rx="5.2" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="17.1" cy="6.9" r="1.15" fill="currentColor"/>
+            </svg>
+          </a>
+          <a data-link="facebook" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" data-pousada-aria="Facebook da {nome} (abre em nova aba)" aria-label="Facebook da Pousada Encanto da Floresta (abre em nova aba)">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14.2 21v-7.3h2.5l.4-2.9h-2.9V9c0-.8.3-1.4 1.5-1.4h1.5V5.1c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2H8.8v2.9h2.5V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="floating-actions">
+      <a class="fab-whatsapp" data-link="whatsapp" href="https://wa.me/5592999990000?text=Ol%C3%A1%21%20Gostaria%20de%20consultar%20disponibilidade%20para%20uma%20hospedagem." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+      </a>
+    </div>
+
+    <!-- config.js primeiro: e ele que guarda os dados da pousada -->
+    <script src="./js/config.js" defer></script>
+    <script src="./js/animations.js" defer></script>
+  </body>
+</html>
