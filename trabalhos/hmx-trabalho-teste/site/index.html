@@ -183,6 +183,14 @@
 
       * { box-sizing: border-box; }
 
+      /* Dois toques rapidos no iPhone davam zoom na pagina (por exemplo,
+         ao passar as fotos da galeria ou as setas do carrossel).
+         manipulation tira so o zoom de dois toques: o zoom de pinca continua
+         funcionando, que e o que quem precisa ampliar o texto usa. */
+      html {
+        touch-action: manipulation;
+      }
+
       /* Veu de grao sobre a pagina inteira, inclusive sobre as fotos e o
          cabecalho de vidro. Fica por cima de tudo mas nao captura clique.
          A 4% nao se enxerga como textura: se percebe como papel em vez de
