@@ -135,9 +135,23 @@ const montarNumeros = () => {
   }
 };
 
+/* Os campos de data ja abrem com o dia em que a pessoa entrou no site,
+   como o de hospedes ja abre com "1 hospede": a barra nao aparece vazia e a
+   pessoa so ajusta. Data local do aparelho, nao UTC, senao a noite viraria
+   o dia seguinte. Campo que ja tem valor (o navegador restaurou, ou a
+   pessoa escolheu) nao e tocado. */
+const preencherDatasDeHoje = () => {
+  const agora = new Date();
+  const doisDigitos = (n) => String(n).padStart(2, '0');
+  const hoje = `${agora.getFullYear()}-${doisDigitos(agora.getMonth() + 1)}-${doisDigitos(agora.getDate())}`;
+  document.querySelectorAll('input[type="date"][name="checkin"], input[type="date"][name="checkout"]')
+    .forEach((campo) => { if (!campo.value) campo.value = hoje; });
+};
+
 aplicarDadosDaPousada();
 montarOpcoesDeQuarto();
 montarNumeros();
+preencherDatasDeHoje();
 
 /* ---------- Header: transparente sobre o hero, sólido ao rolar ---------- */
 const siteHeader = document.querySelector('.site-header');
