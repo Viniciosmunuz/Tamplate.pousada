@@ -167,6 +167,10 @@ reais do cliente (Google, Booking, TripAdvisor...), com o texto como o hóspede
 escreveu e só o primeiro nome. Preencha `avaliacoes.link` no `config.js` para
 mostrar o link "Ver mais avaliações".
 
+O avatar ao lado do nome é a inicial num círculo colorido, como o Google
+mostra para quem não tem foto. Para usar a foto de perfil real do hóspede
+(só com autorização dele), o comentário da seção traz o `<img>` pronto.
+
 ---
 
 ## 9. Números da casa `[MODELO]`
